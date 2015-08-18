@@ -9,6 +9,8 @@ setup(
     # I don't think this url is required either, but it's nice to have
     url='ssh://code.ce.ou.edu/var/git/cce_toolkit',
     packages=['toolkit'],
+    include_package_data=True,
+    package_data={'toolkit': ['*.py','mixins/*.py','templatetags/*.py','test_tools/*.py','test_tools/steps/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
 
