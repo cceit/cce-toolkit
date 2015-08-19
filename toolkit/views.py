@@ -1,7 +1,7 @@
 from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView, TemplateView, FormView
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, ModelFormSetView
 
-from cce_toolkit.forms import ReportSelector
+from toolkit.forms import ReportSelector
 from .mixins.views import *
 
 
