@@ -1,7 +1,7 @@
 from django import template
 from django.forms import widgets
 
-from cce_toolkit.forms import DynamicNullBooleanSelect
+from toolkit.forms import DynamicNullBooleanSelect
 
 register = template.Library()
 

@@ -3,7 +3,7 @@ from behave import *
 import requests
 
 from splinter.exceptions import ElementDoesNotExist
-from cce_toolkit.test_tools.bdd_test_helpers import get_file_content_type, fill_and_submit_form
+from toolkit.test_tools.bdd_test_helpers import get_file_content_type, fill_and_submit_form
 
 __all__ = ['log_in_as', 'visit_page', 'verify_navigation', 'verify_file_received']
 
