@@ -256,6 +256,10 @@ def xls_multiple_worksheets_response(filename, data):
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="%s.xls"' % filename
     wb = xlwt.Workbook(style_compression=2)
+    if not data:
+        wb.add_sheet("Empty report")
+        wb.save(response)
+        return response
     for sheetname, content in data.items():
         table = content['table']
         ws = wb.add_sheet(sheetname.title(), cell_overwrite_ok=True)
