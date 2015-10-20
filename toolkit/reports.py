@@ -1,6 +1,7 @@
 import csv
 from functools import partial
 import math
+import datetime
 
 import openpyxl
 from django.db.models import FieldDoesNotExist
@@ -127,6 +128,12 @@ def get_width(string, bold=False):
     return int(math.ceil(length))  # Rounding up the decimal width value
 
 
+def is_datetime(obj):
+    if type(obj) == datetime.date or type(obj) == datetime.datetime or type(obj) == datetime:
+        return True
+    return False
+
+
 def write_to_worksheet(ws, row, column, cell):
     """
     Write a single cell to a worksheet with xlwt. Used with xls_multiple_worksheets_response.
@@ -138,7 +145,7 @@ def write_to_worksheet(ws, row, column, cell):
     :param cell: Simple or complex data to be written to the cell
     :type cell: str or dict with keys label, style and merge
     """
-    if type(cell) is dict:  # complex cell data
+    if type(cell) is dict:
         label = cell.get('label')
         style = cell.get('style')
         merge = cell.get('merge')
@@ -150,18 +157,65 @@ def write_to_worksheet(ws, row, column, cell):
             col_span = merge.get('col_span', 0)
             width = 0
             if style is not None:
-                ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(style))
+                if is_datetime(label):
+                    ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(num_format_str="YYYY-MM-DD"))
+                else:
+                    try:
+                        ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(style))
+                    except:
+                        ws.write_merge(row, row + row_span, column, column + col_span, str(label), xlwt.easyxf(style))
+
             else:
-                ws.write_merge(row, row + row_span, column, column + col_span, label)
+                if is_datetime(label):
+                    ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(num_format_str="YYYY-MM-DD"))
+                try:
+                    ws.write_merge(row, row + row_span, column, column + col_span, label)
+                except:
+                    ws.write_merge(row, row + row_span, column, column + col_span, str(label))
         else:
+            if is_datetime(label):
+                ws.write(row, column, label, xlwt.easyxf(style, num_format_str="YYYY-MM-DD"))
             if style is not None:
-                ws.write(row, column, label, xlwt.easyxf(style))
+                try:
+                    ws.write(row, column, label, xlwt.easyxf(style))
+                except:
+                    ws.write(row, column, str(label), xlwt.easyxf(style))
             else:
+                try:
+                    ws.write(row, column, label)
+                except:
+                    ws.write(row, column, str(label))
+
+    elif type(cell) == type(()):
+        label = cell[0]
+        style = cell[1]
+        width = get_width(str(label))
+
+        if style is not None:
+            if is_datetime(label):
+                ws.write(row, column, label, xlwt.easyxf(style, num_format_str='YYYY-MM-DD'))
+            else:
+                try:
+                    ws.write(row, column, label, xlwt.easyxf(style))
+                except:
+                    ws.write(row, column, str(label), xlwt.easyxf(style))
+        else:
+            try:
                 ws.write(row, column, label)
-    else:  # cell is just a string
-        label = str(cell)
-        width = get_width(label)
-        ws.write(row, column, label)
+            except:
+                ws.write(row, column, str(label))
+
+    else:
+        label = cell
+        width = get_width(str(label))
+        if is_datetime(label):
+            ws.write(row, column, label, xlwt.easyxf(num_format_str='YYYY-MM-DD'))
+        else:
+            try:
+                ws.write(row, column, label)
+            except:
+                label = str(label)
+                ws.write(row, column, label)
     return width
 
 
