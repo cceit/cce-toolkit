@@ -35,6 +35,7 @@ def is_bootstrap_styled_field(value):
                       widgets.EmailInput,
                       widgets.Select,
                       widgets.DateInput,
+                      widgets.PasswordInput,
                       DynamicNullBooleanSelect,
                       ]
     return type(value.field.widget) in styled_widgets
