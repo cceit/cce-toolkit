@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_headline %}
+    <div class="col-sm-12 col-md-12">
+        <h1>
+            <span class="nav-label">{{ page_headline }}</span>
+        </h1>
+    </div>
+{% endblock page_headline %}
+
+{% block content %}
+    {% block details %}
+    {% endblock details %}
+
+    <div class="row">
+            <form action="" method="POST" style="padding: 20px">{% csrf_token %}
+                {% include 'render_form.html' %}
+                <button type="submit" name="submit" class="btn btn-default action">Submit</button>
+            </form>
+    </div>
+{% endblock content %}
