@@ -1,0 +1,20 @@
+{% if formset.non_form_errors %}
+    <div class="popover top nonfielderrors">
+        <div class="arrow"></div>
+        <h3 class="popover-title">errors:</h3>
+
+        <div class="popover-content">
+            {{ formset.non_form_errors }}
+        </div>
+    </div>
+{% endif %}
+
+<div id="{{ formset.prefix }}">
+    {% for form in formset.forms %}
+        <div class="dynamic-form" id="{{ form.prefix }}-row">
+            {% include "render_form.html" %}
+            <hr/>
+        </div>
+    {% endfor %}
+    {{ formset.management_form }}
+</div>

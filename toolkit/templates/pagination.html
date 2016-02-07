@@ -1,0 +1,11 @@
+{% load pagination %}
+<style>
+
+</style>
+{% if is_paginated %}
+<nav>
+    <ul class="pagination">
+		{% generate_page_links page_obj request %}
+    </ul>
+</nav>
+{% endif %}

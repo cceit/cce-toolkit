@@ -337,7 +337,7 @@ class ViewMetaMixin(object):
         return self.page_title
 
     def get_page_headline(self):
-        return self.page_headline or self.page_title
+        return self.page_headline or self.get_page_title()
 
     def get_sidebar_group(self):
         if not self.sidebar_group:

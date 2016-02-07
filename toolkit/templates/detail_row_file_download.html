@@ -1,0 +1,10 @@
+<div class="row detail">
+    <label class="col-sm-2 control-label detail item">{{ label|capfirst }}:</label>
+    <p class="col-sm-10 detail value">
+        {% if value %}
+            <a href="{% url url_name object.pk %}">{{ value }}</a>
+        {% else %}
+            --
+        {% endif %}
+    </p>
+</div>
