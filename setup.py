@@ -10,7 +10,7 @@ setup(
     url='ssh://code.ce.ou.edu/var/git/cceitdev/cce_toolkit.git',
     packages=['toolkit'],
     include_package_data=True,
-    package_data={'toolkit': ['*.py','mixins/*.py','templatetags/*.py','test_tools/*.py','test_tools/steps/*.py']},
+    package_data={'toolkit': ['*.py','mixins/*.py','templatetags/*.py','templates/*','test_tools/*.py','test_tools/steps/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
 
