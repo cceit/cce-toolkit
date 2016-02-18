@@ -546,16 +546,21 @@ class AbstractedListMixin(object):
         context = super(AbstractedListMixin, self).get_context_data(**kwargs)
         try:
             columns = copy.copy(self.get_columns())
+        except NotImplementedError:
+            # If self.columns was not defined, just return the super context
+            return context
+        qs = self.get_queryset()
+        try:
             popover_rows = copy.copy(self.get_popover_rows())
         except NotImplementedError:
-            # If self.columns or self.popover_rows was not defined, just return the super context
-            return context
+            # Popover is optional
+            quicklook = None
+        else:
+            quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
         # If we didn't use copy above, this next line would keep adding Actions columns every time the page is accessed
         columns += [('Actions', lambda x: self.render_buttons(self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
-        qs = self.get_queryset()
         table = self.generate_list_view_table(columns=columns, data=qs)
-        quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
         underscored_model_name = '_'.join(meta.verbose_name.split(' '))
         context.update({
             'empty_list_message': 'No %s found.' % meta.verbose_name_plural,
