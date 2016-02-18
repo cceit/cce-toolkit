@@ -7,16 +7,15 @@ from .mixins.views import *
 
 class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateView):
     """
-    This view includes all the mixins required in all CreateViews
-
+    This view includes all the mixins required in all CreateViews.
     """
     permissions = {'get': ['can_create'],
                    'post': ['can_create'], }
 
 
-class CCEListView(ViewMetaMixin, ClassPermissionsMixin, ListView):
+class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, ListView):
     """
-    This view includes all the mixins required in all ListViews
+    This view includes all the mixins required in all ListViews.
     """
     permissions = {'get': ['can_view_list'],
                    'post': ['can_view_list'], }
@@ -24,15 +23,15 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, ListView):
 
 class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateView):
     """
-    This view includes all the mixins required in all UpdateViews
+    This view includes all the mixins required in all UpdateViews.
     """
     permissions = {'get': ['can_update'],
                    'post': ['can_update'], }
 
 
-class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, DetailView):
+class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin, DetailView):
     """
-    This view includes all the mixins required in all DetailViews
+    This view includes all the mixins required in all DetailViews.
     """
     permissions = {'get': ['can_view'],
                    'post': ['can_view'], }
@@ -40,7 +39,7 @@ class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, DetailView):
 
 class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, DeleteView):
     """
-    This view includes all the mixins required in all DeleteViews
+    This view includes all the mixins required in all DeleteViews.
     """
     permissions = {'get': ['can_delete'],
                    'post': ['can_delete'],
@@ -49,7 +48,7 @@ class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
 
 class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateWithInlinesView):
     """
-    This view includes all the mixins required in all CreateWithInlinesView
+    This view includes all the mixins required in all CreateWithInlinesViews.
     """
     permissions = {'get': ['can_create'],
                    'post': ['can_create'], }
@@ -57,7 +56,7 @@ class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissi
 
 class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateWithInlinesView):
     """
-    This view includes all the mixins required in all UpdateWithInlinesView
+    This view includes all the mixins required in all UpdateWithInlinesViews.
     """
     permissions = {'get': ['can_update'],
                    'post': ['can_update'], }
@@ -86,7 +85,7 @@ class CCEModelFormSetView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMi
 
 class CCETemplateView(ViewMetaMixin, TemplateView):
     """
-    This view includes all the mixins required in all TemplateView
+    This view includes all the mixins required in all TemplateViews.
     """
     pass
 
