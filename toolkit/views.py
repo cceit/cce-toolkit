@@ -37,7 +37,7 @@ class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin
                    'post': ['can_view'], }
 
 
-class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, DeleteView):
+class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, AbstractedDeleteMixin, DeleteView):
     """
     This view includes all the mixins required in all DeleteViews.
     """

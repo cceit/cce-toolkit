@@ -7,6 +7,7 @@ from django.http import Http404, HttpResponse
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
+from django.contrib.admin.utils import NestedObjects
 
 
 class SuccessMessageMixin(BuiltInSuccessMessageMixin):
@@ -633,5 +634,41 @@ class AbstractedDetailMixin(object):
         context.update({
             'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'details': self.get_details(),
+        })
+        return context
+
+
+class AbstractedDeleteMixin(object):
+    template_name = "generic_delete.html"
+
+    @staticmethod
+    def get_deleted_objects(objs, using):
+        """
+        Find all objects related to ``objs`` that should also be deleted. ``objs``
+        must be a homogeneous iterable of objects (e.g. a QuerySet).
+
+        Returns a nested list of objects suitable for display in the
+        template with the ``unordered_list`` filter.
+
+        This is simplified from a method by the same name that the Django admin uses.
+        "using" means the key in the DATABASES setting.
+        """
+        collector = NestedObjects(using=using)
+        collector.collect(objs)
+        to_delete = collector.nested()  # nested() can take a formatting callback if we want it later
+        return to_delete
+
+    def get_context_data(self, **kwargs):
+        context = super(AbstractedDeleteMixin, self).get_context_data(**kwargs)
+        obj = self.get_object()
+        # Get a queryset so that we can get the database alias
+        db_alias = self.model.objects.filter(pk=obj.pk).db
+        objs_to_be_deleted = AbstractedDeleteMixin.get_deleted_objects([obj], db_alias)
+        object_name = self.model._meta.verbose_name
+        underscored_model_name = '_'.join(self.model._meta.verbose_name.split(' '))
+        context.update({
+            'object_name': object_name,
+            'no_url_name': 'view_%s' % underscored_model_name,
+            'objs_to_be_deleted': objs_to_be_deleted,
         })
         return context

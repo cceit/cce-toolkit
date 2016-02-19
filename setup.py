@@ -2,7 +2,7 @@ from setuptools import setup
 setup(
     # Metadata for PyPI; nice to have but not required
     name="cce_toolkit",
-    version="1.4.6",
+    version="1.4.7",
     description='A collection of tools for use in CCE-IT projects',
     author='CCE Devs',
     license='All Rights Reserved',
