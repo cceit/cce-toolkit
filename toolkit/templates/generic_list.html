@@ -1,0 +1,91 @@
+{% extends "list.html" %}
+{% load bootstrap_tags %}
+
+{% block context_nav %}
+    {% include context_menu_template with obj=object %}
+{% endblock context_nav %}
+
+{% block table %}
+    {% for row in table %}
+        {% if forloop.first and forloop.last %} {# there's only a header row in the table #}
+            {% include 'alert.html' with type='warning' message=empty_list_message %}
+        {% else %}
+            {% if forloop.first %}
+                <div class="table-responsive">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            {% for title_tuple in row %}
+                                <th class="col-sm-{{ title_tuple.1 }}">{{ title_tuple.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+            {% else %}
+                        <tr>
+                            {% for item in row %}
+                                {% if forloop.last %}
+                                    <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">{{ item|safe }}</td>
+                                {% else %}
+                                    <td>{{ item|render_detail:None|safe|default:"--" }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                {% if forloop.last %}
+                    </tbody>
+                </table>
+                </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% for labels, data in quicklook.items %}
+        {% for data_row in data %}
+        <div class="quickLook" id="popover_{{ forloop.counter }}">
+            <div data-toggle="popover" data-placement="left" data-html="true" title='Quick Look' data-content='
+                <div class="media">
+                    <div class="media-body">
+                        {% for label in labels %}
+                            {% for data_item in data_row %}
+                                {% if forloop.counter == forloop.parentloop.counter %}
+                                    {% include 'detail_row.html' with label=label value=data_item %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                '>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock table %}
+
+{% block extra_header %}
+    {{ block.super }}
+    <style>
+        .quickLook {
+            position: absolute;
+            display: none;
+        }
+
+        .popover {
+            width: 500px;
+            max-width: 500px;
+        }
+
+        .popover > .arrow {
+            display: none;
+        }
+    </style>
+{% endblock extra_header %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            quickLook(".action-buttons", -430, 5);
+        });
+    </script>
+{% endblock extra_footer %}

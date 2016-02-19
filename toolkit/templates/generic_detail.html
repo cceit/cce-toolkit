@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block context_nav %}
+    {% include context_menu_template with obj=object %}
+{% endblock context_nav %}
+
+{% block content %}
+    {% for label, value in details.items %}
+        {% include 'detail_row.html' with label=label value=value.0|render_detail:value.1|safe %}
+    {% empty %}
+        <p>There are no details to display.</p>
+    {% endfor %}
+{% endblock content %}
