@@ -158,7 +158,8 @@ def write_to_worksheet(ws, row, column, cell):
             width = 0
             if style is not None:
                 if is_datetime(label):
-                    ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(num_format_str="YYYY-MM-DD"))
+                    ws.write_merge(row, row + row_span, column, column + col_span, label,
+                                   xlwt.easyxf(num_format_str="YYYY-MM-DD"))
                 else:
                     try:
                         ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(style))
@@ -167,7 +168,8 @@ def write_to_worksheet(ws, row, column, cell):
 
             else:
                 if is_datetime(label):
-                    ws.write_merge(row, row + row_span, column, column + col_span, label, xlwt.easyxf(num_format_str="YYYY-MM-DD"))
+                    ws.write_merge(row, row + row_span, column, column + col_span, label,
+                                   xlwt.easyxf(num_format_str="YYYY-MM-DD"))
                 try:
                     ws.write_merge(row, row + row_span, column, column + col_span, label)
                 except:
@@ -275,7 +277,10 @@ def xls_multiple_worksheets_response(filename, data):
 
                     if width > widths.get(c, 0):
                         widths[c] = width
-                        ws.col(c).width = width
+                        try:
+                            ws.col(c).width = width
+                        except ValueError:
+                            ws.col(c).width = 8000
 
                 row_offset += 1
             row_offset += 1
@@ -288,7 +293,10 @@ def xls_multiple_worksheets_response(filename, data):
 
                 if width > widths.get(c, 0):
                     widths[c] = width
-                    ws.col(c).width = width
+                    try:
+                        ws.col(c).width = width
+                    except ValueError:
+                        ws.col(c).width = 8000
 
                 if c > max_column:
                     max_column = c
@@ -369,7 +377,10 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
 
                 if width > widths.get(c, 0):
                     widths[c] = width
-                    ws.col(c).width = width
+                    try:
+                        ws.col(c).width = width
+                    except ValueError:
+                        ws.col(c).width = 8000
 
             row_offset += 1
         row_offset += 1
@@ -385,7 +396,10 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
 
             if width > widths.get(c, 0):
                 widths[c] = width
-                ws.col(c).width = width
+                try:
+                    ws.col(c).width = width
+                except ValueError:
+                    ws.col(c).width = 8000
 
             if c > max_column:
                 max_column = c
@@ -408,13 +422,13 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
                 sub_total += data_table[r][value_col]
             if r >= 2:
                 # If we're beyond the first data row and the grouper values mismatch (indicating a new group)
-                #it returns the subtotal
+                # it returns the subtotal
                 if data_table[r][grouper_col] != data_table[r - 1][grouper_col]:
                     ws.write(r - 1, sub_total_col, sub_total)
                     grand_total += sub_total
                     sub_total = 0
                 else:
-                    #Determines if we're at the end of the data table and inserts the totals
+                    # Determines if we're at the end of the data table and inserts the totals
                     try:
                         data_table[r + 1][grouper_col]
                     except IndexError:
@@ -423,7 +437,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
                         ws.write(r + 2, sub_total_col, grand_total)
 
         # Determines greatest text width between the title and the grand total
-        #Grand total should be the widest tetx value in that column most of the time
+        # Grand total should be the widest tetx value in that column most of the time
         width = max(get_width(total_label), get_width(str(grand_total)))
         ws.col(sub_total_col).width = width
     if footer is not None:
@@ -436,7 +450,10 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
 
                 if width > widths.get(c, 0):
                     widths[c] = width
-                    ws.col(c).width = width
+                    try:
+                        ws.col(c).width = width
+                    except ValueError:
+                        ws.col(c).width = 8000
 
                 if c > max_column:
                     max_column = c

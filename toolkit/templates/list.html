@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block page-header-row %}
+    <div class="row  page-header">
+        {% block page_header %}
+        {% block page_headline %}
+            <div class="col-md-7 col-sm-12">
+                <h1>
+                    {{ page_headline }}
+                    {% block action_buttons %}
+                    {% endblock action_buttons %}
+                </h1>
+            </div>
+        {% endblock page_headline %}
+        {% block page_options %}
+{#            <div class="col-md-3 col-sm-12 page-options">#}
+                {% block page_options_1 %}
+                {% endblock page_options_1 %}
+{#            </div>#}
+            <div class="col-md-5 col-sm-12 page-options">
+                {% block page_options_2 %}
+                        {% if search_form %}
+                                {% include 'simple_search_form.html' with form=search_form %}
+                        {% endif %}
+                {% endblock page_options_2 %}
+            </div>
+        {% endblock page_options %}
+        {% endblock page_header %}
+    </div>
+{% endblock page-header-row %}
+
+
+{% block content %}
+    {% block advanced_search_form %}
+        {% if advanced_search_form %}
+            <div id="advanced_search_form">
+                <form action="" method="GET" enctype="multipart/form-data">
+                    {% include '3_col_render_form.html' with form=advanced_search_form %}
+                    <input type="submit" id="advanced_search" name="advanced_search" value="Search"
+                           class="btn btn-default btn-success">
+                </form>
+                <hr/>
+            </div>
+        {% endif %}
+    {% endblock advanced_search_form %}
+
+    {% block table %}{% endblock table %}
+    {% include 'pagination.html' %}
+{% endblock content %}
+
+{% block extra_header %}
+    {{ block.super }}
+    <style>
+        th:not(:first-child), td:not(:first-child) {
+            text-align: center;
+        }
+    </style>
+{% endblock extra_header %}
