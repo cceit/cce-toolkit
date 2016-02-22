@@ -52,6 +52,7 @@ def update_requirements():
     """
     pip installs the project requirements from requirements.txt
     """
+    __exec_cmd('%s/bin/pip uninstall cce_toolkit' % (env.role['virtualenv']))
     __exec_cmd('%s/bin/pip install -r %s/requirements.txt' % (env.role['virtualenv'], env.role['requirements_path']))
 
 
