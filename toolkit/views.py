@@ -5,7 +5,7 @@ from toolkit.forms import ReportSelector
 from .mixins.views import *
 
 
-class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateView):
+class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateContextMenuMixin, CreateView):
     """
     This view includes all the mixins required in all CreateViews.
     """
@@ -13,7 +13,7 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, C
                    'post': ['can_create'], }
 
 
-class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, ListView):
+class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, ListContextMenuMixin, ListView):
     """
     This view includes all the mixins required in all ListViews.
     """
@@ -21,7 +21,7 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, Lis
                    'post': ['can_view_list'], }
 
 
-class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateView):
+class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateContextMenuMixin, UpdateView):
     """
     This view includes all the mixins required in all UpdateViews.
     """
@@ -29,7 +29,7 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
                    'post': ['can_update'], }
 
 
-class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin, DetailView):
+class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin, DetailContextMenuMixin, DetailView):
     """
     This view includes all the mixins required in all DetailViews.
     """

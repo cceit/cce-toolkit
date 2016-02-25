@@ -672,3 +672,102 @@ class AbstractedDeleteMixin(object):
             'objs_to_be_deleted': objs_to_be_deleted,
         })
         return context
+
+
+class ContextMenuMixin(object):
+    show_context_menu = False
+
+    def get_underscored_names(self):
+        verbose_name = self.model._meta.verbose_name
+        verbose_name_plural = self.model._meta.verbose_name_plural
+        return '_'.join(verbose_name.split(' ')), '_'.join(verbose_name_plural.split(' '))
+
+    def get_context_data(self, **kwargs):
+        context = super(ContextMenuMixin, self).get_context_data(**kwargs)
+        if hasattr(self, 'show_context_menu'):
+            context['show_context_menu'] = self.show_context_menu
+        else:
+            context['show_context_menu'] = False
+        if hasattr(self, 'context_menu_items'):
+            context['context_menu_items'] = self.context_menu_items()
+        else:
+            context['context_menu_items'] = []
+        context['verbose_name_plural'] = str(self.model._meta.verbose_name_plural).capitalize()
+        return context
+
+
+class ListContextMenuMixin(ContextMenuMixin):
+    def context_menu_items(self):
+        if not self.show_context_menu:
+            return []
+        name, plural_name = self.get_underscored_names()
+        menu_links = []
+        # label, reversed url, icon class, sidebar_group
+        try:
+            add_url = reverse("add_%s" % name)
+        except NoReverseMatch:
+            pass
+        else:
+            menu_links.append(
+                ("Add %s" % name.capitalize(), add_url, "glyphicon-plus", "add_%s" % name)
+            )
+        try:
+            export_url = reverse("export_%s" % plural_name)
+        except NoReverseMatch:
+            pass
+        else:
+            menu_links.append(
+                ("Export %s" % plural_name.capitalize(), export_url, "glyphicon-export")
+            )
+        return menu_links
+
+
+class DetailContextMenuMixin(ContextMenuMixin):
+    def context_menu_items(self):
+        if not self.show_context_menu:
+            return []
+        name, plural_name = self.get_underscored_names()
+        menu_links = []
+        try:
+            edit_url = reverse("edit_%s" % name, kwargs={'pk': self.get_object().pk})
+        except NoReverseMatch:
+            pass
+        else:
+            menu_links.append(
+                ("Edit %s" % name.capitalize(), edit_url, "glyphicon-edit", "edit_%s" % name),
+            )
+        return menu_links
+
+
+class CreateContextMenuMixin(ContextMenuMixin):
+    def context_menu_items(self):
+        if not self.show_context_menu:
+            return []
+        name, plural_name = self.get_underscored_names()
+        menu_links = []
+        try:
+            browse_url = reverse("browse_%s" % plural_name)
+        except NoReverseMatch:
+            pass
+        else:
+            menu_links.append(
+                ("Browse %s" % plural_name.capitalize(), browse_url, "glyphicon-list")
+            )
+        return menu_links
+
+
+class UpdateContextMenuMixin(ContextMenuMixin):
+    def context_menu_items(self):
+        if not self.show_context_menu:
+            return []
+        name, plural_name = self.get_underscored_names()
+        menu_links = []
+        try:
+            view_url = reverse("view_%s" % name, kwargs={'pk': self.get_object().pk})
+        except NoReverseMatch:
+            pass
+        else:
+            menu_links.append(
+                ("View %s" % name.capitalize(), view_url, "glyphicon-info-sign")
+            )
+        return menu_links
