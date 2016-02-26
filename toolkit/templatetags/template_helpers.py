@@ -29,15 +29,17 @@ def is_time_field(value):
 
 @register.filter
 def is_bootstrap_styled_field(value):
-    styled_widgets = [widgets.TextInput,
-                      widgets.Textarea,
-                      widgets.NumberInput,
-                      widgets.EmailInput,
-                      widgets.Select,
-                      widgets.DateInput,
-                      widgets.PasswordInput,
-                      DynamicNullBooleanSelect,
-                      ]
+    styled_widgets = [
+        widgets.TextInput,
+        widgets.Textarea,
+        widgets.NumberInput,
+        widgets.EmailInput,
+        widgets.Select,
+        widgets.DateInput,
+        widgets.PasswordInput,
+        DynamicNullBooleanSelect,
+        widgets.URLInput,
+    ]
     return type(value.field.widget) in styled_widgets
 
 
