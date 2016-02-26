@@ -550,7 +550,10 @@ class AbstractedListMixin(object):
         except NotImplementedError:
             # If self.columns was not defined, just return the super context
             return context
-        qs = self.get_queryset()
+        if context['is_paginated']:
+            qs = context['page_obj'].object_list
+        else:
+            qs = self.get_queryset()
         try:
             popover_rows = copy.copy(self.get_popover_rows())
         except NotImplementedError:
