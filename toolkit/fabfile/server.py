@@ -35,7 +35,7 @@ def initial_project_deployment():
         __exec_setup_cmd('git config --global user.email "devs@cce.ou.edu"')
         __exec_setup_cmd('git config --global user.name "Server"')
     git_checkout(env.role['branch'])
-    update_requirements()
+    install_requirements()
     setup_permissions(project_name)
 
 
@@ -50,9 +50,17 @@ def setup_permissions(account):
 
 def update_requirements():
     """
-    pip installs the project requirements from requirements.txt
+    pip updates the project requirements from requirements.txt
     """
     __exec_cmd('%s/bin/pip uninstall -y cce_toolkit' % (env.role['virtualenv']))
+    install_requirements()
+
+
+
+def install_requirements():
+    """
+    pip installs the project requirements from requirements.txt
+    """
     __exec_cmd('%s/bin/pip install -r %s/requirements.txt' % (env.role['virtualenv'], env.role['requirements_path']))
 
 
