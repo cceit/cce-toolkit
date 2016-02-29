@@ -714,14 +714,6 @@ class ListContextMenuMixin(ContextMenuMixin):
             menu_links.append(
                 ("Add %s" % name.capitalize(), add_url, "glyphicon-plus", "add_%s" % name)
             )
-        try:
-            export_url = reverse("export_%s" % plural_name)
-        except NoReverseMatch:
-            pass
-        else:
-            menu_links.append(
-                ("Export %s" % plural_name.capitalize(), export_url, "glyphicon-export")
-            )
         return menu_links
 
 
