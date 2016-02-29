@@ -550,13 +550,7 @@ class AbstractedListMixin(object):
         except NotImplementedError:
             # If self.columns was not defined, just return the super context
             return context
-        # if context['is_paginated']:
-        #     qs = context['page_obj'].object_list
-        # else:
-        #     qs = self.get_queryset()
-
-        # This line should suffice, since object_list gets modified when paginated
-        qs = context['object_list']
+        qs = context['object_list']  # this works whether the view is paginated or not
         try:
             popover_rows = copy.copy(self.get_popover_rows())
         except NotImplementedError:
