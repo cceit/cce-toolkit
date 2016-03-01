@@ -419,7 +419,7 @@ class AbstractedListMixin(object):
         If a URL is not found, or if the user doesn't have permission to do that thing, the button is not rendered.
         """
         buttons = []
-        underscored_model_name = '_'.join(self.model._meta.verbose_name.split(' '))
+        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
         if view_perm_func is None:
             view_perm_func = self.model.can_view
         if view_perm_func(obj, user):
@@ -562,7 +562,7 @@ class AbstractedListMixin(object):
         columns += [('Actions', lambda x: self.render_buttons(self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
-        underscored_model_name = '_'.join(meta.verbose_name.split(' '))
+        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
             'empty_list_message': 'No %s found.' % meta.verbose_name_plural,
             'context_menu_template': '%s/context_menu.html' % underscored_model_name,
@@ -630,7 +630,7 @@ class AbstractedDetailMixin(object):
     def get_context_data(self, **kwargs):
         context = super(AbstractedDetailMixin, self).get_context_data(**kwargs)
         meta = self.model._meta
-        underscored_model_name = '_'.join(meta.verbose_name.split(' '))
+        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
             'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'details': self.get_details(),
@@ -665,7 +665,7 @@ class AbstractedDeleteMixin(object):
         db_alias = self.model.objects.filter(pk=obj.pk).db
         objs_to_be_deleted = AbstractedDeleteMixin.get_deleted_objects([obj], db_alias)
         object_name = self.model._meta.verbose_name
-        underscored_model_name = '_'.join(self.model._meta.verbose_name.split(' '))
+        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
         context.update({
             'object_name': object_name,
             'no_url_name': 'view_%s' % underscored_model_name,
@@ -678,8 +678,8 @@ class ContextMenuMixin(object):
     show_context_menu = False
 
     def get_underscored_names(self):
-        verbose_name = self.model._meta.verbose_name
-        verbose_name_plural = self.model._meta.verbose_name_plural
+        verbose_name = self.model._meta.verbose_name.lower()
+        verbose_name_plural = self.model._meta.verbose_name_plural.lower()
         return '_'.join(verbose_name.split(' ')), '_'.join(verbose_name_plural.split(' '))
 
     def get_context_data(self, **kwargs):
