@@ -677,6 +677,9 @@ class AbstractedDeleteMixin(object):
 class ContextMenuMixin(object):
     show_context_menu = False
 
+    def get_verbose_names(self):
+        return self.model._meta.verbose_name.lower(), self.model._meta.verbose_name_plural.lower()
+
     def get_underscored_names(self):
         verbose_name = self.model._meta.verbose_name.lower()
         verbose_name_plural = self.model._meta.verbose_name_plural.lower()
@@ -700,16 +703,17 @@ class ListContextMenuMixin(ContextMenuMixin):
     def context_menu_items(self):
         if not self.show_context_menu:
             return []
-        name, plural_name = self.get_underscored_names()
+        name, plural_name = self.get_verbose_names()
+        name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         # label, reversed url, icon class, sidebar_group
         try:
-            add_url = reverse("add_%s" % name)
+            add_url = reverse("add_%s" % name_underscored)
         except NoReverseMatch:
             pass
         else:
             menu_links.append(
-                ("Add %s" % name.capitalize(), add_url, "glyphicon-plus", "add_%s" % name)
+                ("Add %s" % name.capitalize(), add_url, "glyphicon-plus", "add_%s" % name_underscored)
             )
         return menu_links
 
@@ -718,15 +722,16 @@ class DetailContextMenuMixin(ContextMenuMixin):
     def context_menu_items(self):
         if not self.show_context_menu:
             return []
-        name, plural_name = self.get_underscored_names()
+        name, plural_name = self.get_verbose_names()
+        name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         try:
-            edit_url = reverse("edit_%s" % name, kwargs={'pk': self.get_object().pk})
+            edit_url = reverse("edit_%s" % name_underscored, kwargs={'pk': self.get_object().pk})
         except NoReverseMatch:
             pass
         else:
             menu_links.append(
-                ("Edit %s" % name.capitalize(), edit_url, "glyphicon-edit", "edit_%s" % name),
+                ("Edit %s" % name.capitalize(), edit_url, "glyphicon-edit", "edit_%s" % name_underscored),
             )
         return menu_links
 
@@ -735,10 +740,11 @@ class CreateContextMenuMixin(ContextMenuMixin):
     def context_menu_items(self):
         if not self.show_context_menu:
             return []
-        name, plural_name = self.get_underscored_names()
+        name, plural_name = self.get_verbose_names()
+        name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         try:
-            browse_url = reverse("browse_%s" % plural_name)
+            browse_url = reverse("browse_%s" % plural_underscored)
         except NoReverseMatch:
             pass
         else:
@@ -752,10 +758,11 @@ class UpdateContextMenuMixin(ContextMenuMixin):
     def context_menu_items(self):
         if not self.show_context_menu:
             return []
-        name, plural_name = self.get_underscored_names()
+        name, plural_name = self.get_verbose_names()
+        name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         try:
-            view_url = reverse("view_%s" % name, kwargs={'pk': self.get_object().pk})
+            view_url = reverse("view_%s" % name_underscored, kwargs={'pk': self.get_object().pk})
         except NoReverseMatch:
             pass
         else:
