@@ -21,6 +21,7 @@ setup(
                               'templates/comments/*.html',
                               'templates/form_fragments/*.html',
                               'templates/registration/*.html',
+                              'assets/js/*.js',
                               'assets/*.js',
                               'test_tools/*.py',
                               'test_tools/steps/*.py']},
