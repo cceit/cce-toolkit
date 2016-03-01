@@ -15,11 +15,12 @@
     <div class="row">
             <form action="" method="POST" style="padding: 20px">{% csrf_token %}
                 {% include 'render_form.html' %}
+
+                {% block extras %}
+                {% endblock extras %}
                 <button type="submit" name="submit" class="btn btn-default action">Submit</button>
             </form>
     </div>
 
 
-    {% block extras %}
-    {% endblock extras %}
 {% endblock content %}
