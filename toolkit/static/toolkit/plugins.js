@@ -1,4 +1,4 @@
-function initialize_form_plugins() {
+function initialize_plugins(advanced_search_form_bound) {
     $('.datefield').each(function (index, value) {
         $(this).datepicker({
             format: "mm/dd/yyyy",
@@ -8,13 +8,73 @@ function initialize_form_plugins() {
         });
         $(this).data('has_datepicker', true)
     });
+    $('.tinymce').each(function (index, value) {
+        initTinyMCE($(this));
+    });
     $("select").select2();
     $('.timefield').datetimepicker({
         format: 'LT'
     });
+
+    var $advance_search_toggle = $('#advance_search_toggle');
+    var $advanced_search_form = $('#advanced_search_form');
+
+    $advance_search_toggle.on('click', function () {
+        if ($advance_search_toggle.attr('aria-pressed') == 'false') {
+            $advance_search_toggle.attr('aria-pressed', 'true');
+            $advance_search_toggle.children('span').removeClass('glyphicon-plus');
+            $advance_search_toggle.children('span').addClass('glyphicon-minus');
+        } else {
+            $advance_search_toggle.attr('aria-pressed', 'false');
+            $advance_search_toggle.children('span').removeClass('glyphicon-minus');
+            $advance_search_toggle.children('span').addClass('glyphicon-plus');
+        }
+
+        $('#advanced_search_form').toggle()
+    });
+
+    if (advanced_search_form_bound) {
+
+        $advance_search_toggle.attr('aria-pressed', 'true');
+        $advance_search_toggle.children('span').removeClass('glyphicon-plus');
+        $advance_search_toggle.children('span').addClass('glyphicon-minus');
+    }
+    else {
+        $advanced_search_form.toggle();
+    }
+
+    $('[data-toggle="popover"]').popover('show');
+    $(document).on("click", ".popover .close" , function(){
+        $(this).parents(".popover").popover('hide');
+    });
+}
+
+// function enables tinymce with settings loaded from widget, taken from django-tinymce
+function initTinyMCE($e) {
+    if ($e.parents('.empty-form').length == 0) {  // Don't do empty inlines
+      var mce_conf = $.parseJSON($e.attr('data-mce-conf'));
+      var id = $e.attr('id');
+      if ('elements' in mce_conf && mce_conf['mode'] == 'exact') {
+        mce_conf['elements'] = id;
+      }
+      if ($e.attr('data-mce-gz-conf')) {
+        tinyMCE_GZ.init($.parseJSON($e.attr('data-mce-gz-conf')));
+      }
+      if (!tinyMCE.editors[id]) {
+        tinyMCE.init(mce_conf);
+      }
+    }
+}
+
+function disable_plugins(){
+    // disable tinymce
+    $('.tinymce').each(function (index, value) {
+        tinyMCE.EditorManager.execCommand('mceRemoveEditor',true, $(this).attr('id'));
+    });
 }
 
 function addForm(btn, prefix) {
+
     // Get the div surrounding the formset
     var forms_container = $('#' + prefix);
     // Get the hidden input saying how many forms there are
@@ -32,6 +92,9 @@ function addForm(btn, prefix) {
         var id = 'id_' + name;
         $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
     });
+    newElement.find(':checkbox').each(function () {
+        $(this).removeAttr('value');
+    });
     // The "for" attribute on each label, since ids changed
     newElement.find('label').each(function () {
         var newFor = $(this).attr('for').replace('-0-', '-' + total + '-');
@@ -46,7 +109,7 @@ function addForm(btn, prefix) {
     // Put the new form on the page
     forms_container.children('.dynamic-form:last').after(newElement);
 
-    initialize_form_plugins();
+    initialize_plugins(false);
     return newElement;
 }
 
