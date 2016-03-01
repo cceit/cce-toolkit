@@ -46,7 +46,7 @@ class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
                    'delete': ['can_delete'], }
 
 
-class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateWithInlinesView):
+class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateContextMenuMixin, CreateWithInlinesView):
     """
     This view includes all the mixins required in all CreateWithInlinesViews.
     """
@@ -54,7 +54,7 @@ class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissi
                    'post': ['can_create'], }
 
 
-class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateWithInlinesView):
+class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateContextMenuMixin, UpdateWithInlinesView):
     """
     This view includes all the mixins required in all UpdateWithInlinesViews.
     """
