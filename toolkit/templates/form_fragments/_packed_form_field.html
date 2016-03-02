@@ -2,7 +2,7 @@
 {% block form_field %}
     <div class="form-group">
         <label for="{{ field.id_for_label }}" class="control-label">
-            {% if field.field.required %}*{% endif %}{{ field.label_tag|capfirst }}
+            {% if field.field.required %}*{% endif %}{{ field.label|capfirst }}
         </label>
         <br>
         {% if field|is_date_field %}
