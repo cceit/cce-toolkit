@@ -1,7 +1,7 @@
 {% load widget_tweaks template_helpers %}
 {% block form_field %}
     <div class="form-group">
-        <label for="{{ field.name }}" class="control-label">
+        <label for="{{ field.id_for_label }}" class="control-label">
             {% if field.field.required %}*{% endif %}{{ field.label_tag|capfirst }}
         </label>
         <br>
