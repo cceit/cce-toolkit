@@ -668,7 +668,7 @@ class AbstractedDeleteMixin(object):
         underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
         context.update({
             'object_name': object_name,
-            'no_url_name': 'view_%s' % underscored_model_name,
+            'no_url_path': reverse('view_%s' % underscored_model_name, kwargs={'pk': obj.pk}),
             'objs_to_be_deleted': objs_to_be_deleted,
         })
         return context
