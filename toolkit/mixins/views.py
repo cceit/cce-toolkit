@@ -695,7 +695,7 @@ class ContextMenuMixin(object):
             context['context_menu_items'] = self.context_menu_items()
         else:
             context['context_menu_items'] = []
-        context['verbose_name_plural'] = str(self.model._meta.verbose_name_plural).capitalize()
+        context['verbose_name_plural'] = str(self.model._meta.verbose_name_plural).title()
         return context
 
 
@@ -713,7 +713,7 @@ class ListContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Add %s" % name.capitalize(), add_url, "glyphicon-plus", "add_%s" % name_underscored)
+                ("Add %s" % name.title(), add_url, "glyphicon-plus", "add_%s" % name_underscored)
             )
         return menu_links
 
@@ -731,7 +731,7 @@ class DetailContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Edit %s" % name.capitalize(), edit_url, "glyphicon-edit", "edit_%s" % name_underscored),
+                ("Edit %s" % name.title(), edit_url, "glyphicon-edit", "edit_%s" % name_underscored),
             )
         return menu_links
 
@@ -749,7 +749,7 @@ class CreateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Browse %s" % plural_name.capitalize(), browse_url, "glyphicon-list")
+                ("Browse %s" % plural_name.title(), browse_url, "glyphicon-list")
             )
         return menu_links
 
@@ -767,6 +767,6 @@ class UpdateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("View %s" % name.capitalize(), view_url, "glyphicon-info-sign")
+                ("View %s" % name.title(), view_url, "glyphicon-info-sign")
             )
         return menu_links
