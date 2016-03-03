@@ -589,8 +589,7 @@ class AbstractedDetailMixin(object):
         - The second item should be EITHER a dotted path from this object to what goes on the page,
           OR a function that takes exactly one argument.
         - The third item is an optional extra parameter.
-        - - If the thing passed is a file field, this should be a URL name for the download link.
-        - - If the thing passed is a related manager, this should be a dotted path to apply to each object in the manager.
+        - - If the thing passed is a related manager, this is an optional dotted path to apply to each object in the manager.
         Example:
         fields = [
             ('Username', 'user.username'),
