@@ -9,7 +9,7 @@
         {% for item in context_menu_items %}
             <li>
                 <a href="{{ item.1 }}" class="{% if item.3 in sidebar_group %}active{% endif %}">
-                    <span class="glyphicon {{ item.2 }}" aria-hidden="true"></span> {{ item.0 }}
+                    <span class="{{ item.2 }}" aria-hidden="true"></span> {{ item.0 }}
                 </a>
             </li>
         {% endfor %}

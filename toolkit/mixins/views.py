@@ -715,7 +715,7 @@ class ListContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Add %s" % name.title(), add_url, "glyphicon-plus", "add_%s" % name_underscored)
+                ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
             )
         return menu_links
 
@@ -733,7 +733,7 @@ class DetailContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Edit %s" % name.title(), edit_url, "glyphicon-edit", "edit_%s" % name_underscored),
+                ("Edit %s" % name.title(), edit_url, "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
             )
         return menu_links
 
@@ -751,7 +751,7 @@ class CreateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Browse %s" % plural_name.title(), browse_url, "glyphicon-list")
+                ("Browse %s" % plural_name.title(), browse_url, "glyphicon glyphicon-list")
             )
         return menu_links
 
@@ -769,6 +769,6 @@ class UpdateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("View %s" % name.title(), view_url, "glyphicon-info-sign")
+                ("View %s" % name.title(), view_url, "glyphicon glyphicon-info-sign")
             )
         return menu_links
