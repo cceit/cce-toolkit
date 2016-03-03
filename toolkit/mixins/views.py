@@ -594,7 +594,7 @@ class AbstractedDetailMixin(object):
         Example:
         fields = [
             ('Username', 'user.username'),
-            ('Passport file', 'passport', 'download_staff_passport'),
+            ('Passport file', 'passport'),
             ('Zip codes', 'address_set', 'zip_code'),
             ('Active', 'is_active'),
             ('Joined date', 'joined_date'),
