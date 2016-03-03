@@ -25,7 +25,12 @@
                         <tr>
                             {% for item in row %}
                                 {% if forloop.last %}
-                                    <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">{{ item|safe }}</td>
+                                    <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">
+                                        {# item is a list of button tuples #}
+                                        {% for t in item %}
+                                            <a class="btn {{ t.0 }}" href="{{ t.1 }}" title="{{ t.2 }}"><i class="{{ t.3 }}"></i> {{ t.4 }}</a>
+                                        {% endfor %}
+                                    </td>
                                 {% else %}
                                     <td>{{ item|render_detail:None|safe|default:"--" }}</td>
                                 {% endif %}

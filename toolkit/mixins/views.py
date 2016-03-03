@@ -406,9 +406,7 @@ class AbstractedListMixin(object):
                 url = reverse(url_name, kwargs={'pk': pk})
             except NoReverseMatch:
                 return ''
-        return '<a class="btn %s" href="%s" title="%s"><i class="%s"></i> %s</a>' % (
-            btn_class, url, label, icon_classes, button_text
-        )
+        return btn_class, url, label, icon_classes, button_text
 
     def render_buttons(self, user, obj, view_perm_func=None, edit_perm_func=None, delete_perm_func=None):
         """
@@ -432,7 +430,7 @@ class AbstractedListMixin(object):
             delete_perm_func = self.model.can_delete
         if delete_perm_func(obj, user):
             buttons.append(self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove'))
-        return ' '.join(buttons)
+        return buttons
 
     def get_columns(self):
         if self.columns is None:
@@ -489,7 +487,6 @@ class AbstractedListMixin(object):
             titles = zip(titles, column_widths)
         table = [titles]
         for obj in data:
-            # table.append([f(obj) for f in functions])
             row = []
             for f in functions:
                 if type(f) == str:
