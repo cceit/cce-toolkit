@@ -405,7 +405,7 @@ class AbstractedListMixin(object):
             try:
                 url = reverse(url_name, kwargs={'pk': pk})
             except NoReverseMatch:
-                return ''
+                return None
         return btn_class, url, label, icon_classes, button_text
 
     def render_buttons(self, user, obj, view_perm_func=None, edit_perm_func=None, delete_perm_func=None):
@@ -421,15 +421,21 @@ class AbstractedListMixin(object):
         if view_perm_func is None:
             view_perm_func = self.model.can_view
         if view_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-info', 'view_'+underscored_model_name, 'View', 'glyphicon glyphicon-info-sign'))
+            button = self.render_button(obj.pk, 'btn-info', 'view_'+underscored_model_name, 'View', 'glyphicon glyphicon-info-sign')
+            if button:
+                buttons.append(button)
         if edit_perm_func is None:
             edit_perm_func = self.model.can_update
         if edit_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-warning', 'edit_'+underscored_model_name, 'Edit', 'glyphicon glyphicon-edit'))
+            button = self.render_button(obj.pk, 'btn-warning', 'edit_'+underscored_model_name, 'Edit', 'glyphicon glyphicon-edit')
+            if button:
+                buttons.append(button)
         if delete_perm_func is None:
             delete_perm_func = self.model.can_delete
         if delete_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove'))
+            button = self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove')
+            if button:
+                buttons.append(button)
         return buttons
 
     def get_columns(self):
