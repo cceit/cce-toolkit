@@ -565,10 +565,8 @@ class AbstractedListMixin(object):
         columns += [('Actions', lambda x: self.render_buttons(self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
-        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
             'empty_list_message': 'No %s found.' % meta.verbose_name_plural,
-            'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'table': table,
             'quicklook': quicklook,
         })
@@ -631,10 +629,7 @@ class AbstractedDetailMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(AbstractedDetailMixin, self).get_context_data(**kwargs)
-        meta = self.model._meta
-        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
-            'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'details': self.get_details(),
         })
         return context
