@@ -71,9 +71,13 @@ function disable_plugins(){
     $('.tinymce').each(function (index, value) {
         tinyMCE.EditorManager.execCommand('mceRemoveEditor',true, $(this).attr('id'));
     });
+    // disable select2
+    $("select").select2('destroy');
 }
 
 function addForm(btn, prefix) {
+    // disable js plugin that are not compatible with .clone
+    disable_plugins();
 
     // Get the div surrounding the formset
     var forms_container = $('#' + prefix);
@@ -109,6 +113,7 @@ function addForm(btn, prefix) {
     // Put the new form on the page
     forms_container.children('.dynamic-form:last').after(newElement);
 
+    // re-enable plugins
     initialize_plugins(false);
     return newElement;
 }
