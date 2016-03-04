@@ -334,12 +334,18 @@ class ViewMetaMixin(object):
     """
     page_title = ''
     page_headline = ''
+    page_icon = ''
     sidebar_group = []
 
     def get_page_title(self):
         if not self.page_title:
             raise ImproperlyConfigured("page_title is not set")
         return self.page_title
+
+    def get_page_icon(self):
+        if self.page_icon:
+            return '<i class="%s"></i>' % self.page_icon
+        return ''
 
     def get_page_headline(self):
         return self.page_headline or self.get_page_title()
@@ -354,6 +360,7 @@ class ViewMetaMixin(object):
         context.update({
             'page_title': self.get_page_title(),
             'page_headline': self.get_page_headline(),
+            'page_icon': self.get_page_icon(),
             'sidebar_group': self.get_sidebar_group(),
         })
         return context
