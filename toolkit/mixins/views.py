@@ -405,10 +405,8 @@ class AbstractedListMixin(object):
             try:
                 url = reverse(url_name, kwargs={'pk': pk})
             except NoReverseMatch:
-                return ''
-        return '<a class="btn %s" href="%s" title="%s"><i class="%s"></i> %s</a>' % (
-            btn_class, url, label, icon_classes, button_text
-        )
+                return None
+        return btn_class, url, label, icon_classes, button_text
 
     def render_buttons(self, user, obj, view_perm_func=None, edit_perm_func=None, delete_perm_func=None):
         """
@@ -423,16 +421,22 @@ class AbstractedListMixin(object):
         if view_perm_func is None:
             view_perm_func = self.model.can_view
         if view_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-info', 'view_'+underscored_model_name, 'View', 'glyphicon glyphicon-info-sign'))
+            button = self.render_button(obj.pk, 'btn-info', 'view_'+underscored_model_name, 'View', 'glyphicon glyphicon-info-sign')
+            if button:
+                buttons.append(button)
         if edit_perm_func is None:
             edit_perm_func = self.model.can_update
         if edit_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-warning', 'edit_'+underscored_model_name, 'Edit', 'glyphicon glyphicon-edit'))
+            button = self.render_button(obj.pk, 'btn-warning', 'edit_'+underscored_model_name, 'Edit', 'glyphicon glyphicon-edit')
+            if button:
+                buttons.append(button)
         if delete_perm_func is None:
             delete_perm_func = self.model.can_delete
         if delete_perm_func(obj, user):
-            buttons.append(self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove'))
-        return ' '.join(buttons)
+            button = self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove')
+            if button:
+                buttons.append(button)
+        return buttons
 
     def get_columns(self):
         if self.columns is None:
@@ -489,7 +493,6 @@ class AbstractedListMixin(object):
             titles = zip(titles, column_widths)
         table = [titles]
         for obj in data:
-            # table.append([f(obj) for f in functions])
             row = []
             for f in functions:
                 if type(f) == str:
@@ -562,10 +565,8 @@ class AbstractedListMixin(object):
         columns += [('Actions', lambda x: self.render_buttons(self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
-        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
             'empty_list_message': 'No %s found.' % meta.verbose_name_plural,
-            'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'table': table,
             'quicklook': quicklook,
         })
@@ -586,12 +587,11 @@ class AbstractedDetailMixin(object):
         - The second item should be EITHER a dotted path from this object to what goes on the page,
           OR a function that takes exactly one argument.
         - The third item is an optional extra parameter.
-        - - If the thing passed is a file field, this should be a URL name for the download link.
-        - - If the thing passed is a related manager, this should be a dotted path to apply to each object in the manager.
+        - - If the thing passed is a related manager, this is an optional dotted path to apply to each object in the manager.
         Example:
         fields = [
             ('Username', 'user.username'),
-            ('Passport file', 'passport', 'download_staff_passport'),
+            ('Passport file', 'passport'),
             ('Zip codes', 'address_set', 'zip_code'),
             ('Active', 'is_active'),
             ('Joined date', 'joined_date'),
@@ -629,10 +629,7 @@ class AbstractedDetailMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(AbstractedDetailMixin, self).get_context_data(**kwargs)
-        meta = self.model._meta
-        underscored_model_name = '_'.join(meta.verbose_name.lower().split(' '))
         context.update({
-            'context_menu_template': '%s/context_menu.html' % underscored_model_name,
             'details': self.get_details(),
         })
         return context
@@ -713,7 +710,7 @@ class ListContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Add %s" % name.title(), add_url, "glyphicon-plus", "add_%s" % name_underscored)
+                ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
             )
         return menu_links
 
@@ -731,7 +728,7 @@ class DetailContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Edit %s" % name.title(), edit_url, "glyphicon-edit", "edit_%s" % name_underscored),
+                ("Edit %s" % name.title(), edit_url, "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
             )
         return menu_links
 
@@ -749,7 +746,7 @@ class CreateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Browse %s" % plural_name.title(), browse_url, "glyphicon-list")
+                ("Browse %s" % plural_name.title(), browse_url, "glyphicon glyphicon-list")
             )
         return menu_links
 
@@ -767,6 +764,6 @@ class UpdateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("View %s" % name.title(), view_url, "glyphicon-info-sign")
+                ("View %s" % name.title(), view_url, "glyphicon glyphicon-info-sign")
             )
         return menu_links
