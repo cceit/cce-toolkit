@@ -40,6 +40,8 @@ def render_detail(value, param):
         return value.strftime("%-m/%-d/%Y")
     elif isinstance(value, datetime.time):
         return value.strftime("%I:%M %p").lstrip('0')
+    elif isinstance(value, datetime.datetime):
+        return value.strftime("%-m/%-d/%Y, %I:%M %p")
     elif isinstance(value, Manager):
         # param is an optional dotted path to follow on each related object
         related_objs = list(value.all())
