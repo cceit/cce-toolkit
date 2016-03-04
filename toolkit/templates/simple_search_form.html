@@ -3,6 +3,7 @@
     <form class="input-group" action="" method="GET" enctype="multipart/form-data">
         {% for field in form %}
             <div class="input-group-btn">
+                <label for="{{ field.id_for_label }}" class="sr-only">{{ field.name }}</label>
                 {{ field|add_class:'form-control input-sm' }}
                 <div class="btn-group" role="group">
                     <button id="search_btn" type="submit" class="btn btn-sm btn-primary" role="button"
