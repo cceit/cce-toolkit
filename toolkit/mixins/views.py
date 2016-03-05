@@ -8,6 +8,7 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.contrib.admin.utils import NestedObjects
+from django.utils.safestring import mark_safe
 
 
 class SuccessMessageMixin(BuiltInSuccessMessageMixin):
@@ -344,7 +345,7 @@ class ViewMetaMixin(object):
 
     def get_page_icon(self):
         if self.page_icon:
-            return '<i class="%s"></i>' % self.page_icon
+            return mark_safe('<i class="%s"></i>' % self.page_icon)
         return ''
 
     def get_page_headline(self):
