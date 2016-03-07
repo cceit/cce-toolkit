@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.contrib.admin.sites import AlreadyRegistered
-from django.apps import apps
-
 
 def auto_admin_register(app_name, exclude=()):
     """Register all remaining models in the given app with the admin site.
@@ -21,6 +19,8 @@ def auto_admin_register(app_name, exclude=()):
     Author:
         Fredrick Wagner
     """
+    from django.apps import apps
+
     app = apps.get_app_config(app_name)
     for k, model in app.models.items():
         if model.__name__ not in exclude:
