@@ -13,7 +13,7 @@
     {% endblock details %}
 
     <div class="row">
-            <form action="" method="POST" style="padding: 20px">{% csrf_token %}
+            <form action="" method="POST" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
                 {% include 'render_form.html' %}
 
                 {% block extras %}
