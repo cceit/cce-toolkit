@@ -1,4 +1,4 @@
 <a href="{% if search %}{% url url %}?{{ search }}={{ object.pk }}{% else %}{% url url pk=object.pk %}{% endif %}"
    class="{% if url in sidebar_group %}active{% endif %}">
-    <span class="{{ icon }}" aria-hidden="true"> </span> {{ label }}
+    <span class="glyphicon {{ glyphicon }}" aria-hidden="true"> </span> {{ label }}
 </a>
