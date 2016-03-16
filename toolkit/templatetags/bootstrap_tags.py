@@ -31,6 +31,8 @@ def follow_path(ob, dotted_attrs):
 
 @register.filter
 def render_detail(value, param):
+    if value is None:
+        return "--"
     if isinstance(value, bool):
         if value:
             return mark_safe('<i class="true_icon glyphicon glyphicon-ok"></i>')
