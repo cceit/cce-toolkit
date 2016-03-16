@@ -645,6 +645,7 @@ class AbstractedDetailMixin(object):
 
 class AbstractedDeleteMixin(object):
     template_name = "generic_delete.html"
+    no_url_path = None
 
     @staticmethod
     def get_deleted_objects(objs, using):
@@ -673,9 +674,18 @@ class AbstractedDeleteMixin(object):
         underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
         context.update({
             'object_name': object_name,
-            'no_url_path': reverse('view_%s' % underscored_model_name, kwargs={'pk': obj.pk}),
             'objs_to_be_deleted': objs_to_be_deleted,
         })
+        if self.no_url_path is not None:
+            context['no_url_path'] = self.no_url_path
+        else:
+            if hasattr(self, 'get_success_url'):
+                context['no_url_path'] = self.get_success_url()
+            elif hasattr(self, 'get_absolute_url'):
+                context['no_url_path'] = self.get_absolute_url()
+            else:
+                context['no_url_path'] = reverse('view_%s' % underscored_model_name, kwargs={'pk': obj.pk}),
+
         return context
 
 
