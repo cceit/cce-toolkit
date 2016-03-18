@@ -15,7 +15,8 @@ function initialize_plugins(advanced_search_form_bound) {
     $('.timefield').datetimepicker({
         format: 'LT'
     });
-    $('.datetimefield').datetimepicker();
+    $('.datetimefield').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss'});
 
     var $advance_search_toggle = $('#advance_search_toggle');
     var $advanced_search_form = $('#advanced_search_form');
