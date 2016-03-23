@@ -12,6 +12,10 @@ function initialize_plugins(advanced_search_form_bound) {
         initTinyMCE($(this));
     });
     $("select").select2();
+
+    // fix for report selector. We disable select2
+    $(".report_selector select").select2("destroy");
+
     $('.timefield').datetimepicker({
         format: 'LT'
     });

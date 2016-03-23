@@ -13,11 +13,14 @@
             </div>
         {% endblock page_headline %}
         {% block page_options %}
-{#            <div class="col-md-3 col-sm-12 page-options">#}
-                {% block page_options_1 %}
-                {% endblock page_options_1 %}
-{#            </div>#}
-            <div class="col-md-5 col-sm-12 page-options">
+            {% block page_options_1 %}
+                {% if report_selector_form %}
+                    <div class="col-md-3 col-sm-12 page-options report_selector">
+                        {% include 'report_selector_form.html' with form=report_selector_form %}
+                    </div>
+                {% endif %}
+            {% endblock page_options_1 %}
+            <div class="col-md-3 col-sm-12 page-options">
                 {% block page_options_2 %}
                         {% if search_form %}
                                 {% include 'simple_search_form.html' with form=search_form %}
