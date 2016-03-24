@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load bootstrap_tags %}
 
-{% block context_nav %}
-    {% include "generic_context_menu.html" %}
-{% endblock context_nav %}
+{% block mobile_context_nav %}
+    {% block context_nav %}
+        {% include "generic_context_menu.html" %}
+    {% endblock context_nav %}
+{% endblock mobile_context_nav %}
 
 {% block content %}
     {% for label, value in details.items %}
