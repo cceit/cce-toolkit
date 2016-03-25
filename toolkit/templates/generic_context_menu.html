@@ -1,11 +1,11 @@
 {% if show_context_menu %}
 <li class="active context-aware-nav ">
-    <a href="#" data-toggle="collapse" data-target="#context-menu" class="collapsed" aria-expanded="true">
+    <a href="#" data-toggle="collapse" data-target=".context-menu" class="collapsed" aria-expanded="true">
         <span class="glyphicon glyphicon-list" aria-hidden="true"></span> {{ object|default:verbose_name_plural }}
         <span class="caret"></span>
     </a>
 
-    <ul id="context-menu" class="collapse in" aria-expanded="true">
+    <ul id="context-menu" class="context-menu collapse in" aria-expanded="true">
         {% for item in context_menu_items %}
             <li>
                 <a href="{{ item.1 }}" class="{% if item.3 in sidebar_group %}active{% endif %}">
