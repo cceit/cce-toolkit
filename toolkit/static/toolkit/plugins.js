@@ -1,7 +1,8 @@
 function initialize_plugins(advanced_search_form_bound) {
     $('.datefield').each(function (index, value) {
         $(this).datepicker({
-            format: "mm/dd/yyyy",
+            //format: "mm/dd/yyyy",
+            format: "yyyy-mm-dd",
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true
