@@ -1,5 +1,12 @@
 import re
+
+import unicodedata
+
+from django.utils import six
 from django.contrib.auth.models import User
+from django.utils.encoding import force_text
+from django.utils.functional import allow_lazy
+from django.utils.safestring import mark_safe, SafeText
 
 
 def usernamify(s):
@@ -42,7 +49,14 @@ def replace_key(old_key, new_key, dictionary):
     return dictionary
 
 
-def snakecase(string):
-    scrubbed_string = re.sub(r"[^\w\s]", '', string)
-    snaked_string = re.sub(r"\s+", '_', scrubbed_string).lower()
-    return snaked_string
+def snakify(value):
+    """
+    Converts to ASCII. Converts spaces to underscores. Removes characters that
+    aren't alphanumerics, underscores, or hyphens. Converts to lowercase.
+    Also strips leading and trailing whitespace.
+    """
+    value = force_text(value)
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub('[^\w\s-]', '', value).strip().lower()
+    return mark_safe(re.sub('[-\s]+', '_', value))
+snakify = allow_lazy(snakify, six.text_type, SafeText)
