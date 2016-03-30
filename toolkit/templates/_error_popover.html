@@ -1,0 +1,13 @@
+<div class="error-popover">
+{% for error in errors %}
+    {% if forloop.first %}
+        <div data-toggle="popover" data-placement="top" data-html="true"
+        title='Errors <a href="#" class="close" data-dismiss="alert">×</a>'
+        data-content='<div class="media"><div class="media-body"><ul>
+    {% endif %}
+    <li>{{ error }}</li>
+    {% if forloop.last %}
+        </ul></div></div>'></div>
+    {% endif %}
+{% endfor %}
+</div>
