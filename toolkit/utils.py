@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.models import User
 
 
@@ -39,3 +40,9 @@ def replace_key(old_key, new_key, dictionary):
         value = dictionary.pop(old_key)
         dictionary[new_key] = value
     return dictionary
+
+
+def snakecase(string):
+    scrubbed_string = re.sub(r"[^\w\s]", '', string)
+    snaked_string = re.sub(r"\s+", '_', scrubbed_string).lower()
+    return snaked_string
