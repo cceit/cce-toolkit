@@ -54,6 +54,11 @@ function initialize_plugins(advanced_search_form_bound) {
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
     });
+
+    //This is needed for accessibility on the modals
+    $('.modal').on('shown.bs.modal', function () {
+        $('.close').focus()
+    })
 }
 
 // function enables tinymce with settings loaded from widget, taken from django-tinymce
