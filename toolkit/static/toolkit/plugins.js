@@ -1,8 +1,7 @@
 function initialize_plugins(advanced_search_form_bound) {
     $('.datefield').each(function (index, value) {
         $(this).datepicker({
-            //format: "mm/dd/yyyy",
-            format: "yyyy-mm-dd",
+            format: "mm/dd/yyyy",
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true
@@ -20,6 +19,7 @@ function initialize_plugins(advanced_search_form_bound) {
     $('.timefield').datetimepicker({
         format: 'LT'
     });
+    
     $('.datetimefield').datetimepicker({
         format: 'YYYY-MM-DD hh:mm:ss'});
 
