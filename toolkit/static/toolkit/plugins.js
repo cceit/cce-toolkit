@@ -57,7 +57,7 @@ function initialize_plugins(advanced_search_form_bound) {
 
     //This is needed for accessibility on the modals
     $('.modal').on('shown.bs.modal', function () {
-        $('.close').focus()
+        $('.modal .close').focus()
     })
 }
 
