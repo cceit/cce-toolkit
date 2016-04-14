@@ -23,8 +23,7 @@ setup(
                               'templates/registration/*.html',
                               'static/toolkit/*.js',
                               'static/*.js',
-                              'test_tools/*.py',
-                              'test_tools/steps/*.py']},
+                              'bdd/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
 
