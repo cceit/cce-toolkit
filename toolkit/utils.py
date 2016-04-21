@@ -2,6 +2,7 @@ import re
 
 import unicodedata
 
+from django.shortcuts import _get_queryset
 from django.utils import six
 from django.contrib.auth.models import User
 from django.utils.encoding import force_text
@@ -60,3 +61,11 @@ def snakify(value):
     value = re.sub('[^\w\s-]', '', value).strip().lower()
     return mark_safe(re.sub('[-\s]+', '_', value))
 snakify = allow_lazy(snakify, six.text_type, SafeText)
+
+
+def get_object_or_none(klass, *args, **kwargs):
+    queryset = _get_queryset(klass)
+    try:
+        return queryset.get(*args, **kwargs)
+    except queryset.model.DoesNotExist:
+        return None
