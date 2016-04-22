@@ -734,15 +734,17 @@ class ListContextMenuMixin(ContextMenuMixin):
         name, plural_name = self.get_verbose_names()
         name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
-        # label, reversed url, icon class, sidebar_group
-        try:
-            add_url = reverse("add_%s" % name_underscored)
-        except NoReverseMatch:
-            pass
-        else:
-            menu_links.append(
-                ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
-            )
+        # This interacts with AbstractedListMixin
+        if not hasattr(self, 'show_add_button') or not self.show_add_button:
+            try:
+                add_url = reverse("add_%s" % name_underscored)
+            except NoReverseMatch:
+                pass
+            else:
+                # label, reversed url, icon class, sidebar_group
+                menu_links.append(
+                    ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                )
         return menu_links
 
 
