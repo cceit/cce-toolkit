@@ -197,3 +197,5 @@ function quickLook(element, xOffset, yOffset) {
         }
     });
 }
+
+$('div.static-alert button.close').remove();
