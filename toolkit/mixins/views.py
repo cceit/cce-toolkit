@@ -401,6 +401,7 @@ class AbstractedListMixin(object):
     columns = None
     popover_rows = None
     actions_column_width = '1'  # will be coerced to a string and put into a Bootstrap class.
+    show_add_button = False
 
     def render_button(self, pk=None, btn_class='', url_name='', label='', icon_classes='', button_text='', url=''):
         """
@@ -548,6 +549,17 @@ class AbstractedListMixin(object):
         popover_dict[row_titles] = row_values
         return popover_dict
 
+    def get_add_button_url(self):
+        if not self.show_add_button:
+            return None
+        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
+        try:
+            url = reverse('add_' + underscored_model_name)
+        except NoReverseMatch:
+            return None
+        else:
+            return url
+
     def get_context_data(self, **kwargs):
         """
         Puts things into the context that the template needs:
@@ -577,6 +589,7 @@ class AbstractedListMixin(object):
             'empty_list_message': 'No %s found.' % meta.verbose_name_plural,
             'table': table,
             'quicklook': quicklook,
+            'add_button_url': self.get_add_button_url(),
         })
         return context
 
@@ -721,15 +734,17 @@ class ListContextMenuMixin(ContextMenuMixin):
         name, plural_name = self.get_verbose_names()
         name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
-        # label, reversed url, icon class, sidebar_group
-        try:
-            add_url = reverse("add_%s" % name_underscored)
-        except NoReverseMatch:
-            pass
-        else:
-            menu_links.append(
-                ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
-            )
+        # This interacts with AbstractedListMixin
+        if not hasattr(self, 'show_add_button') or not self.show_add_button:
+            try:
+                add_url = reverse("add_%s" % name_underscored)
+            except NoReverseMatch:
+                pass
+            else:
+                # label, reversed url, icon class, sidebar_group
+                menu_links.append(
+                    ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                )
         return menu_links
 
 

@@ -1,6 +1,12 @@
 {% extends "list.html" %}
 {% load bootstrap_tags %}
 
+{% block action_buttons %}
+    {% if add_button_url %}
+        <a href="{{ add_button_url }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add</a>
+    {% endif %}
+{% endblock action_buttons %}
+
 {% block mobile_context_nav %}
     {% block context_nav %}
         {% include "generic_context_menu.html" %}
