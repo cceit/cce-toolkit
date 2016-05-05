@@ -200,9 +200,6 @@ function quickLook(element, xOffset, yOffset) {
 
 $(document).ready(function () {
 
-    /*Scroll to the top*/
-    $().UItoTop({easingType: 'easeOutQuart'});
-
     $('div.static-alert button.close').remove();
 
 });
