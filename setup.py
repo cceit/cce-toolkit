@@ -25,6 +25,9 @@ setup(
                               'static/toolkit/*.css',
                               'static/*.js',
                               'static/*.css',
+                              'static/uitotop/css/*.css'
+                              'static/uitotop/img/*.png'
+                              'static/uitotop/js/*.js'
                               'bdd/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )

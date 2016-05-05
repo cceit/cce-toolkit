@@ -199,3 +199,9 @@ function quickLook(element, xOffset, yOffset) {
 }
 
 $('div.static-alert button.close').remove();
+
+/*Scroll to the top*/
+$(document).ready(function () {
+    $().UItoTop({easingType: 'easeOutQuart'});
+
+});
