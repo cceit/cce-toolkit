@@ -198,10 +198,11 @@ function quickLook(element, xOffset, yOffset) {
     });
 }
 
-$('div.static-alert button.close').remove();
-
-/*Scroll to the top*/
 $(document).ready(function () {
+
+    /*Scroll to the top*/
     $().UItoTop({easingType: 'easeOutQuart'});
+
+    $('div.static-alert button.close').remove();
 
 });
