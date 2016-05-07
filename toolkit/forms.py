@@ -74,7 +74,6 @@ class ReportSelector(forms.Form):
 
 def cce_formfield_callback(f, **kwargs):
     formfield = f.formfield(**kwargs)
-
     DATEFIELD_FORMAT = '%m/%d/%Y'
     TIMEFIELD_FORMAT = '%I:%M %p'
 
@@ -82,12 +81,12 @@ def cce_formfield_callback(f, **kwargs):
         try:
             formfield.widget.format = settings.DATEFIELD_FORMAT
         except AttributeError:
-            formfield.widget.format = DATEFIELD_FORMAT # set default
+            formfield.widget.format = DATEFIELD_FORMAT  # set default
     if isinstance(formfield, forms.TimeField):
         try:
             formfield.widget.format = settings.TIMEFIELD_FORMAT
         except AttributeError:
-            formfield.widget.format = TIMEFIELD_FORMAT # set default
+            formfield.input_formats = [TIMEFIELD_FORMAT]  # set default
 
     return formfield
 
