@@ -4,6 +4,8 @@ from django.forms import NullBooleanSelect
 
 from .mixins.forms import SearchFormMixin
 
+DEFAULT_DATEFIELD_FORMAT = '%m/%d/%Y'
+DEFAULT_TIMEFIELD_FORMAT = '%I:%M %p'
 
 class SearchForm(SearchFormMixin, forms.Form):
     pass
@@ -74,26 +76,25 @@ class ReportSelector(forms.Form):
 
 def cce_formfield_callback(f, **kwargs):
     formfield = f.formfield(**kwargs)
-    DATEFIELD_FORMAT = '%m/%d/%Y'
-    TIMEFIELD_FORMAT = '%I:%M %p'
 
     if isinstance(formfield, forms.DateField):
         try:
-            formfield.widget.format = settings.DATEFIELD_FORMAT
+            formfield.widget.format = settings.DEFAULT_DATEFIELD_FORMAT
         except AttributeError:
-            formfield.widget.format = DATEFIELD_FORMAT  # set default
+            formfield.widget.format = DEFAULT_DATEFIELD_FORMAT  # set default
+
     if isinstance(formfield, forms.TimeField):
         try:
-            formfield.widget.format = settings.TIMEFIELD_FORMAT
+            formfield.input_formats = [settings.DEFAULT_TIMEFIELD_FORMAT]  # set default
         except AttributeError:
-            formfield.input_formats = [TIMEFIELD_FORMAT]  # set default
+            formfield.input_formats = [DEFAULT_TIMEFIELD_FORMAT]  # set default
 
     return formfield
 
 
 class CCEModelFormMetaclass(forms.models.ModelFormMetaclass):
     def __new__(mcs, name, bases, attrs):
-        if 'formfield_callback' not in attrs:
+        if 'formfield_callback' not in attrs or not attrs['formfield_callback']:
             attrs['formfield_callback'] = cce_formfield_callback
         return super(CCEModelFormMetaclass, mcs).__new__(mcs, name, bases, attrs)
 
