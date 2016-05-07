@@ -1,8 +1,7 @@
 function initialize_plugins(advanced_search_form_bound) {
     $('.datefield').each(function (index, value) {
         $(this).datepicker({
-            //format: "mm/dd/yyyy",
-            format: "yyyy-mm-dd",
+            format: "mm/dd/yyyy",
             todayBtn: "linked",
             autoclose: true,
             todayHighlight: true
@@ -20,6 +19,7 @@ function initialize_plugins(advanced_search_form_bound) {
     $('.timefield').datetimepicker({
         format: 'LT'
     });
+    
     $('.datetimefield').datetimepicker({
         format: 'YYYY-MM-DD hh:mm:ss'});
 
@@ -54,6 +54,11 @@ function initialize_plugins(advanced_search_form_bound) {
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
     });
+
+    //This is needed for accessibility on the modals
+    $('.modal').on('shown.bs.modal', function () {
+        $('.modal .close').focus()
+    })
 }
 
 // function enables tinymce with settings loaded from widget, taken from django-tinymce
@@ -192,3 +197,12 @@ function quickLook(element, xOffset, yOffset) {
         }
     });
 }
+
+$(document).ready(function () {
+
+    /*Scroll to the top*/
+    $().UItoTop({easingType: 'easeOutQuart'});
+
+    $('div.static-alert button.close').remove();
+
+});

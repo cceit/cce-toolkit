@@ -4,7 +4,7 @@
     <div class="row  page-header">
         {% block page_header %}
         {% block page_headline %}
-            <div class="col-md-7 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <h1>
                     {{ page_icon }} {{ page_headline }}
                     {% block action_buttons %}
@@ -20,7 +20,7 @@
                     </div>
                 {% endif %}
             {% endblock page_options_1 %}
-            <div class="col-md-3 col-sm-12 page-options">
+            <div class="col-md-4 col-sm-12 page-options">
                 {% block page_options_2 %}
                         {% if search_form %}
                                 {% include 'simple_search_form.html' with form=search_form %}

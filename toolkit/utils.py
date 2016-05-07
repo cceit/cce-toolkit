@@ -1,4 +1,13 @@
+import re
+
+import unicodedata
+
+from django.shortcuts import _get_queryset
+from django.utils import six
 from django.contrib.auth.models import User
+from django.utils.encoding import force_text
+from django.utils.functional import allow_lazy
+from django.utils.safestring import mark_safe, SafeText
 
 
 def usernamify(s):
@@ -39,3 +48,24 @@ def replace_key(old_key, new_key, dictionary):
         value = dictionary.pop(old_key)
         dictionary[new_key] = value
     return dictionary
+
+
+def snakify(value):
+    """
+    Converts to ASCII. Converts spaces to underscores. Removes characters that
+    aren't alphanumerics, underscores, or hyphens. Converts to lowercase.
+    Also strips leading and trailing whitespace.
+    """
+    value = force_text(value)
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub('[^\w\s-]', '', value).strip().lower()
+    return mark_safe(re.sub('[-\s]+', '_', value))
+snakify = allow_lazy(snakify, six.text_type, SafeText)
+
+
+def get_object_or_none(klass, *args, **kwargs):
+    queryset = _get_queryset(klass)
+    try:
+        return queryset.get(*args, **kwargs)
+    except queryset.model.DoesNotExist:
+        return None

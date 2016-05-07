@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.forms import NullBooleanSelect
 
 from .mixins.forms import SearchFormMixin
@@ -69,3 +70,21 @@ class ReportSelector(forms.Form):
         super(ReportSelector, self).__init__(*args, **kwargs)
         self.fields['get_reports'] = forms.ChoiceField(choices=[('', 'Select Report')] +
                                                                [(k, v['name']) for k, v in reports_list.items()])
+
+
+def cce_formfield_callback(f, **kwargs):
+    formfield = f.formfield(**kwargs)
+    if isinstance(formfield, forms.DateField):
+        formfield.widget.format = settings.DATEFIELD_FORMAT
+    return formfield
+
+
+class CCEModelFormMetaclass(forms.models.ModelFormMetaclass):
+    def __new__(mcs, name, bases, attrs):
+        if 'formfield_callback' not in attrs:
+            attrs['formfield_callback'] = cce_formfield_callback
+        return super(CCEModelFormMetaclass, mcs).__new__(mcs, name, bases, attrs)
+
+
+class CCEModelForm(forms.ModelForm):
+    __metaclass__ = CCEModelFormMetaclass

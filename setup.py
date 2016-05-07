@@ -22,9 +22,10 @@ setup(
                               'templates/form_fragments/*.html',
                               'templates/registration/*.html',
                               'static/toolkit/*.js',
+                              'static/toolkit/*.css',
                               'static/*.js',
-                              'test_tools/*.py',
-                              'test_tools/steps/*.py']},
+                              'static/*.css',
+                              'bdd/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
 
