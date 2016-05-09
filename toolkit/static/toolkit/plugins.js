@@ -104,10 +104,17 @@ function addForm(btn, prefix) {
     newElement.attr('id', newElement.attr('id').replace('-0-', '-' + total + '-'));
     // The attributes of each form element (":input" is a jQuery selector)
     newElement.find(':input').each(function () {
-        var name = $(this).attr('name').replace('-0-', '-' + total + '-');
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        var attr = $(this).attr('name');
+
+        // For some browsers, `attr` is undefined; for others,
+        // `attr` is false.  Check for both.
+        if (typeof attr !== typeof undefined && attr !== false) {
+            var name = $(this).attr('name').replace('-0-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
     });
+
     newElement.find(':checkbox').each(function () {
         $(this).removeAttr('value');
     });
@@ -197,3 +204,12 @@ function quickLook(element, xOffset, yOffset) {
         }
     });
 }
+
+$(document).ready(function () {
+
+    /*Scroll to the top*/
+    $().UItoTop({easingType: 'easeOutQuart'});
+
+    $('div.static-alert button.close').remove();
+
+});
