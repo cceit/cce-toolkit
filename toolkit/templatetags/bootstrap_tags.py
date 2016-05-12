@@ -54,5 +54,7 @@ def render_detail(value, param):
     elif isinstance(value, ImageFieldFile):
         return mark_safe('<img src="%s%s" width="200px" height="200px">' % (settings.MEDIA_URL, value))
     elif isinstance(value, FieldFile):
+        if not value:
+            return '--'
         return mark_safe('<a href="%s">Download</a>' % value.url)
     return value
