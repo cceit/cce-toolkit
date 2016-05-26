@@ -56,5 +56,5 @@ def render_detail(value, param):
     elif isinstance(value, FieldFile):
         if not value:
             return '--'
-        return mark_safe('<a href="%s">Download</a>' % value.url)
+        return mark_safe('<a href="%s%s">Download</a>' % (settings.MEDIA_URL, value.url))
     return value
