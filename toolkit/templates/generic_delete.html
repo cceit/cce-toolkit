@@ -18,3 +18,10 @@
         </a>
     </form>
 {% endblock content %}
+
+
+{% block mobile_context_nav %}
+    {% block context_nav %}
+        {% include "generic_context_menu.html" %}
+    {% endblock context_nav %}
+{% endblock mobile_context_nav %}

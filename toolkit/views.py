@@ -9,6 +9,7 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, C
     """
     This view includes all the mixins required in all CreateViews.
     """
+    template_name = 'form.html'
     permissions = {'get': ['can_create'],
                    'post': ['can_create'], }
 
@@ -25,6 +26,7 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
     """
     This view includes all the mixins required in all UpdateViews.
     """
+    template_name = 'form.html'
     permissions = {'get': ['can_update'],
                    'post': ['can_update'], }
 

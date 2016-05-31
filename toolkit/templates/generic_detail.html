@@ -9,9 +9,7 @@
 
 {% block content %}
     {% for label, value in details.items %}
-        {% if value.0 %}
-            {% include 'detail_row.html' with label=label value=value.0|render_detail:value.1|safe %}
-        {% endif %}
+        {% include 'detail_row.html' with label=label value=value.0|render_detail:value.1|safe %}
     {% empty %}
         <p>There are no details to display.</p>
     {% endfor %}
