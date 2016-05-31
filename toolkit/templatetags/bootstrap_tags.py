@@ -38,12 +38,12 @@ def render_detail(value, param):
             return mark_safe('<i class="true_icon glyphicon glyphicon-ok"></i>')
         else:
             return mark_safe('<i class="false_icon glyphicon glyphicon-remove"></i>')
+    if isinstance(value, datetime.datetime):
+        return value.strftime("%-m/%-d/%Y, %I:%M %p")
     elif isinstance(value, datetime.date):
         return value.strftime("%-m/%-d/%Y")
     elif isinstance(value, datetime.time):
         return value.strftime("%I:%M %p").lstrip('0')
-    elif isinstance(value, datetime.datetime):
-        return value.strftime("%-m/%-d/%Y, %I:%M %p")
     elif isinstance(value, Manager):
         # param is an optional dotted path to follow on each related object
         related_objs = list(value.all())
@@ -56,5 +56,5 @@ def render_detail(value, param):
     elif isinstance(value, FieldFile):
         if not value:
             return '--'
-        return mark_safe('<a href="%s%s">Download</a>' % (settings.MEDIA_URL, value.url))
+        return mark_safe('<a href="%s">Download</a>' % value.url)
     return value

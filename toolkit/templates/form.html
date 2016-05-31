@@ -18,9 +18,15 @@
 
                 {% block extras %}
                 {% endblock extras %}
-                <button type="submit" name="submit" class="btn btn-default action">Submit</button>
+                <button type="submit" name="submit" class="btn btn-default action">Save</button>
             </form>
     </div>
 
 
 {% endblock content %}
+
+{% block mobile_context_nav %}
+    {% block context_nav %}
+        {% include "generic_context_menu.html" %}
+    {% endblock context_nav %}
+{% endblock mobile_context_nav %}
