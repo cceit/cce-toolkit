@@ -4,7 +4,11 @@ import requests
 from splinter.exceptions import ElementDoesNotExist
 
 
-def fill_and_submit_form(browser, fields, submit_button_name='submit'):
+def click_button_by_name(browser, name, index=0):
+    browser.find_by_name(name)[index].click()
+
+
+def fill_form(browser, fields):
     for field in fields:
         function = field['function']
         name = field['name']
@@ -13,7 +17,11 @@ def fill_and_submit_form(browser, fields, submit_button_name='submit'):
             getattr(browser, function)(name, value)
         else:
             getattr(browser, function)(name)
-    browser.find_by_name(submit_button_name).first.click()
+
+
+def fill_and_submit_form(browser, fields, submit_button_name='submit'):
+    fill_form(browser, fields)
+    click_button_by_name(browser, submit_button_name)
 
 
 def assert_text_in_table(browser, fields, date_format='%m/%d/%Y'):
@@ -32,7 +40,8 @@ def assert_text_in_table(browser, fields, date_format='%m/%d/%Y'):
                 break
 
     assert contains_test_obj, "Couldn't find the test row in the table%s" % (
-        ': ' + failing_field if failing_field else '')
+        ': ' + failing_field if failing_field else ''
+    )
 
 
 def assert_text_not_in_table(browser, fields, date_format='%m/%d/%Y'):
@@ -51,7 +60,8 @@ def assert_text_not_in_table(browser, fields, date_format='%m/%d/%Y'):
                 break
 
     assert not contains_test_obj, "Found unexpected row in the table%s" % (
-        ': ' + failing_field if failing_field else '')
+        ': ' + failing_field if failing_field else ''
+    )
 
 
 def get_file_content_type(file_type):
