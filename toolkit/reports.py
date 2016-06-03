@@ -1,15 +1,15 @@
 import csv
-from functools import partial
-import math
 import datetime
+import math
+from functools import partial
 
 import openpyxl
-from django.db.models import FieldDoesNotExist
-from django.utils.text import capfirst
+import xlwt
 from django.conf import settings
 from django.core.files import temp as tempfile
+from django.db.models import FieldDoesNotExist
 from django.http import HttpResponse
-import xlwt
+from django.utils.text import capfirst
 
 
 def get_width(string, bold=False):
@@ -128,6 +128,10 @@ def get_width(string, bold=False):
     return int(math.ceil(length))  # Rounding up the decimal width value
 
 
+def get_height(string):
+    return int(len(string.split('\n')) * 220 * 1.2)
+
+
 def is_datetime(obj):
     if type(obj) == datetime.date or type(obj) == datetime.datetime or type(obj) == datetime:
         return True
@@ -151,6 +155,7 @@ def write_to_worksheet(ws, row, column, cell):
         merge = cell.get('merge')
 
         width = get_width(str(label))
+        height = get_height(str(label))
 
         if merge is not None:
             row_span = merge.get('row_span', 0)
@@ -192,6 +197,7 @@ def write_to_worksheet(ws, row, column, cell):
         label = cell[0]
         style = cell[1]
         width = get_width(str(label))
+        height = get_height(str(label))
 
         if style is not None:
             if is_datetime(label):
@@ -210,6 +216,7 @@ def write_to_worksheet(ws, row, column, cell):
     else:
         label = cell
         width = get_width(str(label))
+        height = get_height(str(label))
         if is_datetime(label):
             ws.write(row, column, label, xlwt.easyxf(num_format_str='YYYY-MM-DD'))
         else:
@@ -218,7 +225,7 @@ def write_to_worksheet(ws, row, column, cell):
             except:
                 label = str(label)
                 ws.write(row, column, label)
-    return width
+    return width, height
 
 
 def xls_multiple_worksheets_response(filename, data):
@@ -266,6 +273,7 @@ def xls_multiple_worksheets_response(filename, data):
         table = content['table']
         ws = wb.add_sheet(sheetname.title(), cell_overwrite_ok=True)
         widths = dict()
+        heights = dict()
         row_offset = 0
         max_column = 0
 
@@ -273,7 +281,11 @@ def xls_multiple_worksheets_response(filename, data):
             header = data[sheetname].pop('header')
             for r, row in enumerate(header):
                 for c, cell in enumerate(row):
-                    width = write_to_worksheet(ws, r, c, cell)
+                    width, height = write_to_worksheet(ws, r, c, cell)
+
+                    if height > heights.get(r, 0):
+                        heights[r] = height
+                        ws.row(r).height = height
 
                     if width > widths.get(c, 0):
                         widths[c] = width
@@ -289,7 +301,11 @@ def xls_multiple_worksheets_response(filename, data):
         for r, row in enumerate(data_table):
             r += row_offset
             for c, cell in enumerate(row):
-                width = write_to_worksheet(ws, r, c, cell)
+                width, height = write_to_worksheet(ws, r, c, cell)
+
+                if height > heights.get(r, 0):
+                    heights[r] = height
+                    ws.row(r).height = height
 
                 if width > widths.get(c, 0):
                     widths[c] = width
@@ -365,6 +381,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     ws = wb.add_sheet(sheetname)
     data_table = [list(x) for x in table]
     widths = dict()
+    heights = dict()
     row_offset = 0
     max_column = 0
 
@@ -372,8 +389,13 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
         for r, row in enumerate(header):
             for c, cell in enumerate(row):
                 label = str(cell)
+                height = get_height(label)
                 width = get_width(label)
                 ws.write(r, c, label)
+
+                if height > heights.get(r, 0):
+                    heights[r] = height
+                    ws.row(r).height = height
 
                 if width > widths.get(c, 0):
                     widths[c] = width
@@ -391,8 +413,13 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
         r += row_offset
         for c, cell in enumerate(row):
             label = str(cell)
+            height = get_height(label)
             width = get_width(label)
             ws.write(r, c, label)
+
+            if height > heights.get(r, 0):
+                heights[r] = height
+                ws.row(r).height = height
 
             if width > widths.get(c, 0):
                 widths[c] = width
@@ -445,8 +472,13 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
             r += row_offset
             for c, cell in enumerate(row):
                 label = str(cell)
+                height = get_height(label)
                 width = get_width(label)
                 ws.write(r, c, label)
+
+                if height > heights.get(r, 0):
+                    heights[r] = height
+                    ws.row(r).height = height
 
                 if width > widths.get(c, 0):
                     widths[c] = width
