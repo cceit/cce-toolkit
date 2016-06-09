@@ -30,7 +30,8 @@ setup(
             'static/*.js',
             'static/*.css',
             'bdd/*.py',
-            'activity_log/*.py'
+            'migrations/*.py',
+            'activity_log/*.py',
         ],
     },
     zip_safe=False,  # important, forces it to install as directories and not .zip
