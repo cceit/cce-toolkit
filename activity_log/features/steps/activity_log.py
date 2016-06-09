@@ -1,7 +1,7 @@
 from behave import *
 from django.contrib.auth.models import Group
 
-from toolkit.activity_log.models import ActivityLog, ActivityType
+from activity_log import ActivityLog, ActivityType
 
 use_step_matcher("re")
 
