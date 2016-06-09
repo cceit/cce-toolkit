@@ -10,7 +10,8 @@ setup(
     url='ssh://code.ce.ou.edu/var/git/cceitdev/cce_toolkit.git',
     packages=['toolkit'],
     include_package_data=True,
-    package_data={'toolkit': ['*.py','mixins/*.py',
+    package_data={'toolkit': ['*.py',
+                              'mixins/*.py',
                               'fabfile/*.py',
                               'breadcrumbs/*.py',
                               'breadcrumbs/middleware/*.py',
@@ -25,7 +26,8 @@ setup(
                               'static/toolkit/*.css',
                               'static/*.js',
                               'static/*.css',
-                              'bdd/*.py']},
+                              'bdd/*.py',
+                              'activity_log/*.py']},
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
 
