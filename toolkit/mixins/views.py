@@ -374,13 +374,13 @@ class FileDownloadMixin(object):
     Note: This is for serving a file as a response and is no longer recommended.
     """
     def get(self, *args, **kwargs):
+        import magic
         # This view will directly stream the file with the content-disposition of an attachment
         backing_file = self.get_file_field_to_download()
 
         # taken from http://subversion.outreach.cce/svn/it/django/sooner_flight/trunk/content_repository/views.py
         if not backing_file:
             raise Http404("The resource requested is no longer available")
-        response = HttpResponse()
 
         # http://stackoverflow.com/questions/9421797/django-filefield-open-method-returns-none-for-valid-file
         backing_file.open()  # TODO: check for IOError
@@ -388,7 +388,9 @@ class FileDownloadMixin(object):
         # TODO: get the content length
         file_contents = backing_file.read()
         backing_file.close()
-        response.write(file_contents)
+        mime = magic.Magic(mime=True)
+        content_type = mime.from_file(backing_file.path)
+        response = HttpResponse(file_contents, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(backing_file.name)
         return response
 
