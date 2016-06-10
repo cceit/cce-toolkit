@@ -1,4 +1,5 @@
 from setuptools import setup
+
 setup(
     # Metadata for PyPI; nice to have but not required
     name="cce_toolkit",
@@ -10,22 +11,27 @@ setup(
     url='ssh://code.ce.ou.edu/var/git/cceitdev/cce_toolkit.git',
     packages=['toolkit'],
     include_package_data=True,
-    package_data={'toolkit': ['*.py','mixins/*.py',
-                              'fabfile/*.py',
-                              'breadcrumbs/*.py',
-                              'breadcrumbs/middleware/*.py',
-                              'breadcrumbs/templates/*.html',
-                              'breadcrumbs/templatetags/*.py',
-                              'templatetags/*.py',
-                              'templates/*.html',
-                              'templates/comments/*.html',
-                              'templates/form_fragments/*.html',
-                              'templates/registration/*.html',
-                              'static/toolkit/*.js',
-                              'static/toolkit/*.css',
-                              'static/*.js',
-                              'static/*.css',
-                              'bdd/*.py']},
+    package_data={
+        'toolkit': [
+            '*.py',
+            'mixins/*.py',
+            'fabfile/*.py',
+            'breadcrumbs/*.py',
+            'breadcrumbs/middleware/*.py',
+            'breadcrumbs/templates/*.html',
+            'breadcrumbs/templatetags/*.py',
+            'templatetags/*.py',
+            'templates/*.html',
+            'templates/comments/*.html',
+            'templates/form_fragments/*.html',
+            'templates/registration/*.html',
+            'static/toolkit/*.js',
+            'static/toolkit/*.css',
+            'static/*.js',
+            'static/*.css',
+            'bdd/*.py',
+            'migrations/*.py',
+        ],
+    },
     zip_safe=False,  # important, forces it to install as directories and not .zip
 )
-
