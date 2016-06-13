@@ -494,7 +494,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     return response
 
 
-def xlsx_response(filename, table, max_width=120, max_height=90):
+def xlsx_response(filename, table, max_width=118, max_height=90):
     """Return a Microsoft Excel 2007+ file of the given table as an HttpResponse.
 
     Args:
@@ -527,21 +527,15 @@ def xlsx_response(filename, table, max_width=120, max_height=90):
             else:
                 cell_str = str(cell)
 
-            widths[c] = max((widths.get(c, 0), len(cell_str))) + 2
+            widths[c] = min(max((widths.get(c, 0), len(cell_str))), max_width)
             cell_height = int(len(cell_str.split('\n')) * 15)
-            heights[r] = max((heights.get(r, 0), cell_height))
+            heights[r] = min(max((heights.get(r, 0), cell_height)), max_height)
 
     for column, width in widths.items():
-        if width > max_width:
-            ws.column_dimensions[get_column_letter(column)].width = max_width
-        else:
-            ws.column_dimensions[get_column_letter(column)].width = width
+        ws.column_dimensions[get_column_letter(column)].width = width + 1
 
     for row, height in heights.items():
-        if height > max_height:
-            ws.row_dimensions[row].height = max_height
-        else:
-            ws.row_dimensions[row].height = height
+        ws.row_dimensions[row].height = height
 
     # Save to temporary file
     if settings.FILE_UPLOAD_TEMP_DIR:
