@@ -333,10 +333,14 @@ class ViewMetaMixin(object):
     Mixin will be used capture optional and required meta data about each view that are then passed to the template
 
     """
+    page_details = ''
     page_title = ''
     page_headline = ''
     page_icon = ''
     sidebar_group = []
+
+    def get_page_details(self):
+        return self.page_details
 
     def get_page_title(self):
         if not self.page_title:
@@ -360,6 +364,7 @@ class ViewMetaMixin(object):
         context = super(ViewMetaMixin, self).get_context_data(**kwargs)
         context.update({
             'page_title': self.get_page_title(),
+            'page_details': self.get_page_details(),
             'page_headline': self.get_page_headline(),
             'page_icon': self.get_page_icon(),
             'sidebar_group': self.get_sidebar_group(),
@@ -405,7 +410,8 @@ class AbstractedListMixin(object):
     actions_column_width = '1'  # will be coerced to a string and put into a Bootstrap class.
     show_add_button = False
 
-    def render_button(self, pk=None, btn_class='', url_name='', label='', icon_classes='', button_text='', url=''):
+    def render_button(self, pk=None, btn_class='', url_name='', label='', icon_classes='', button_text='', url='',
+                      condensed=True):
         """
         Takes of boatload of parameters and returns the HTML for a nice Bootstrap button-link.
         If the URL lookup fails, no button is returned.
@@ -417,7 +423,7 @@ class AbstractedListMixin(object):
                 url = reverse(url_name, kwargs={'pk': pk})
             except NoReverseMatch:
                 return None
-        return btn_class, url, label, icon_classes, button_text
+        return btn_class, url, label, icon_classes, button_text, condensed
 
     def render_buttons(self, user, obj, view_perm_func=None, edit_perm_func=None, delete_perm_func=None):
         """
