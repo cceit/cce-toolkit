@@ -4,6 +4,7 @@ import math
 from functools import partial
 
 import openpyxl
+from openpyxl.cell import get_column_letter
 import xlwt
 from django.conf import settings
 from django.core.files import temp as tempfile
@@ -514,10 +515,24 @@ def xlsx_response(filename, table):
     response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % filename
     wb = openpyxl.Workbook()
     ws = wb.active
+    widths = dict()
+    heights = dict()
+
     for r, row in enumerate(table, start=1):
         for c, cell in enumerate(row, start=1):
             ws_cell = ws.cell(row=r, column=c)
-            ws_cell.value = cell
+            ws_cell.value = str(cell)
+
+            widths[c] = max((widths.get(c, 0), len(ws_cell.value))) + 2
+            cell_height = int(len(ws_cell.value.split('\n')) * 15)
+            heights[r] = max((heights.get(r, 0), cell_height))
+
+    for column, width in widths.items():
+        ws.column_dimensions[get_column_letter(column)].width = width
+
+    for row, height in heights.items():
+        ws.row_dimensions[row].height = height
+
     # Save to temporary file
     if settings.FILE_UPLOAD_TEMP_DIR:
         my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx',
