@@ -521,7 +521,7 @@ def xlsx_response(filename, table):
     for r, row in enumerate(table, start=1):
         for c, cell in enumerate(row, start=1):
             ws_cell = ws.cell(row=r, column=c)
-            ws_cell.value = str(cell)
+            ws_cell.value = cell
 
             widths[c] = max((widths.get(c, 0), len(ws_cell.value))) + 2
             cell_height = int(len(ws_cell.value.split('\n')) * 15)
