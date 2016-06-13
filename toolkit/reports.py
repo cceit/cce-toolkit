@@ -522,9 +522,10 @@ def xlsx_response(filename, table, max_width=120, max_height=90):
         for c, cell in enumerate(row, start=1):
             ws_cell = ws.cell(row=r, column=c)
             ws_cell.value = cell
+            cell_str = str(ws_cell.value)
 
-            widths[c] = max((widths.get(c, 0), len(ws_cell.value))) + 2
-            cell_height = int(len(ws_cell.value.split('\n')) * 15)
+            widths[c] = max((widths.get(c, 0), len(cell_str))) + 2
+            cell_height = int(len(cell_str.split('\n')) * 15)
             heights[r] = max((heights.get(r, 0), cell_height))
 
     for column, width in widths.items():
