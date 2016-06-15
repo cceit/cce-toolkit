@@ -4,7 +4,7 @@ import requests
 from splinter.exceptions import ElementDoesNotExist
 
 
-def click_button_by_name(browser, name, index=0):
+def click_element_by_name(browser, name, index=0):
     browser.find_by_name(name)[index].click()
 
 
@@ -21,7 +21,7 @@ def fill_form(browser, fields):
 
 def fill_and_submit_form(browser, fields, submit_button_name='submit'):
     fill_form(browser, fields)
-    click_button_by_name(browser, submit_button_name)
+    click_element_by_name(browser, submit_button_name)
 
 
 def assert_text_in_table(browser, fields, date_format='%m/%d/%Y'):
