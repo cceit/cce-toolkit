@@ -2,6 +2,7 @@ import re
 
 import unicodedata
 
+from django.db.models.fields.related import RelatedField
 from django.shortcuts import _get_queryset
 from django.utils import six
 from django.contrib.auth.models import User
@@ -69,3 +70,49 @@ def get_object_or_none(klass, *args, **kwargs):
         return queryset.get(*args, **kwargs)
     except queryset.model.DoesNotExist:
         return None
+
+
+def _hasfield(model_fields, field_name):
+    """
+    Check if field name exists in list of model fields
+
+    Args:
+        model_fields: List of Django Model object fields
+        field_name: attribute string, dotted or dunderscored. example: 'user.first_name' or 'user__first_name'
+
+    Returns: Field object or False
+
+    """
+    for field in model_fields:
+        if field.name == field_name:
+            return field
+    return False
+
+
+def hasfield(model, field_name):
+    """
+    Returns whether the attribute string is a valid field on the model or its related models
+
+    Args:
+        model: Django Model object
+        field_name: attribute string, dotted or dunderscored. example: 'user.first_name' or 'user__first_name'
+
+    Returns: Field object or False
+
+    """
+    field_name = field_name.replace('__', '.')
+    model_fields = model._meta.fields
+    field_names = field_name.split('.')
+    fields_count = len(field_names)
+    i = 0
+    for field_name in field_names:
+        related_field = _hasfield(model_fields, field_name)
+        # if no match found or if a match found and this is the last field to lookup, return the result
+        if not related_field or (related_field and i == (fields_count - 1)):
+            return related_field
+
+        # if its a ForeignKey or a ManytoManyField or a OnetoOneField, look through the related model
+        if isinstance(related_field, RelatedField):
+            model_fields = related_field.related_model._meta.fields
+        i += 1
+    return False

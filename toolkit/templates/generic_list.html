@@ -1,5 +1,5 @@
 {% extends "list.html" %}
-{% load bootstrap_tags %}
+{% load bootstrap_tags pagination %}
 
 {% block action_buttons %}
     {% if add_button_url %}
@@ -24,7 +24,9 @@
                     <thead>
                         <tr>
                             {% for title_tuple in row %}
-                                <th class="col-sm-{{ title_tuple.1 }}">{{ title_tuple.0 }}</th>
+                                <th class="col-sm-{{ title_tuple.1 }}">
+                                    {% generate_ordering_links request title_tuple.0 title_tuple.2 %}
+                                </th>
                             {% endfor %}
                         </tr>
                     </thead>

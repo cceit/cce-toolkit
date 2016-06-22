@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.contrib.admin.utils import NestedObjects
 from django.utils.safestring import mark_safe
+from toolkit.utils import hasfield
 
 
 class SuccessMessageMixin(BuiltInSuccessMessageMixin):
@@ -405,6 +406,7 @@ class AbstractedListMixin(object):
     Assumes that it's mixed in with a ListView that has self.model.
     """
     template_name = "generic_list.html"
+    model = None
     columns = None
     popover_rows = None
     actions_column_width = '1'  # will be coerced to a string and put into a Bootstrap class.
@@ -470,23 +472,24 @@ class AbstractedListMixin(object):
     def generate_list_view_table(self, columns, data):
         """
         Generates a data structure for use in the generic list template.
-        The "columns" parameter is a list of 2-tuples or 3-tuples. These contain
+        The "columns" parameter is a list of 2-tuples or 3-tuples or 4 tuples. These contain
         - a column title,
         - EITHER a function that takes one parameter (an object from the list) and returns a cell of data
           OR a dot-separated string of attributes, and
         - an optional column width number that will go into a Bootstrap class.
+        - dot-separated string of attributes with underscore replacing the dots to be used in queryset ordering
         All of these values will be coerced to strings in the template. So the function can return an object, and its
         string representation will be used. The column width can be a string or an integer.
         Example:
         columns = [
             ("Column title", lambda obj: obj.method_name(CONSTANT)),
             ("Other title", previously_defined_function, '3'),
-            ("Third", 'dotted.attribute', 2),
+            ("Third", 'dotted.attribute', 2, 'dotted_attribute'),
         ]
         The "data" parameter should be an iterable.
         This method returns a data structure of the following form (using the above example as input):
         [
-            [("Column title", ''), ("Other title", '3'), ("Third", 2)],
+            [("Column title", '', '', ''), ("Other title", '3', ''), ("Third", 2, '', 'dotted_attribute')],
             [data[0].method_name(CONSTANT), previously_defined_function(data[0]), data[0].dotted.attribute],
             [data[1].method_name(CONSTANT), previously_defined_function(data[1]), data[1].dotted.attribute],
             # etc.
@@ -494,20 +497,34 @@ class AbstractedListMixin(object):
         """
         titles, functions = [], []
         columns = list(columns)
+
         if columns:
             new_columns = []
-            for tupple in columns:
+            row = []
+            for column_header_tuple in columns:
+                column_header_tuple = list(column_header_tuple)
                 # deal with column widths
-                if len(tupple) == 2:
-                    tupple = tupple + ('',)
-                elif len(tupple) == 3:
+                if len(column_header_tuple) == 2:
+                    column_header_tuple += ['', ]
+                elif len(column_header_tuple) in [3, 4]:
                     pass
                 else:
                     continue  # throw out bad rows
-                new_columns.append(tupple)
+
+                '''
+                 if the value field is a dot-separated string of attributes, convert it into a parameter that can be
+                 used to order queryset
+                '''
+                if len(column_header_tuple) == 4 and hasfield(self.model, column_header_tuple[3]):
+                    column_header_tuple[3] = column_header_tuple[3].replace('.', '__')
+                elif type(column_header_tuple[1]) == str and hasfield(self.model, column_header_tuple[1]):
+                    column_header_tuple += [column_header_tuple[1].replace('.', '__'), ]
+                else:
+                    column_header_tuple += ['', ]
+                new_columns.append(column_header_tuple)
             # Now each tuple in new_columns is (title, function, number or empty string)
-            titles, functions, column_widths = zip(*new_columns)
-            titles = zip(titles, column_widths)
+            titles, functions, column_widths, field_lookup = zip(*new_columns)
+            titles = zip(titles, column_widths, field_lookup)
         table = [titles]
         for obj in data:
             row = []
