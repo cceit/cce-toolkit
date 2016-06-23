@@ -1,3 +1,4 @@
+import inspect
 import operator
 
 from django.db.models import Q
@@ -6,7 +7,7 @@ from toolkit.utils import replace_key
 
 
 class SearchFormMixin(object):
-    def filters(self):
+    def filters(self, queryset):
         """Return a dict that can be unpacked as kwargs for QuerySet.filter().
 
         Uses self.cleaned_data, so self.full_clean() must be called first.
@@ -19,6 +20,9 @@ class SearchFormMixin(object):
         for field_name, custom_field_lookup in self.Meta.field_lookups.iteritems():
             value = self.cleaned_data[field_name]
 
+            if inspect.isfunction(custom_field_lookup):
+                q_filters.append(custom_field_lookup(self, queryset, value))
+                kwargs.pop(field_name)
             if type(custom_field_lookup) is tuple:
                 # if its tuple of field_lookups, remove the field name lookup from filters
                 # and add a new Q Object filter for each field lookup in the tuple
@@ -59,7 +63,7 @@ class SearchFormMixin(object):
         Raises:
             AttributeError, if the form is not valid.
         """
-        q_objects, kwargs = self.filters()
+        q_objects, kwargs = self.filters(queryset)
         if q_objects:
             queryset = queryset.filter(q_objects)
         if kwargs:
