@@ -4,11 +4,11 @@ setup(
     # Metadata for PyPI; nice to have but not required
     name="cce_toolkit",
     version="1.4.7",
-    description='A collection of tools for use in CCE-IT projects',
+    description='A collection of tools used to speed up the development of management information systems using Django',
     author='CCE Devs',
-    license='All Rights Reserved',
+    license='BSD-3',
     # I don't think this url is required either, but it's nice to have
-    url='ssh://code.ce.ou.edu/var/git/cceitdev/cce_toolkit.git',
+    url='https://github.com/cceit/cce-toolkit.git',
     packages=['toolkit'],
     include_package_data=True,
     package_data={
