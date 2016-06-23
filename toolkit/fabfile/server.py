@@ -19,7 +19,6 @@ def create_service_account(account):
     """
     __exec_cmd('sudo adduser %s' % account)
     __exec_cmd('sudo passwd %s' % account)
-    __exec_cmd('sudo chown %s:ssh-git /home/%s -R' % (account, account))
 
 
 def initial_project_deployment():
@@ -31,9 +30,6 @@ def initial_project_deployment():
     __exec_setup_cmd('virtualenv /home/%s/env --no-site-packages' % project_name)
     __exec_setup_cmd('git clone %s /home/%s/app' % (git_link, project_name))
     setup_permissions(project_name)
-    with cd(env.role['project_dir']):
-        __exec_setup_cmd('git config --global user.email "devs@cce.ou.edu"')
-        __exec_setup_cmd('git config --global user.name "Server"')
     git_checkout(env.role['branch'])
     install_requirements()
     setup_permissions(project_name)
@@ -44,7 +40,6 @@ def setup_permissions(account):
     setup project environment and repo
     """
     __exec_setup_cmd('setfacl -R -m g:apache:rwx /home/%s/ ' % account)
-    __exec_setup_cmd('setfacl -R -m g:ssh-git:rwx /home/%s/ ' % account)
     __exec_setup_cmd('setfacl -R -m u:%s:rwx  /home/%s/ ' % (account, account))
 
 
