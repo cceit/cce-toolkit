@@ -1,3 +1,37 @@
 div.static-alert button.close {
     display: none;
 }
+
+/* ToTop
+ * -------------------------- */
+#toTop {
+    background: rgba(0, 0, 0, 0.5) none;
+    bottom: 20px;
+    right: 20px;
+    text-indent: inherit;
+    width: 40px;
+    height: 40px;
+    z-index: 15;
+}
+
+#toTopHover {
+    background: #96273b none;
+    width: 40px;
+    height: 40px;
+}
+
+#toTop:before {
+    font-family: 'FontAwesome';
+    content: "\f106";
+    color: #ffffff;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
