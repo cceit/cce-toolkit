@@ -97,3 +97,25 @@ def compare_content_types(browser, context, file_type):
 
     return target_type, received_type
 
+
+def log(context, text):
+    script_text = 'console.log("%s")' % text
+    context.browser.execute_script(script_text)
+
+
+def assert_text_on_page(browser, fields, date_format='%m/%d/%Y'):
+    for field in fields:
+        text = field.strftime(date_format) if isinstance(field, datetime.date) else '%s' % field
+        assert browser.is_text_present(text), "Could not find '%s' on the page" % text
+
+
+def set_test_obj_pk(context):
+    if hasattr(context, 'test_obj'):
+            context.test_obj_pk = context.test_obj.pk
+
+
+def set_test_obj(context, model):
+    if hasattr(context, 'test_obj_pk'):
+        context.test_obj = model.objects.get(pk=context.test_obj_pk)
+    else:
+        context.test_obj = model.objects.all().order_by('-pk').first()
