@@ -22,7 +22,8 @@ class SearchFormMixin(object):
 
             if inspect.isfunction(custom_field_lookup):
                 q_filters.append(custom_field_lookup(self, queryset, value))
-                kwargs.pop(field_name)
+                if field_name in kwargs:
+                    kwargs.pop(field_name)
             if type(custom_field_lookup) is tuple:
                 # if its tuple of field_lookups, remove the field name lookup from filters
                 # and add a new Q Object filter for each field lookup in the tuple
