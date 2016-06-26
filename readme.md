@@ -1,4 +1,3 @@
 # CCE Toolkit
 
-A collection of tools used to speed up the development of management information systems using Django
-
+A collection of python helpers and custom Django views, forms and models created for rapid development of Management Information Systems
