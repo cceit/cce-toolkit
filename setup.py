@@ -14,7 +14,7 @@ setup(
         "cuser": ["django-cuser"],
     },
     classifiers=[
-        'Development Status :: 1.0.0-beta',
+        'Development Status :: 1.0.0-b0',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
