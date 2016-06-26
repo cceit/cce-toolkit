@@ -19,13 +19,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ActivityLog',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False,
+                                        auto_created=True, primary_key=True)),
                 ('last_updated_at', models.DateTimeField(auto_now=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('summary', models.TextField(max_length=128)),
                 ('description', models.TextField(max_length=256)),
                 ('object_id', models.PositiveIntegerField()),
-                ('absolute_url_name', models.CharField(max_length=64, blank=True)),
+                ('absolute_url_name', models.CharField(max_length=64,
+                                                       blank=True)),
             ],
             options={
                 'ordering': ('-pk',),
@@ -36,7 +38,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ActivityType',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False,
+                                        auto_created=True, primary_key=True)),
                 ('activity_type', models.CharField(max_length=64)),
                 ('logo', models.CharField(max_length=128, blank=True)),
                 ('include_creator', models.BooleanField(default=True)),
@@ -61,11 +64,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='activitylog',
             name='created_by',
-            field=cuser.fields.CurrentUserField(related_name='toolkit_activitylog_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True),
+            field=cuser.fields.CurrentUserField(
+                related_name='toolkit_activitylog_last_created',
+                editable=False, to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='activitylog',
             name='last_updated_by',
-            field=cuser.fields.CurrentUserField(related_name='toolkit_activitylog_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True),
+            field=cuser.fields.CurrentUserField(
+                related_name='toolkit_activitylog_last_updated',
+                editable=False, to=settings.AUTH_USER_MODEL, null=True),
         ),
     ]
