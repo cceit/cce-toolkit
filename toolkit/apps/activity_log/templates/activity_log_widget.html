@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="glyphicon glyphicon-time"></i> Activity Log</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            {% for activity in activity_log %}
+                {% if activity.content_object %}
+                    <a href="{{ activity.content_object.get_absolute_url }}"
+                       title="{{ activity.description }}"
+                       class="list-group-item">
+                {% else %}
+                    <a href="{{ activity.absolute_url_name }}"
+                       title="{{ activity.description }}"
+                       class="list-group-item">
+                {% endif %}
+            <span class="badge">
+                <abbr class="timeago" title="{{ activity.created_at|date:'c' }}"></abbr>
+            </span>
+            <i class="{{ activity.activity_type.logo }}"></i>
+            {{ activity.activity_type }} - {{ activity.summary }} ({{ activity.created_by }})
+            </a>
+            {% empty %}
+                {% include 'alert.html' with type='warning' message='No activities logged yet.' %}
+            {% endfor %}
+        </div>
+        {% if activity_log %}
+            <div class="text-right">
+                <a href="{% url 'browse_activity_logs' %}">
+                    View All Activity <i class="glyphicon glyphicon-circle-arrow-right"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
