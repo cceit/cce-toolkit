@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe
-from toolkit.utils import hasfield
+from toolkit.helpers.utils import hasfield
 
 
 class SuccessMessageMixin(BuiltInSuccessMessageMixin):

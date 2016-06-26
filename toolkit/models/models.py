@@ -1,5 +1,5 @@
 from django.db import models
-from toolkit.mixins.models import ModelPermissionsMixin
+from .mixins import ModelPermissionsMixin
 
 
 class CCEModel(ModelPermissionsMixin, models.Model):

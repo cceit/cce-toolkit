@@ -6,7 +6,7 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView, \
     ModelFormSetView
 
 from toolkit.forms import ReportSelector
-from toolkit.mixins.views import *
+from .mixins import *
 
 
 class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,

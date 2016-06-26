@@ -1,8 +1,8 @@
 CCE Toolkit documentation!
 ==========================
 
-Contents:
-
+Toolkit Views, Models and Forms
+===============================
 
 .. toctree::
    :maxdepth: 2
@@ -10,13 +10,34 @@ Contents:
    toolkit/views
    toolkit/models
    toolkit/forms
-   toolkit/admin
-   toolkit/reports
-   toolkit/utils
-   toolkit/bdd
    toolkit/template_tags
-   toolkit/breadcrumbs
-   toolkit/fabfiles
+
+Toolkit Helpers
+===============
+
+.. toctree::
+   :maxdepth: 2
+
+   toolkit/helpers/admin
+   toolkit/helpers/reports
+   toolkit/helpers/utils
+   toolkit/helpers/bdd
+
+Toolkit Apps
+============
+
+.. toctree::
+   :maxdepth: 2
+
+   toolkit/apps/breadcrumbs
+   toolkit/apps/fabfiles
+
+License
+=======
+
+.. toctree::
+   :maxdepth: 2
+
    license
 
 

@@ -1,8 +1,8 @@
-:mod:`toolkit.views` -- Customized Django views with lots of extra batteries
-============================================================================
+:mod:`toolkit.views` -- Toolkit views
+=====================================
 
-.. automodule:: views
+.. automodule:: toolkit.views.views
     :members:
 
-.. automodule:: mixins.views
+.. automodule:: toolkit.views.mixins
     :members:

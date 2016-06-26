@@ -3,7 +3,7 @@ import operator
 
 from django.db.models import Q
 
-from toolkit.utils import replace_key
+from toolkit.helpers.utils import replace_key
 
 
 class SearchFormMixin(object):

@@ -1,9 +1,9 @@
-:mod:`toolkit.forms` -- Django forms helpers
-==============================================
+:mod:`toolkit.forms` -- Toolkit forms
+=====================================
 
 
-.. automodule:: toolkit.forms
+.. automodule:: toolkit.forms.forms
     :members:
 
-.. automodule:: toolkit.mixins.forms
+.. automodule:: toolkit.forms.mixins
     :members:

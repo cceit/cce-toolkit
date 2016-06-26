@@ -1,8 +1,8 @@
-:mod:`toolkit.models` -- Django models helpers
-==============================================
+:mod:`toolkit.models` -- Toolkit models
+=======================================
 
-.. automodule:: toolkit.models
-    :members:
+.. automodule:: toolkit.models.models
+   :members:
 
-.. automodule:: mixins.models
-    :members:
+.. automodule:: toolkit.models.mixins
+   :members:

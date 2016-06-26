@@ -1,5 +1,5 @@
-:mod:`toolkit.templatetags` -- Django templates helpers
-=======================================================
+:mod:`toolkit.templatetags` -- Toolkit template tags
+====================================================
 
 
 """""""""""""""

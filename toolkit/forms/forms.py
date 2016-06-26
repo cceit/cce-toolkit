@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.forms import NullBooleanSelect
 
-from toolkit.mixins.forms import SearchFormMixin
+from .mixins import SearchFormMixin
 
 DEFAULT_DATEFIELD_FORMAT = '%m/%d/%Y'
 DEFAULT_TIMEFIELD_FORMAT = '%I:%M %p'
