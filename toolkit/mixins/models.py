@@ -1,7 +1,10 @@
+
+
 class ModelPermissionsMixin(object):
     """
     Defines the permissions methods that most models need,
-    and raises NotImplementedError if they have not been overridden.
+
+    :raises NotImplementedError: if they have not been overridden.
     """
     def can_create(self, user_obj):
         """

@@ -15,7 +15,8 @@ def update_breadcrumb(url, breadcrumbs):
     func, args, kwargs = resolve(url)
     clss = get_class('{0}.{1}'.format(func.__module__, func.__name__))
 
-    if 'extra_context' in kwargs and 'breadcrumb_name' in kwargs['extra_context']:
+    if 'extra_context' in kwargs and 'breadcrumb_name' \
+            in kwargs['extra_context']:
         breadcrumbs.append((kwargs['extra_context']['breadcrumb_name'], url))
     else:
         try:
@@ -24,9 +25,11 @@ def update_breadcrumb(url, breadcrumbs):
         except (AttributeError, TypeError), e:
             pass
 
+
 def process_context(req):
     tokens = req.path.split("/")
-    subpaths = ["/" + "/".join(tokens[1:n + 1]) for n in range(len(tokens[:-1]))]
+    subpaths = ["/" + "/".join(tokens[1:n + 1])
+                for n in range(len(tokens[:-1]))]
     breadcrumbs = []
 
     for u in subpaths:

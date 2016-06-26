@@ -4,11 +4,27 @@ from splinter import Browser
 
 
 def setup_test_environment(context, scenario):
-    context.display = Display(visible=0, size=(1920, 1080))  # Our virtual display to run firefox
+    """
+    Method used to setup the BDD test environment
+     - Sets up Virtual Display
+     - Sets up Browser
+     - Sets window size
+     - flushes cookies
+     - Turn on debug(useful when capturing screenshots of the errors)
+     - Sets Scenario
+
+
+    """
+    # Our virtual display to run firefox
+    context.display = Display(visible=0, size=(1920, 1080))
     context.display.start()
-    context.browser = Browser()  # This is our base webdriver instance. It uses Firefox by default.
+    # This is our base webdriver instance. It uses Firefox by default.
+    context.browser = Browser()
     context.browser.driver.set_window_size(1920, 1080)
     context.server_url = 'http://localhost:%s' % settings.TEST_PORT
-    context.browser.cookies.delete()  # Flushes all cookies.
-    settings.DEBUG = True  # Re-enables yellow screens on failure. (Normally disabled by LiveServerTestCase)
+    # Flushes all cookies.
+    context.browser.cookies.delete()
+    # Re-enables yellow screens on failure. (Normally disabled by
+    # LiveServerTestCase)
+    settings.DEBUG = True
     context.scenario = scenario.name

@@ -2,7 +2,6 @@ from .environment import __exec_cmd, __exec_setup_cmd
 from .env_settings import project_name, git_link
 from fabric.state import env
 from .git_tools import git_checkout
-from fabric.context_managers import cd
 
 
 def setup_project():
@@ -27,7 +26,8 @@ def initial_project_deployment():
     """
     __exec_setup_cmd('rm -rf /home/%s/env' % project_name)
     __exec_setup_cmd('rm -rf /home/%s/app' % project_name)
-    __exec_setup_cmd('virtualenv /home/%s/env --no-site-packages' % project_name)
+    __exec_setup_cmd('virtualenv /home/%s/env --no-site-packages'
+                     % project_name)
     __exec_setup_cmd('git clone %s /home/%s/app' % (git_link, project_name))
     setup_permissions(project_name)
     git_checkout(env.role['branch'])
@@ -47,16 +47,17 @@ def update_requirements():
     """
     pip updates the project requirements from requirements.txt
     """
-    __exec_cmd('%s/bin/pip uninstall -y cce_toolkit  --no-input' % (env.role['virtualenv']))
+    __exec_cmd('%s/bin/pip uninstall -y cce_toolkit  --no-input' % (
+        env.role['virtualenv']))
     install_requirements()
-
 
 
 def install_requirements():
     """
     pip installs the project requirements from requirements.txt
     """
-    __exec_cmd('%s/bin/pip install -r %s/requirements.txt' % (env.role['virtualenv'], env.role['requirements_path']))
+    __exec_cmd('%s/bin/pip install -r %s/requirements.txt' % (
+        env.role['virtualenv'], env.role['requirements_path']))
 
 
 def reload_http():

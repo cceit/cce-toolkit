@@ -1,0 +1,23 @@
+# Custom Django model-views-forms requirements
+django
+django-extra-views
+django-cuser
+python-magic
+
+# Documentation requirements
+sphinx
+sphinx_rtd_theme
+
+
+# Custom Report helpers requirements
+openpyxl
+xlwt
+
+
+# Fabric recipes requirements
+Fabric
+
+# Testing helpers requirements
+pyvirtualdisplay
+requests
+splinter

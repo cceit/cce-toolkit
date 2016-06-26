@@ -1,23 +1,51 @@
 from django.core.exceptions import FieldError
 from django.db import ProgrammingError
-from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView, TemplateView, FormView
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, ModelFormSetView
+from django.views.generic import CreateView, ListView, UpdateView, \
+    DetailView, DeleteView, TemplateView, FormView
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, \
+    ModelFormSetView
 
 from toolkit.forms import ReportSelector
-from toolkit.utils import hasfield
-from .mixins.views import *
+from toolkit.mixins.views import *
 
 
-class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateContextMenuMixin, CreateView):
+class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,
+                    CreateContextMenuMixin, CreateView):
     """
     This view includes all the mixins required in all CreateViews.
+
+
+
+    Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollCreateView(CCECreateView):
+                model = Poll
+                form_class = PollCreateForm
+                page_title = "Create a poll"
+                sidebar_group = ['polls', ]
+                success_message = "Poll added successfully."
+
+    Advanced Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollCreateView(CCECreateView):
+                model = Poll
+                form_class = PollCreateForm
+                page_title = "Create a poll"
+                sidebar_group = ['polls', ]
+                success_message = "Poll added successfully."
+
     """
     template_name = 'form.html'
     permissions = {'get': ['can_create'],
                    'post': ['can_create'], }
 
 
-class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, ListContextMenuMixin, ListView):
+class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
+                  ListContextMenuMixin, ListView):
     """
     This view includes all the mixins required in all ListViews.
     """
@@ -25,7 +53,9 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin, Lis
                    'post': ['can_view_list'], }
 
 
-class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateContextMenuMixin, UpdateView):
+class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
+                    ObjectPermissionsMixin, UpdateContextMenuMixin,
+                    UpdateView):
     """
     This view includes all the mixins required in all UpdateViews.
     """
@@ -34,7 +64,8 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
                    'post': ['can_update'], }
 
 
-class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin, DetailContextMenuMixin, DetailView):
+class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin,
+                    AbstractedDetailMixin, DetailContextMenuMixin, DetailView):
     """
     This view includes all the mixins required in all DetailViews.
     """
@@ -42,7 +73,8 @@ class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin, AbstractedDetailMixin
                    'post': ['can_view'], }
 
 
-class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, AbstractedDeleteMixin, DeleteView):
+class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin,
+                    ObjectPermissionsMixin, AbstractedDeleteMixin, DeleteView):
     """
     This view includes all the mixins required in all DeleteViews.
     """
@@ -51,7 +83,9 @@ class CCEDeleteView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, 
                    'delete': ['can_delete'], }
 
 
-class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, CreateContextMenuMixin, CreateWithInlinesView):
+class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin,
+                               ClassPermissionsMixin, CreateContextMenuMixin,
+                               CreateWithInlinesView):
     """
     This view includes all the mixins required in all CreateWithInlinesViews.
     """
@@ -59,7 +93,9 @@ class CCECreateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ClassPermissi
                    'post': ['can_create'], }
 
 
-class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ObjectPermissionsMixin, UpdateContextMenuMixin, UpdateWithInlinesView):
+class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin,
+                               ObjectPermissionsMixin, UpdateContextMenuMixin,
+                               UpdateWithInlinesView):
     """
     This view includes all the mixins required in all UpdateWithInlinesViews.
     """
@@ -67,7 +103,8 @@ class CCEUpdateWithInlinesView(ViewMetaMixin, SuccessMessageMixin, ObjectPermiss
                    'post': ['can_update'], }
 
 
-class CCEModelFormSetView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin, ModelFormSetView):
+class CCEModelFormSetView(ViewMetaMixin, SuccessMessageMixin,
+                          ClassPermissionsMixin, ModelFormSetView):
     """
     This view includes all the mixins required in all ModelFormSetViews.
     """
@@ -141,7 +178,9 @@ class CCESearchView(CCEListView):
 
         if qs and order_by and hasfield(self.model, order_by.replace('-', '')):
             try:
-                qs.order_by(order_by)[0]  # used to force the query to be called to ensure that ordering string is valid
+                qs.order_by(order_by)[0]
+                # used to force the query to be called to ensure that
+                # ordering string is valid
             except (ProgrammingError, FieldError):
                 pass
             else:
@@ -152,76 +191,9 @@ class CCESearchView(CCEListView):
         context = super(CCESearchView, self).get_context_data(**kwargs)
         context['search_form'] = self.get_search_form()
         if self.advanced_search_form_class:
-            context['advanced_search_form'] = self.get_advanced_search_form_class()
+            context['advanced_search_form'] = \
+                self.get_advanced_search_form_class()
         return context
-
-
-class ReportSearchView_needswork(CCESearchView):
-    """Variant of SearchView for displaying a report of the search results.
-
-    base_search.html was designed for use with this view.
-
-    The following attributes must be defined on inheriting classes:
-        - model or queryset (per BaseListView)
-        - search_form_class (per SearchView)
-        - report_function: a function that will be applied to each object in
-            object_list to generate a tabular report. See utils.generate_table.
-            Note: due to Python's bound-method calling process, this function
-            must either be fully defined on this class, or wrapped with
-            'staticmethod' if it is assigned from an external definition (e.g.,
-            `report_function = staticmethod(payment_contract_report)`), to
-            avoid passing it a reference to 'self' as its first argument.
-        - report_download_url (optional): the URL at which to download a report
-            of the data displayed on the page. This URL should expect the same
-            GET query string as this view. This attribute is simply passed to
-            the template as context data.
-    """
-    report_function = None
-    report_download_url = None
-
-    def get_url(self, obj):
-        """Return a URL for the given object, to link to from the report.
-
-        This method may be overridden in inheriting classes to make the first
-        column of the displayed report into a hyperlink. The link may be to the
-        object's detail view page, a related page, or really anywhere.
-
-        Args:
-            obj: an instance of the ReportView's model.
-        Returns:
-            The URL to link to from the object's row of the report, or None.
-        """
-        pass
-
-    def get_context_data(self, **kwargs):
-        _object_list = kwargs.get('object_list')
-        # list-ify the report rows, for compatibility with templates (?!?).
-        report = (list(row) for row in self.report_function(_object_list))
-        # The first element of the report is the table headers.
-        table_headers = next(report)
-        # Package up the rest along with links.
-
-        class ListWrapper(list):
-            """Wrapper around the built-in list that allows specifying arbitrary
-            attributes via kwargs passed to __init__.
-            """
-
-            def __init__(self, iterable=None, **kwargs):
-                super(ListWrapper, self).__init__(iterable)
-                for kwarg, value in kwargs.items():
-                    setattr(self, kwarg, value)
-
-        object_list = [
-            ListWrapper(report_row, link=self.get_url(obj))
-            for report_row, obj
-            in zip(report, _object_list)
-            ]
-        return super(ReportSearchView_needswork, self).get_context_data(
-            table_headers=table_headers,
-            report_rows=object_list,
-            report_download_url=self.report_download_url,
-            **kwargs
-        )
 
 
 class ReportDownloadView(object):
@@ -231,7 +203,8 @@ class ReportDownloadView(object):
         raise ImproperlyConfigured("define reports user get_reports")
 
     def get_report_selector_form(self):
-        return self.report_selector_form_class(self.request.GET or None, reports_list=self.get_reports())
+        return self.report_selector_form_class(self.request.GET or None,
+                                               reports_list=self.get_reports())
 
     def get_context_data(self, **kwargs):
         context = super(ReportDownloadView, self).get_context_data(**kwargs)
@@ -242,26 +215,22 @@ class ReportDownloadView(object):
 
 
 class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
-    """Variant of SearchView that downloads the search results as an xls file.
+    """
+    Variant of SearchView that downloads the search results as an xls file.
 
     Raises Http404 if the GET parameters do not form a valid search query.
     If no query string is specified, gives a report of all objects returned
     by get_queryset.
 
     The following fields must be defined on inheriting classes:
-        - model or queryset (per BaseListView)
-        - search_form_class (per SearchView)
-        - report_function (see ReportView)
+     - model or queryset (per BaseListView)
+     - search_form_class (per SearchView)
+     - report_function (see ReportView)
 
-    The following fields have default values that should probably be overridden:
-        - filename
-        - sheet_name
-
-
-    return {'report_slug': {'name': ''
-                            'report_function': ''
-                            'model': ''}}
-
+    The following fields have default values that should probably be
+     overridden:
+     - filename
+     - sheet_name
     """
 
     def get(self, request, *args, **kwargs):
@@ -272,8 +241,10 @@ class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
         if self.search_form.is_valid() and selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            return getattr(model.reports, str('%s' % report['method']))(qs=self.get_queryset(), form=self.search_form)
-        return super(ReportDownloadSearchView, self).get(request, *args, **kwargs)
+            return getattr(model.reports, str('%s' % report['method']))(
+                qs=self.get_queryset(), form=self.search_form)
+        return super(ReportDownloadSearchView, self).get(request, *args,
+                                                         **kwargs)
 
 
 class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
@@ -287,5 +258,7 @@ class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
         if selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            return getattr(model.reports, str('%s' % report['method']))(obj=self.get_object())
-        return super(ReportDownloadDetailView, self).get(request, *args, **kwargs)
+            return getattr(model.reports, str('%s' % report['method']))(
+                obj=self.get_object())
+        return super(ReportDownloadDetailView, self).get(request, *args,
+                                                         **kwargs)

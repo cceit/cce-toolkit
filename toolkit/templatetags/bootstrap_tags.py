@@ -10,10 +10,15 @@ register = template.Library()
 
 @register.filter
 def boolean_icon(value):
+    """
+    :param Bool value: Boolean value
+    :returns html: i tag with bootstrap ok or remove glyphicon
+    """
     if value:
         return mark_safe('<i class="true_icon glyphicon glyphicon-ok"></i>')
     else:
-        return mark_safe('<i class="false_icon glyphicon glyphicon-remove"></i>')
+        return mark_safe('<i class="false_icon glyphicon glyphicon-remove">'
+                         '</i>')
 
 
 def follow_path(ob, dotted_attrs):
@@ -25,19 +30,20 @@ def follow_path(ob, dotted_attrs):
             if callable(new_ob) and not isinstance(new_ob, Manager):
                 new_ob = new_ob()
         else:
-            raise Exception("Bad dotted attributes passed to %s: %s" % (type(new_ob), dotted_attrs))
+            raise Exception("Bad dotted attributes passed to %s: %s"
+                            % (type(new_ob), dotted_attrs))
     return new_ob
 
 
 @register.filter
 def render_detail(value, param):
+    """
+    :returns: appropriate html rendering of value
+    """
     if value is None:
         return "--"
     if isinstance(value, bool):
-        if value:
-            return mark_safe('<i class="true_icon glyphicon glyphicon-ok"></i>')
-        else:
-            return mark_safe('<i class="false_icon glyphicon glyphicon-remove"></i>')
+        return boolean_icon(value)
     if isinstance(value, datetime.datetime):
         return value.strftime("%-m/%-d/%Y, %I:%M %p")
     elif isinstance(value, datetime.date):
@@ -52,7 +58,8 @@ def render_detail(value, param):
             related_objs = [follow_path(o, param) for o in swap]
             return ', '.join([str(thing) for thing in related_objs])
     elif isinstance(value, ImageFieldFile):
-        return mark_safe('<img src="%s%s" width="200px" height="200px">' % (settings.MEDIA_URL, value))
+        return mark_safe('<img src="%s%s" width="200px" height="200px">' %
+                         (settings.MEDIA_URL, value))
     elif isinstance(value, FieldFile):
         if not value:
             return '--'

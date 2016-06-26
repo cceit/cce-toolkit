@@ -15,7 +15,8 @@ from django.utils.text import capfirst
 
 def get_width(string, bold=False):
     """
-    Assuming a standard 10-point Arial font, returns the width of the string, in BIFF column width units.
+    Assuming a standard 10-point Arial font, returns the width of the string,
+    in BIFF column width units.
     """
     char_widths = {
         '0': 262.637,
@@ -134,18 +135,21 @@ def get_height(string):
 
 
 def is_datetime(obj):
-    if type(obj) == datetime.date or type(obj) == datetime.datetime or type(obj) == datetime:
+    if type(obj) == datetime.date or type(obj) == datetime.datetime \
+            or type(obj) == datetime:
         return True
     return False
 
 
 def write_to_worksheet(ws, row, column, cell):
     """
-    Write a single cell to a worksheet with xlwt. Used with xls_multiple_worksheets_response.
+    Write a single cell to a worksheet with xlwt.
+    Used with xls_multiple_worksheets_response.
 
-    If "cell" is a dict and the key "merge" is present, the value of "merge" is also a dict
-    with the potential to have keys called "row_span" and "col_span".
-    These parameters indicate what cells (starting at row, column) should be merged together.
+    If "cell" is a dict and the key "merge" is present, the value of "merge"
+    is also a dict with the potential to have keys called "row_span" and
+    "col_span". These parameters indicate what cells (starting at row, column)
+    should be merged together.
 
     :param cell: Simple or complex data to be written to the cell
     :type cell: str or dict with keys label, style and merge
@@ -219,7 +223,10 @@ def write_to_worksheet(ws, row, column, cell):
         width = get_width(str(label))
         height = get_height(str(label))
         if is_datetime(label):
-            ws.write(row, column, label, xlwt.easyxf(num_format_str='YYYY-MM-DD'))
+            ws.write(row,
+                     column,
+                     label,
+                     xlwt.easyxf(num_format_str='YYYY-MM-DD'))
         else:
             try:
                 ws.write(row, column, label)
@@ -231,16 +238,20 @@ def write_to_worksheet(ws, row, column, cell):
 
 def xls_multiple_worksheets_response(filename, data):
     """
-    Take a filename and a dictionary (data) and return a .xls response that can have multiple sheets.
+    Take a filename and a dictionary (data) and return a .xls response that
+    can have multiple sheets.
 
-    The user may indicate a style for a cell by passing in a dictionary with keys 'label' and 'style'
-    instead of just a string.
+    The user may indicate a style for a cell by passing in a dictionary with
+    keys 'label' and 'style' instead of just a string.
 
-    The user may provide a header for each sheet. A header is a set of cells under the key "header" that appears
-    first in the sheet.
+    The user may provide a header for each sheet. A header is a set of cells
+    under the key "header" that appears first in the sheet.
 
     data dict format:
-    ::
+
+    .. code-block:: python
+        :linenos:
+
         mystyle = 'font: bold 1'
         data = {
             sheet_name: {
@@ -255,16 +266,27 @@ def xls_multiple_worksheets_response(filename, data):
             },
         }
 
-    Styles are XFStyle strings. Comprehensive documentation for the format of these strings is difficult to find.
-    Brief example: http://xlwt.readthedocs.org/en/latest/api.html#xlwt.Style.easyxf
+    Styles are XFStyle strings. Comprehensive documentation for the format of
+    these strings is difficult to find.
+
+    Brief example:
+        http://xlwt.readthedocs.org/en/latest/api.html#xlwt.Style.easyxf
+
     Our example:
-    ::
-        style = 'font: bold 1, name Tahoma, height 160;' \
-                'borders: left thick, right thick, top thick, bottom thick;' \
-                'pattern: pattern solid, pattern_fore_colour yellow, pattern_back_colour yellow'
+        .. code-block:: python
+            :linenos:
+
+            style = 'font: bold 1,
+                    'name Tahoma, ' \\
+                    'height 160;' \\
+                    'borders: left thick, right thick, top thick, ' \\
+                    'bottom thick;  ' \\
+                    'pattern: pattern solid, pattern_fore_colour  ' \\
+                    'yellow,pattern_back_colour yellow'
     """
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="%s.xls"' % filename
+    response['Content-Disposition'] = 'attachment; filename="%s.xls"' \
+                                      % filename
     wb = xlwt.Workbook(style_compression=2)
     if not data:
         wb.add_sheet("Empty report")
@@ -278,7 +300,8 @@ def xls_multiple_worksheets_response(filename, data):
         row_offset = 0
         max_column = 0
 
-        if 'header' in data[sheetname] and data[sheetname]['header'] is not None:
+        if 'header' in data[sheetname] \
+                and data[sheetname]['header'] is not None:
             header = data[sheetname].pop('header')
             for r, row in enumerate(header):
                 for c, cell in enumerate(row):
@@ -339,7 +362,8 @@ def csv_response(filename, table):
 
     """
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="%s.csv"' % filename
+    response['Content-Disposition'] = 'attachment; filename="%s.csv"' \
+                                      % filename
     writer = csv.writer(response)
     for row in table:
         # Convert generators to lists for use by writer.writerow.
@@ -348,12 +372,13 @@ def csv_response(filename, table):
 
 
 def xls_response(filename, sheetname, table, header=None, footer=None,
-                 include_totals=False, total_label='Total', grouper_col=None, value_col=None):
+                 include_totals=False, total_label='Total', grouper_col=None,
+                 value_col=None):
     """Return a Microsoft Excel file of the given table as an HttpResponse.
 
     Args:
 
-        filename: the name of the downloaded file. The extension will be '.xls'.
+        filename: the name of the downloaded file. The extension will be '.xls'
             This parameter is inserted directly to the response's
             Content-Disposition, and must be escaped accordingly.
 
@@ -369,7 +394,8 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
 
         grouper_col: Name of the group to subtotal values for (e.g. 'Site').
 
-        value_col: Name of the column which holds the values to be summed (e.g.'Amount').
+        value_col: Name of the column which holds the values to be summed
+         (e.g.'Amount').
 
     Returns:
 
@@ -377,7 +403,8 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
         Content-Disposition.
     """
     response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="%s.xls"' % filename
+    response['Content-Disposition'] = 'attachment; filename="%s.xls"' \
+                                      % filename
     wb = xlwt.Workbook()
     ws = wb.add_sheet(sheetname)
     data_table = [list(x) for x in table]
@@ -449,14 +476,15 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
                 # We begin calculation at the first data row
                 sub_total += data_table[r][value_col]
             if r >= 2:
-                # If we're beyond the first data row and the grouper values mismatch (indicating a new group)
-                # it returns the subtotal
+                # If we're beyond the first data row and the grouper values
+                # mismatch (indicating a new group) it returns the subtotal
                 if data_table[r][grouper_col] != data_table[r - 1][grouper_col]:
                     ws.write(r - 1, sub_total_col, sub_total)
                     grand_total += sub_total
                     sub_total = 0
                 else:
-                    # Determines if we're at the end of the data table and inserts the totals
+                    # Determines if we're at the end of the data table and
+                    # inserts the totals
                     try:
                         data_table[r + 1][grouper_col]
                     except IndexError:
@@ -465,7 +493,8 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
                         ws.write(r + 2, sub_total_col, grand_total)
 
         # Determines greatest text width between the title and the grand total
-        # Grand total should be the widest tetx value in that column most of the time
+        # Grand total should be the widest tetx value in that column most of
+        # the time
         width = max(get_width(total_label), get_width(str(grand_total)))
         ws.col(sub_total_col).width = width
     if footer is not None:
@@ -495,12 +524,13 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
 
 
 def xlsx_response(filename, table, max_width=118, max_height=90):
-    """Return a Microsoft Excel 2007+ file of the given table as an HttpResponse.
+    """Return a Microsoft Excel 2007+ file of the given table as an
+     HttpResponse.
 
     Args:
 
-        filename: the name of the downloaded file. The extension will be '.xlsx'.
-        This parameter is inserted directly to the response's
+        filename: the name of the downloaded file. The extension will be
+        '.xlsx'. This parameter is inserted directly to the response's
         Content-Disposition, and must be escaped accordingly.
 
         table: a 2-dimensional iterable, in row-major order.
@@ -511,8 +541,10 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
         Content-Disposition.
 
     """
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % filename
+    response = HttpResponse(content_type='application/vnd.openxmlformats-'
+                                         'officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % \
+                                      filename
     wb = openpyxl.Workbook()
     ws = wb.active
     widths = dict()
@@ -539,8 +571,8 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
 
     # Save to temporary file
     if settings.FILE_UPLOAD_TEMP_DIR:
-        my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx',
-                                                   dir=settings.FILE_UPLOAD_TEMP_DIR)
+        my_temp_file = tempfile.NamedTemporaryFile(
+            suffix='.xlsx', dir=settings.FILE_UPLOAD_TEMP_DIR)
     else:
         my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx')
     print my_temp_file.name
@@ -557,32 +589,33 @@ def getattr_chain(obj, name_chain, suppress_attr_errors=False, sep='__'):
     Argument 'name_chain' is a string containing sequence of attribute names
     to look up, starting with the initial object 'obj' and progressing through
     the chain. By default, a double underscore ('__') is expected to separate
-    attribute names (as in Django's admin config and queryset keyword args), but
+    attribute names (as in Django's admin config and queryset keyword args),but
     any string may be specified in argument 'sep'. If 'sep' is None, argument
     'name_chain' is instead expected to be an already-separated iterable of
     attribute names.
 
-    When evaluating a chain of attributes such as 'foo__bar__baz', in some cases
+    When evaluating a chain of attributes such as 'foo__bar__baz',in some cases
     'bar' may sometimes be None, such as in database models with nullable
-    foreign keys. In order to simplify the process of attempting to look up such
-    values, argument 'suppress_attr_errors' may be given: if it is True, any
-    AttributeErrors raised by lookups on None (e.g., 'None.baz') will be caught,
-    and the value None will be returned instead. (Attempted lookups of invalid
-    names will still raise errors as usual.) Be aware, though, that specifying
-    this option will result in the same behavior whether 'bar' or 'baz' is None.
+    foreign keys. In order to simplify the process of attempting to look up
+    such values, argument 'suppress_attr_errors' may be given: if it is True,
+    any AttributeErrors raised by lookups on None (e.g., 'None.baz') will be
+    caught, and the value None will be returned instead. (Attempted lookups of
+    invalid names will still raise errors as usual.)
+    Be aware, though, that specifying this option will result in the same
+    behavior whether 'bar' or 'baz' is None.
 
-    Note that while Django's uses of such string-specified attribute lookups are
-    limited to database relations, this function performs just as well with
+    Note that while Django's uses of such string-specified attribute lookups
+    are limited to database relations, this function performs just as well with
     regular object attributes, and even with properties.
 
-    If a more complex lookup involving function calls or other logic is desired,
+    If a more complex lookup involving function calls or other logic is desired
     consider a lambda function, such as `lambda obj: obj.foo.bar.baz.qux()`.
 
     Args:
 
         obj: the object start the attribute lookup from.
 
-        name_chain: a string containing a sequence of attribute names, separated
+        name_chain: a string containing a sequence of attribute names,separated
             by the value of argument 'sep'. May instead be an iterable of
             attribute names if 'sep' is None.
 
@@ -647,7 +680,7 @@ def getattr_chain(obj, name_chain, suppress_attr_errors=False, sep='__'):
 def generate_basic_table(columns, data):
     """Generate a table of functions applied to data objects.
 
-    Argument 'columns' is an iterable of 2-tuples of the form (title, function),
+    Argument 'columns' is an iterable of 2-tuples of the form (title, function)
     where 'title' is the column title and 'function' is a single-parameter
     function that will be applied to each data element to create the column.
 

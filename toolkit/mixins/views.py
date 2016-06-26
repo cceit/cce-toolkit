@@ -1,29 +1,36 @@
 import copy
-import os
 from collections import OrderedDict
-from django.contrib.messages.views import SuccessMessageMixin as BuiltInSuccessMessageMixin
+
+import os
 from django.contrib import messages
-from django.http import Http404, HttpResponse
+from django.contrib.admin.utils import NestedObjects
+from django.contrib.messages.views import \
+    SuccessMessageMixin as BuiltInSuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
-from django.contrib.admin.utils import NestedObjects
+from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe
 from toolkit.utils import hasfield
 
 
 class SuccessMessageMixin(BuiltInSuccessMessageMixin):
     """
-    Use when you'd like a success message added to your Create or Update response.
+    Use when you'd like a success message added to your Create or Update
+    response.
+
     Assumptions:
         - Class has method form_valid()
+
     Limitations:
         - Class cannot override form_valid()
         - Success message may only be one line.
 
     Use when you'd like a success message added to your Delete response.
+
     Assumptions:
         - Class has method delete()
+
     Limitations:
         - Class cannot override delete()
         - Success message may only be one line.
@@ -35,24 +42,30 @@ class SuccessMessageMixin(BuiltInSuccessMessageMixin):
                 "You must define the 'success_message' property."
             )
 
-        return super(SuccessMessageMixin, self).dispatch(request, *args, **kwargs)
+        return super(SuccessMessageMixin, self).dispatch(request, *args,
+                                                         **kwargs)
 
     def forms_valid(self, form, inlines, *args, **kwargs):
-        response = super(SuccessMessageMixin, self).forms_valid(form, inlines, *args, **kwargs)
+        response = super(SuccessMessageMixin, self).forms_valid(form, inlines,
+                                                                *args,
+                                                                **kwargs)
         success_message = self.get_success_message(form.cleaned_data)
         if success_message:
             messages.success(self.request, success_message)
         return response
 
     def delete(self, request, *args, **kwargs):
-        response = super(SuccessMessageMixin, self).delete(request, *args, **kwargs)
+        response = super(SuccessMessageMixin, self).delete(request, *args,
+                                                           **kwargs)
         success_message = self.get_success_message({})
         if success_message:
             messages.success(self.request, success_message)
         return response
 
     def formset_valid(self, formset, *args, **kwargs):
-        response = super(SuccessMessageMixin, self).formset_valid(formset, *args, **kwargs)
+        response = super(SuccessMessageMixin, self).formset_valid(formset,
+                                                                  *args,
+                                                                  **kwargs)
         success_message = self.get_success_message({})
         if success_message:
             messages.success(self.request, success_message)
@@ -68,7 +81,7 @@ def append_object(model, context_variable_name, field_lookup):
             k: kwargs[v]
             for k, v
             in field_lookup.items()
-        }
+            }
 
     def get_instance(**kwargs):
         # TODO: try/except on key error, reraise with a more helpful error
@@ -80,19 +93,27 @@ def append_object(model, context_variable_name, field_lookup):
 
 class AppendURLObjectsMixin(object):
     """
-    this mixin is used to get and append objects, who's pks are passed in view kwargs making the objects available
-    to all the methods in your view as well your template.
-    To use this mixin, you need to set the append_objects property with a list of tuples each containing 3 values
+    this mixin is used to get and append objects, who's pks are passed in view
+     kwargs making the objects available to all the methods in your view as
+     well your template.
+    To use this mixin, you need to set the append_objects property with a list
+     of tuples each containing 3 values
 
     append_object format: (Model, context_variable_name, field_lookup)
-    example 1: append_objects = [(Course, 'course', 'course_pk'), (Student, 'student', 'student_pk')]
-    in this example, the mixin will try to get the Course and Student objects based on course_pk and student_pk which
-    are passed through the view url. This mixin assumes that the value being passed by field_lookup contains
-    the pk of the object you're trying to fetch. The fetched objects will be appended to context data with variables
+    example 1: append_objects = [(Course, 'course', 'course_pk'), (Student,
+    'student', 'student_pk')]
+    in this example, the mixin will try to get the Course and Student objects
+    based on course_pk and student_pk which
+    are passed through the view url. This mixin assumes that the value being
+    passed by field_lookup contains
+    the pk of the object you're trying to fetch. The fetched objects will be
+    appended to context data with variables
     named after the second value in the triple ('course' or 'student')
 
-    example 2: append_objects = [(Course, 'course', 'course_pk'), (Student, 'student', {'student_id': 'student_pk'})]
-    In this example, we pass a dict in the field_lookup parameter which represents a mapping of model field lookup
+    example 2: append_objects = [(Course, 'course', 'course_pk'), (Student,
+    'student', {'student_id': 'student_pk'})]
+    In this example, we pass a dict in the field_lookup parameter which
+    represents a mapping of model field lookup
     method and values that will be passed in the url.
 
     the mixin will raise 404 exception if any object is not found
@@ -105,7 +126,8 @@ class AppendURLObjectsMixin(object):
             raise NotImplementedError(
                 "You must define the 'append_objects' property. "
                 "Format: append_objects = "
-                "[AppendURLObjectsMixin.make_append_object(Model, context_variable_name, field_lookup)] "
+                "[AppendURLObjectsMixin.make_append_object(Model, "
+                "context_variable_name, field_lookup)] "
             )
 
         for appended_object in self.append_objects:
@@ -117,18 +139,21 @@ class AppendURLObjectsMixin(object):
             context_name = appended_object[1]
             if hasattr(self, context_name):
                 raise Exception(
-                    "The following context variable name collides with other class properties, "
+                    "The following context variable name collides with other"
+                    " class properties, "
                     "please user a different name: %s" % context_name
                 )
             try:
                 instance = appended_object[3](**self.kwargs)
             except appended_model.DoesNotExist:
-                raise Http404('No %s matches the given query.' % appended_model._meta.object_name)
+                raise Http404('No %s matches the given query.'
+                              % appended_model._meta.object_name)
             setattr(self, context_name, instance)
 
     def dispatch(self, request, *args, **kwargs):
         self.append_from_kwargs()
-        return super(AppendURLObjectsMixin, self).dispatch(request, *args, **kwargs)
+        return super(AppendURLObjectsMixin, self).dispatch(request, *args,
+                                                           **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AppendURLObjectsMixin, self).get_context_data(**kwargs)
@@ -260,11 +285,13 @@ class ObjectPermissionsMixin(PermissionsRequiredMixin):
             if not v:
                 raise ImproperlyConfigured(
                     "'PermissionsRequiredMixin' requires"
-                    "'cce_permissions' functions list to have at least one item.")
+                    "'cce_permissions' functions list to have at least one "
+                    "item.")
             for func in v:
                 if getattr(self.get_object(), func, None) is None:
                     raise ImproperlyConfigured(
-                        "Cannot locate %s.%s; does it exist?" % (self.get_object(), func))
+                        "Cannot locate %s.%s; does it exist?" % (
+                            self.get_object(), func))
 
     def _check_get_object(self):
         """
@@ -312,11 +339,13 @@ class ClassPermissionsMixin(PermissionsRequiredMixin):
             if not v:
                 raise ImproperlyConfigured(
                     "'PermissionsRequiredMixin' requires"
-                    "'cce_permissions' functions list to have at least one item.")
+                    "'cce_permissions' functions list to have at least "
+                    "one item.")
             for func in v:
                 if getattr(self.model, func, None) is None:
                     raise ImproperlyConfigured(
-                        "Cannot locate %s.%s; does it exist?" % (self.model, func))
+                        "Cannot locate %s.%s; does it exist?" % (
+                            self.model, func))
 
     def _check_model(self):
         """
@@ -331,7 +360,8 @@ class ClassPermissionsMixin(PermissionsRequiredMixin):
 
 class ViewMetaMixin(object):
     """
-    Mixin will be used capture optional and required meta data about each view that are then passed to the template
+    Mixin will be used capture optional and required meta data about each view
+     that are then passed to the template
 
     """
     page_details = ''
@@ -376,15 +406,16 @@ class ViewMetaMixin(object):
 class FileDownloadMixin(object):
     """
     View mixin to make that view return a file from a model field on GET.
-    Views using this mixin must implement the method get_file_field_to_download.
-    Note: This is for serving a file as a response and is no longer recommended.
+    Views using this mixin must implement the method get_file_field_to_download
+    Note: This is for serving a file as a response and is no longer recommended
     """
+
     def get(self, *args, **kwargs):
         import magic
-        # This view will directly stream the file with the content-disposition of an attachment
+        # This view will directly stream the file with the content-disposition
+        #  of an attachment
         backing_file = self.get_file_field_to_download()
 
-        # taken from http://subversion.outreach.cce/svn/it/django/sooner_flight/trunk/content_repository/views.py
         if not backing_file:
             raise Http404("The resource requested is no longer available")
 
@@ -397,7 +428,8 @@ class FileDownloadMixin(object):
         mime = magic.Magic(mime=True)
         content_type = mime.from_file(backing_file.path)
         response = HttpResponse(file_contents, content_type=content_type)
-        response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(backing_file.name)
+        response['Content-Disposition'] = 'attachment; filename=%s' % \
+                                          os.path.basename(backing_file.name)
         return response
 
 
@@ -409,13 +441,17 @@ class AbstractedListMixin(object):
     model = None
     columns = None
     popover_rows = None
-    actions_column_width = '1'  # will be coerced to a string and put into a Bootstrap class.
     show_add_button = False
 
-    def render_button(self, pk=None, btn_class='', url_name='', label='', icon_classes='', button_text='', url='',
+    # will be coerced to a string and put into a Bootstrap class.
+    actions_column_width = '1'
+
+    def render_button(self, pk=None, btn_class='', url_name='', label='',
+                      icon_classes='', button_text='', url='',
                       condensed=True):
         """
-        Takes of boatload of parameters and returns the HTML for a nice Bootstrap button-link.
+        Takes of boatload of parameters and returns the HTML for a nice
+        Bootstrap button-link.
         If the URL lookup fails, no button is returned.
 
         Must have EITHER pk and url_name OR url.
@@ -427,73 +463,102 @@ class AbstractedListMixin(object):
                 return None
         return btn_class, url, label, icon_classes, button_text, condensed
 
-    def render_buttons(self, user, obj, view_perm_func=None, edit_perm_func=None, delete_perm_func=None):
+    def render_buttons(self, user, obj, view_perm_func=None,
+                       edit_perm_func=None, delete_perm_func=None):
         """
-        This method provides default buttons for an object in a ListView: View, Edit and Delete.
-        The default permission functions are can_view, can_update and can_delete.
-        We can depend on all three of these permissions methods being there because of CCEAuditModel.
-        Other permission functions can be passed, though this is unlikely to happen under the current structure.
-        If a URL is not found, or if the user doesn't have permission to do that thing, the button is not rendered.
+        This method provides default buttons for an object in a ListView: View,
+        Edit and Delete.
+        The default permission functions are can_view, can_update and
+        can_delete.
+        We can depend on all three of these permissions methods being there
+        because of CCEAuditModel.
+        Other permission functions can be passed, though this is unlikely to
+        happen under the current structure.
+        If a URL is not found, or if the user doesn't have permission to do
+        that thing, the button is not rendered.
         """
         buttons = []
-        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
+        underscored_model_name = '_'.join(
+            self.model._meta.verbose_name.lower().split(' '))
         if view_perm_func is None:
             view_perm_func = self.model.can_view
         if view_perm_func(obj, user):
-            button = self.render_button(obj.pk, 'btn-info', 'view_'+underscored_model_name, 'View', 'glyphicon glyphicon-info-sign')
+            button = self.render_button(obj.pk, 'btn-info',
+                                        'view_' + underscored_model_name,
+                                        'View',
+                                        'glyphicon glyphicon-info-sign')
             if button:
                 buttons.append(button)
         if edit_perm_func is None:
             edit_perm_func = self.model.can_update
         if edit_perm_func(obj, user):
-            button = self.render_button(obj.pk, 'btn-warning', 'edit_'+underscored_model_name, 'Edit', 'glyphicon glyphicon-edit')
+            button = self.render_button(obj.pk, 'btn-warning',
+                                        'edit_' + underscored_model_name,
+                                        'Edit', 'glyphicon glyphicon-edit')
             if button:
                 buttons.append(button)
         if delete_perm_func is None:
             delete_perm_func = self.model.can_delete
         if delete_perm_func(obj, user):
-            button = self.render_button(obj.pk, 'btn-danger', 'delete_'+underscored_model_name, 'Delete', 'glyphicon glyphicon-remove')
+            button = self.render_button(obj.pk, 'btn-danger',
+                                        'delete_' + underscored_model_name,
+                                        'Delete', 'glyphicon glyphicon-remove')
             if button:
                 buttons.append(button)
         return buttons
 
     def get_columns(self):
         if self.columns is None:
-            # This error is caught in get_context_data so that ListViews that don't use this abstraction don't blow up.
+            # This error is caught in get_context_data so that ListViews
+            # that don't use this abstraction don't blow up.
             raise NotImplementedError
         return self.columns
 
     def get_popover_rows(self):
         if self.popover_rows is None:
-            # This error is caught in get_context_data so that ListViews that don't use this abstraction don't blow up.
+            # This error is caught in get_context_data so that ListViews
+            # that don't use this abstraction don't blow up.
             raise NotImplementedError
         return self.popover_rows
 
     def generate_list_view_table(self, columns, data):
         """
         Generates a data structure for use in the generic list template.
-        The "columns" parameter is a list of 2-tuples or 3-tuples or 4 tuples. These contain
-        - a column title,
-        - EITHER a function that takes one parameter (an object from the list) and returns a cell of data
-          OR a dot-separated string of attributes, and
+        The "columns" parameter is a list of 2-tuples or 3-tuples or 4 tuples.
+        These contain
+        - a column title
+        - EITHER a function that takes one parameter (an object from the list)
+        and returns a cell of data OR a dot-separated string of attributes,
+        and
         - an optional column width number that will go into a Bootstrap class.
-        - dot-separated string of attributes with underscore replacing the dots to be used in queryset ordering
-        All of these values will be coerced to strings in the template. So the function can return an object, and its
-        string representation will be used. The column width can be a string or an integer.
+        - dot-separated string of attributes with underscore replacing the
+        dots to be used in queryset ordering
+
+        All of these values will be coerced to strings in the template. So the
+        function can return an object, and its string representation will be
+        used. The column width can be a string or an integer.
+
         Example:
-        columns = [
-            ("Column title", lambda obj: obj.method_name(CONSTANT)),
-            ("Other title", previously_defined_function, '3'),
-            ("Third", 'dotted.attribute', 2, 'dotted_attribute'),
-        ]
+            columns = [
+                ("Column title", lambda obj: obj.method_name(CONSTANT)),
+                ("Other title", previously_defined_function, '3'),
+                ("Third", 'dotted.attribute', 2, 'dotted_attribute'),
+                ]
+
         The "data" parameter should be an iterable.
-        This method returns a data structure of the following form (using the above example as input):
+        This method returns a data structure of the following form (using the
+        above example as input):
+
         [
-            [("Column title", '', '', ''), ("Other title", '3', ''), ("Third", 2, '', 'dotted_attribute')],
-            [data[0].method_name(CONSTANT), previously_defined_function(data[0]), data[0].dotted.attribute],
-            [data[1].method_name(CONSTANT), previously_defined_function(data[1]), data[1].dotted.attribute],
+            [("Column title", '', '', ''), ("Other title", '3', ''), ("Third",
+            2, '', 'dotted_attribute')],
+            [data[0].method_name(CONSTANT),
+            previously_defined_function(data[0]), data[0].dotted.attribute],
+            [data[1].method_name(CONSTANT),
+            previously_defined_function(data[1]), data[1].dotted.attribute],
             # etc.
-        ]
+            ]
+
         """
         titles, functions = [], []
         columns = list(columns)
@@ -512,17 +577,28 @@ class AbstractedListMixin(object):
                     continue  # throw out bad rows
 
                 '''
-                 if the value field is a dot-separated string of attributes, convert it into a parameter that can be
+                 if the value field is a dot-separated string of attributes,
+                 convert it into a parameter that can be
                  used to order queryset
                 '''
-                if len(column_header_tuple) == 4 and hasfield(self.model, column_header_tuple[3]):
-                    column_header_tuple[3] = column_header_tuple[3].replace('.', '__')
-                elif type(column_header_tuple[1]) == str and hasfield(self.model, column_header_tuple[1]):
-                    column_header_tuple += [column_header_tuple[1].replace('.', '__'), ]
+                if len(column_header_tuple) == 4 \
+                        and hasfield(self.model, column_header_tuple[3]):
+                    column_header_tuple[3] = column_header_tuple[3].replace(
+                        '.', '__')
+
+                elif type(column_header_tuple[1]) == str \
+                        and hasfield(self.model, column_header_tuple[1]):
+                    column_header_tuple += [column_header_tuple[1].replace(
+                        '.', '__'), ]
+
                 else:
                     column_header_tuple += ['', ]
                 new_columns.append(column_header_tuple)
-            # Now each tuple in new_columns is (title, function, number or empty string)
+
+            '''
+            Now each tuple in new_columns is (title, function, number or
+            empty string)
+            '''
             titles, functions, column_widths, field_lookup = zip(*new_columns)
             titles = zip(titles, column_widths, field_lookup)
         table = [titles]
@@ -536,7 +612,8 @@ class AbstractedListMixin(object):
                         if hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
-                            raise Exception("Bad dotted attributes passed to %s: %s" % (type(new_obj), f))
+                            raise Exception("Bad dotted attributes passed "
+                                            "to %s: %s" % (type(new_obj), f))
                     row.append(new_obj)
                 else:
                     row.append(f(obj))
@@ -562,7 +639,8 @@ class AbstractedListMixin(object):
                         if hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
-                            raise Exception("Bad dotted attributes passed to %s: %s" % (type(new_obj), f))
+                            raise Exception("Bad dotted attributes passed "
+                                            "to %s: %s" % (type(new_obj), f))
                     if isinstance(new_obj, models.Manager):
                         objs_repr = ', '.join([str(o) for o in new_obj.all()])
                         row.append(objs_repr)
@@ -577,7 +655,8 @@ class AbstractedListMixin(object):
     def get_add_button_url(self):
         if not self.show_add_button:
             return None
-        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
+        underscored_model_name = '_'.join(
+            self.model._meta.verbose_name.lower().split(' '))
         try:
             url = reverse('add_' + underscored_model_name)
         except NoReverseMatch:
@@ -598,7 +677,9 @@ class AbstractedListMixin(object):
         except NotImplementedError:
             # If self.columns was not defined, just return the super context
             return context
-        qs = context['object_list']  # this works whether the view is paginated or not
+
+        # this works whether the view is paginated or not
+        qs = context['object_list']
         try:
             popover_rows = copy.copy(self.get_popover_rows())
         except NotImplementedError:
@@ -606,8 +687,10 @@ class AbstractedListMixin(object):
             quicklook = None
         else:
             quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
-        # If we didn't use copy above, this next line would keep adding Actions columns every time the page is accessed
-        columns += [('Actions', lambda x: self.render_buttons(self.request.user, x), self.actions_column_width)]
+        # If we didn't use copy above, this next line would keep adding
+        # Actions columns every time the page is accessed
+        columns += [('Actions', lambda x: self.render_buttons(
+            self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
         context.update({
@@ -621,7 +704,15 @@ class AbstractedListMixin(object):
 
 class AbstractedDetailMixin(object):
     """
-    Assumes that it's mixed in with a DetailView that has self.model and self.get_object().
+    A Django DetailView mixin used to generate a list of label-value pairs
+    and pass it to the template
+
+    :note:
+
+        Mixin will also set the default template_name of the view to
+        generic_detail.html template
+
+
     """
     template_name = "generic_detail.html"
     detail_fields = None
@@ -630,31 +721,43 @@ class AbstractedDetailMixin(object):
         """
         How self.fields should be formatted:
         - The first item in each tuple should be the label.
-        - The second item should be EITHER a dotted path from this object to what goes on the page,
-          OR a function that takes exactly one argument.
+        - The second item should be EITHER a dotted path from this object to
+        what goes on the page, OR a function that takes exactly one argument.
         - The third item is an optional extra parameter.
-        - - If the thing passed is a related manager, this is an optional dotted path to apply to each object in the manager.
+        - - If the thing passed is a related manager, this is an optional
+        dotted path to apply to each object in the manager.
+
         Example:
-        fields = [
-            ('Username', 'user.username'),
-            ('Passport file', 'passport'),
-            ('Zip codes', 'address_set', 'zip_code'),
-            ('Active', 'is_active'),
-            ('Joined date', 'joined_date'),
-            ('Type', lambda obj: type(obj)),
-        ]
-        Returns an OrderedDict of {label: (value, param)} that gets dropped into the template.
+
+        .. code-block:: python
+            :linenos:
+
+            fields = [
+                ('Username', 'user.username'),
+                ('Passport file', 'passport'),
+                ('Zip codes', 'address_set', 'zip_code'),
+                ('Active', 'is_active'),
+                ('Joined date', 'joined_date'),
+                ('Type', lambda obj: type(obj)),
+            ]
+
+        :returns: OrderedDict of {label: (value, param)} that gets dropped
+         into the template.
+
         """
+
         def follow_path(ob, dotted_attrs):
             new_ob = ob
             attrs = dotted_attrs.split('.')
             for attr in attrs:
                 if hasattr(new_ob, attr):
                     new_ob = getattr(new_ob, attr)
-                    if callable(new_ob) and not isinstance(new_ob, models.Manager):
+                    if callable(new_ob) and not isinstance(new_ob,
+                                                           models.Manager):
                         new_ob = new_ob()
                 else:
-                    raise Exception("Bad dotted attributes passed to %s: %s" % (type(new_ob), dotted_attrs))
+                    raise Exception("Bad dotted attributes passed to %s: %s" %
+                                    (type(new_ob), dotted_attrs))
             return new_ob
 
         details = OrderedDict()
@@ -688,18 +791,20 @@ class AbstractedDeleteMixin(object):
     @staticmethod
     def get_deleted_objects(objs, using):
         """
-        Find all objects related to ``objs`` that should also be deleted. ``objs``
-        must be a homogeneous iterable of objects (e.g. a QuerySet).
+        Find all objects related to ``objs`` that should also be deleted.
+        ``objs`` must be a homogeneous iterable of objects (e.g. a QuerySet).
 
         Returns a nested list of objects suitable for display in the
         template with the ``unordered_list`` filter.
 
-        This is simplified from a method by the same name that the Django admin uses.
-        "using" means the key in the DATABASES setting.
+        This is simplified from a method by the same name that the
+        Django admin uses. "using" means the key in the DATABASES setting.
         """
+
         collector = NestedObjects(using=using)
         collector.collect(objs)
-        to_delete = collector.nested()  # nested() can take a formatting callback if we want it later
+        # nested() can take a formatting callback if we want it later
+        to_delete = collector.nested()
         return to_delete
 
     def get_context_data(self, **kwargs):
@@ -707,9 +812,11 @@ class AbstractedDeleteMixin(object):
         obj = self.get_object()
         # Get a queryset so that we can get the database alias
         db_alias = self.model.objects.filter(pk=obj.pk).db
-        objs_to_be_deleted = AbstractedDeleteMixin.get_deleted_objects([obj], db_alias)
+        objs_to_be_deleted = AbstractedDeleteMixin.get_deleted_objects(
+            [obj], db_alias)
         object_name = self.model._meta.verbose_name
-        underscored_model_name = '_'.join(self.model._meta.verbose_name.lower().split(' '))
+        underscored_model_name = '_'.join(
+            self.model._meta.verbose_name.lower().split(' '))
         context.update({
             'object_name': object_name,
             'objs_to_be_deleted': objs_to_be_deleted,
@@ -722,7 +829,8 @@ class AbstractedDeleteMixin(object):
             elif hasattr(self, 'get_absolute_url'):
                 context['no_url_path'] = self.get_absolute_url()
             else:
-                context['no_url_path'] = reverse('view_%s' % underscored_model_name, kwargs={'pk': obj.pk}),
+                context['no_url_path'] = reverse(
+                    'view_%s' % underscored_model_name, kwargs={'pk': obj.pk}),
 
         return context
 
@@ -731,12 +839,14 @@ class ContextMenuMixin(object):
     show_context_menu = False
 
     def get_verbose_names(self):
-        return self.model._meta.verbose_name.lower(), self.model._meta.verbose_name_plural.lower()
+        return self.model._meta.verbose_name.lower(), \
+               self.model._meta.verbose_name_plural.lower()
 
     def get_underscored_names(self):
         verbose_name = self.model._meta.verbose_name.lower()
         verbose_name_plural = self.model._meta.verbose_name_plural.lower()
-        return '_'.join(verbose_name.split(' ')), '_'.join(verbose_name_plural.split(' '))
+        return '_'.join(verbose_name.split(' ')), \
+               '_'.join(verbose_name_plural.split(' '))
 
     def get_context_data(self, **kwargs):
         context = super(ContextMenuMixin, self).get_context_data(**kwargs)
@@ -748,7 +858,8 @@ class ContextMenuMixin(object):
             context['context_menu_items'] = self.context_menu_items()
         else:
             context['context_menu_items'] = []
-        context['verbose_name_plural'] = str(self.model._meta.verbose_name_plural).title()
+        context['verbose_name_plural'] = \
+            str(self.model._meta.verbose_name_plural).title()
         return context
 
 
@@ -768,7 +879,8 @@ class ListContextMenuMixin(ContextMenuMixin):
             else:
                 # label, reversed url, icon class, sidebar_group
                 menu_links.append(
-                    ("Add %s" % name.title(), add_url, "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                    ("Add %s" % name.title(), add_url,
+                     "glyphicon glyphicon-plus", "add_%s" % name_underscored)
                 )
         return menu_links
 
@@ -781,12 +893,14 @@ class DetailContextMenuMixin(ContextMenuMixin):
         name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         try:
-            edit_url = reverse("edit_%s" % name_underscored, kwargs={'pk': self.get_object().pk})
+            edit_url = reverse("edit_%s" % name_underscored,
+                               kwargs={'pk': self.get_object().pk})
         except NoReverseMatch:
             pass
         else:
             menu_links.append(
-                ("Edit %s" % name.title(), edit_url, "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
+                ("Edit %s" % name.title(), edit_url,
+                 "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
             )
         return menu_links
 
@@ -804,7 +918,8 @@ class CreateContextMenuMixin(ContextMenuMixin):
             pass
         else:
             menu_links.append(
-                ("Browse %s" % plural_name.title(), browse_url, "glyphicon glyphicon-list")
+                ("Browse %s" % plural_name.title(), browse_url,
+                 "glyphicon glyphicon-list")
             )
         return menu_links
 
@@ -817,11 +932,13 @@ class UpdateContextMenuMixin(ContextMenuMixin):
         name_underscored, plural_underscored = self.get_underscored_names()
         menu_links = []
         try:
-            view_url = reverse("view_%s" % name_underscored, kwargs={'pk': self.get_object().pk})
+            view_url = reverse("view_%s" % name_underscored,
+                               kwargs={'pk': self.get_object().pk})
         except NoReverseMatch:
             pass
         else:
             menu_links.append(
-                ("View %s" % name.title(), view_url, "glyphicon glyphicon-info-sign")
+                ("View %s" % name.title(), view_url,
+                 "glyphicon glyphicon-info-sign")
             )
         return menu_links

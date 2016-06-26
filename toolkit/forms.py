@@ -2,17 +2,30 @@ from django import forms
 from django.conf import settings
 from django.forms import NullBooleanSelect
 
-from .mixins.forms import SearchFormMixin
+from toolkit.mixins.forms import SearchFormMixin
 
 DEFAULT_DATEFIELD_FORMAT = '%m/%d/%Y'
 DEFAULT_TIMEFIELD_FORMAT = '%I:%M %p'
 
+
 class SearchForm(SearchFormMixin, forms.Form):
+    """
+    Regular Django form with SearchFormMixin
+    """
     pass
 
 
 class CCEModelSearchForm(SearchFormMixin, forms.ModelForm):
+    """
+    Django Model form with SearchFormMixin to create an Advanced Search
+    form using multiple fields and filters
+
+    Allows filtering a queryset using a list of fields, Q objects and custom
+    filter methods
+
+    """
     required_fields = []
+
     def __init__(self, *args, **kwargs):
         """
         Disables the require property of all form fields, allowing them to be
@@ -25,7 +38,12 @@ class CCEModelSearchForm(SearchFormMixin, forms.ModelForm):
 
 
 class CCESimpleSearchForm(CCEModelSearchForm):
-    """SearchForm used to search for CESL Session
+    """
+    Model Search Form with a single search field, provides similar
+    functionality to django-admin search box
+
+    Allows filtering a queryset using a list of fields, Q objects and custom
+    filter methods
 
     :fields:
             - search
@@ -43,7 +61,8 @@ class CCESimpleSearchForm(CCEModelSearchForm):
         used as optional search fields.
         """
         super(CCESimpleSearchForm, self).__init__(*args, **kwargs)
-        self.fields['search'].widget = forms.TextInput(attrs={'placeholder': self.search_placeholder})
+        self.fields['search'].widget = forms.TextInput(
+            attrs={'placeholder': self.search_placeholder})
 
 
 class DynamicNullBooleanSelect(NullBooleanSelect):
@@ -51,7 +70,8 @@ class DynamicNullBooleanSelect(NullBooleanSelect):
     An overriden Select widget to be used with NullBooleanField.
     Takes a kwarg "null_label" that indicates the text on the null option.
     """
-    def __init__(self, attrs=None, null_label=None, true_label=None, false_label=None):
+    def __init__(self, attrs=None, null_label=None, true_label=None,
+                 false_label=None):
         if null_label is None:
             null_label = 'Unknown'
         if true_label is None:
@@ -67,14 +87,22 @@ class DynamicNullBooleanSelect(NullBooleanSelect):
 
 
 class ReportSelector(forms.Form):
-    def __init__(self, user, *args, **kwargs):
-        reports_list = kwargs.pop('reports_list')
+    """
+    Form used for CCE Report Views to provide a dropdown of available reports
+    """
+    get_reports = forms.ChoiceField(choices=[('', 'Select Report')])
+
+    def __init__(self, user, reports_list, *args, **kwargs):
         super(ReportSelector, self).__init__(*args, **kwargs)
-        self.fields['get_reports'] = forms.ChoiceField(choices=[('', 'Select Report')] +
-                                                               [(k, v['name']) for k, v in reports_list.items()])
+        self.fields['get_reports'].choices += [(k, v['name'])
+                                               for k, v in reports_list.items()
+                                               ]
 
 
 def cce_formfield_callback(f, **kwargs):
+    """
+    overrides django formfield widgets default values
+    """
     formfield = f.formfield(**kwargs)
 
     if isinstance(formfield, forms.DateField):
@@ -84,8 +112,8 @@ def cce_formfield_callback(f, **kwargs):
             formfield.widget.format = DEFAULT_DATEFIELD_FORMAT  # set default
 
     if isinstance(formfield, forms.TimeField):
-        try:
-            formfield.input_formats = [settings.DEFAULT_TIMEFIELD_FORMAT]  # set default
+        try:  # set default
+            formfield.input_formats = [settings.DEFAULT_TIMEFIELD_FORMAT]
         except AttributeError:
             formfield.input_formats = [DEFAULT_TIMEFIELD_FORMAT]  # set default
 
@@ -93,11 +121,21 @@ def cce_formfield_callback(f, **kwargs):
 
 
 class CCEModelFormMetaclass(forms.models.ModelFormMetaclass):
+    """
+    Defines custom Model Form Meta Class
+    """
     def __new__(mcs, name, bases, attrs):
-        if 'formfield_callback' not in attrs or not attrs['formfield_callback']:
+        if 'formfield_callback' not in attrs \
+                or not attrs['formfield_callback']:
             attrs['formfield_callback'] = cce_formfield_callback
-        return super(CCEModelFormMetaclass, mcs).__new__(mcs, name, bases, attrs)
+        return super(CCEModelFormMetaclass, mcs).__new__(mcs,
+                                                         name,
+                                                         bases,
+                                                         attrs)
 
 
 class CCEModelForm(forms.ModelForm):
+    """
+    Django model form using CCE ModelFormMetaClass
+    """
     __metaclass__ = CCEModelFormMetaclass
