@@ -21,3 +21,4 @@ Fabric
 pyvirtualdisplay
 requests
 splinter
+django-behave
