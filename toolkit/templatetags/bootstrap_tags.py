@@ -56,7 +56,7 @@ def render_detail(value, param):
         if param:
             swap = related_objs
             related_objs = [follow_path(o, param) for o in swap]
-            return ', '.join([str(thing) for thing in related_objs])
+        return ', '.join([str(thing) for thing in related_objs])
     elif isinstance(value, ImageFieldFile):
         return mark_safe('<img src="%s%s" width="200px" height="200px">' %
                          (settings.MEDIA_URL, value))
