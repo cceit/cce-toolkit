@@ -7,3 +7,6 @@
 
 .. automodule:: toolkit.helpers.bdd.utils
     :members:
+
+.. automodule:: toolkit.helpers.bdd.shared_steps
+    :members:
