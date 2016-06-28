@@ -20,7 +20,7 @@ def fill_form(browser, fields):
     Fills a dictionary of form fields on a page
 
     :param browser: browser object
-    :param dictionary fields: dictionary of fields
+    :param fields: iterable of fields
     """
     for field in fields:
         function = field['function']
@@ -37,7 +37,7 @@ def fill_and_submit_form(browser, fields, submit_button_name='submit'):
     Fills a dictionary of form fields on a page and clicks the submit button
 
     :param browser: browser object
-    :param dictionary fields: dictionary of fields
+    :param fields: iterable of fields
     :param string submit_button_name: optional button name field in case
      there's multiple buttons on the page
     """
