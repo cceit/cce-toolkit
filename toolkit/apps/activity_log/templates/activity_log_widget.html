@@ -6,7 +6,7 @@
         <div class="list-group">
             {% for activity in activity_log %}
                 {% if activity.content_object %}
-                    <a href="{{ activity.content_object.get_absolute_url }}"
+                    <a href="{{ activity.resolved_url }}"
                        title="{{ activity.description }}"
                        class="list-group-item">
                 {% else %}
