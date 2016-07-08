@@ -32,10 +32,23 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,
             class PollCreateView(CCECreateView):
                 model = Poll
                 form_class = PollCreateForm
+                template_name = "polls/add.html"
                 page_title = "Create a poll"
                 sidebar_group = ['polls', ]
                 success_message = "Poll added successfully."
 
+                def context_menu_items(self):
+                    items = super(PollListView, self).context_menu_items()
+                    items.append(
+                        # label, reversed url, icon class, sidebar_group
+                        (
+                            "Link to something else you want",
+                            reverse('link_to_something_else'),
+                            "glyphicon glyphicon-fire",
+                            "something_else",
+                        )
+                    )
+                    return items
     """
     template_name = 'form.html'
     permissions = {'get': ['can_create'],
@@ -126,6 +139,42 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
                     UpdateView):
     """
     This view includes all the mixins required in all UpdateViews.
+
+    Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollUpdateView(CCECreateView):
+                model = Poll
+                form_class = PollUpdateForm
+                page_title = "Edit Poll"
+                sidebar_group = ['polls', ]
+                success_message = "Poll saved successfully."
+
+    Advanced Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollUpdateView(CCECreateView):
+                model = Poll
+                form_class = PollUpdateForm
+                template_name = "polls/edit.html"
+                page_title = "Edit Poll"
+                sidebar_group = ['polls', ]
+                success_message = "Poll saved successfully."
+
+                def context_menu_items(self):
+                    items = super(PollListView, self).context_menu_items()
+                    items.append(
+                        # label, reversed url, icon class, sidebar_group
+                        (
+                            "Link to something else you want",
+                            reverse('link_to_something_else'),
+                            "glyphicon glyphicon-fire",
+                            "something_else",
+                        )
+                    )
+                    return items
     """
     template_name = 'form.html'
     permissions = {'get': ['can_update'],
