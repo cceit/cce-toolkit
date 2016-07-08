@@ -14,8 +14,6 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,
     """
     This view includes all the mixins required in all CreateViews.
 
-
-
     Usage:
         .. code-block:: python
             :linenos:
@@ -48,6 +46,76 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
                   ListContextMenuMixin, ListView):
     """
     This view includes all the mixins required in all ListViews.
+
+    Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollListView(CCEListView):
+                model = Poll
+                paginate_by = 10
+                page_title = "Browse Polls"
+                sidebar_group = ['polls', ]
+                columns = [
+                    ('Name', 'name'),
+                    ('Active', 'active'),
+                ]
+                show_context_menu = True
+
+    Advanced Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollListView(CCEListView):
+                model = Poll
+                paginate_by = 10
+                template_name = "polls/list.html"
+                ordering = ['-created_at']
+                page_title = "Browse Polls"
+                sidebar_group = ['polls', ]
+                # Column widths should add up to 12
+                columns = [
+                    ('Name', 'name', 4),
+                    ('Active', 'active', 5),
+                ]
+                actions_column_width = 3
+                show_context_menu = True
+                show_add_button = True
+                popover_rows = [
+                    ('Description', 'description'),
+                    ('Choices', lambda poll: poll.get_choices_as_one_line())
+                ]
+
+                def context_menu_items(self):
+                    items = super(PollListView, self).context_menu_items()
+                    items.append(
+                        # label, reversed url, icon class, sidebar_group
+                        (
+                            "Edit All Polls at Once",
+                            reverse('edit_all_polls'),
+                            "glyphicon glyphicon-pencil",
+                            "edit_all_polls",
+                        )
+                    )
+                    return items
+
+                def render_buttons(self, user, obj, **kwargs):
+                    button_list = super(PollListView, self).render_buttons(user, obj, **kwargs)
+                    button_list.extend([
+                        self.render_button(
+                            url_name='edit_poll_permissions',
+                            pk=obj.pk,
+                            icon_classes='fa fa-lock',
+                        ),
+                        self.render_button(
+                            btn_class='warning',
+                            label='Button text',
+                            icon_classes='glyphicon glyphicon-fire',
+                            url=reverse('some_url_name_no_pk_required'),
+                            condensed=False,
+                        ),
+                    ])
+                    return button_list
     """
     permissions = {'get': ['can_view_list'],
                    'post': ['can_view_list'], }
