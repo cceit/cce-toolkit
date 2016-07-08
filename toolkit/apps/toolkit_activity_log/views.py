@@ -2,15 +2,15 @@ from django.template.defaultfilters import title
 from toolkit.views import CCESearchView, mark_safe
 
 from .forms import ActivityLogSearchForm, ActivityLogAdvancedSearchForm
-from .models import ActivityLog, ActivityType
+from .models import ToolkitActivityLog
 
 
-class ActivityLogListView(CCESearchView):
-    template_name = "browse_activities.html"
+class ToolkitActivityLogListView(CCESearchView):
+    template_name = "toolkit_activity_log/browse_activities.html"
     page_title = "Browse Activities"
     sidebar_group = ['dashboard']
     paginate_by = 20
-    model = ActivityLog
+    model = ToolkitActivityLog
     search_form_class = ActivityLogSearchForm
     advanced_search_form_class = ActivityLogAdvancedSearchForm
     ordering = ('-created_at', )
@@ -35,5 +35,5 @@ class ActivityLogListView(CCESearchView):
                                    url=obj.resolved_url)]
 
     def get_queryset(self):
-        return super(ActivityLogListView, self).permissions.scoped_by_user(self.request.user)
+        return super(ToolkitActivityLogListView, self).permissions.scoped_by_user(self.request.user)
 

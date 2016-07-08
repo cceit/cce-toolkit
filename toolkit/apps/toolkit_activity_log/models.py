@@ -8,7 +8,7 @@ from toolkit.models import CCEAuditModel, CCEModel
 from .managers import ActivityTypePermissionManager, ActivitiesPermissionManager
 
 
-class ActivityType(CCEModel):
+class ToolkitActivityType(CCEModel):
     activity_type = models.CharField(max_length=64)
     logo = models.CharField(max_length=128, blank=True)
     groups = models.ManyToManyField(to=Group)
@@ -39,10 +39,10 @@ class ActivityType(CCEModel):
         return True
 
 
-class ActivityLog(CCEAuditModel):
+class ToolkitActivityLog(CCEAuditModel):
     summary = models.TextField(max_length=128)
     description = models.TextField(max_length=256)
-    activity_type = models.ForeignKey(ActivityType)
+    activity_type = models.ForeignKey(ToolkitActivityType)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
