@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.forms import ModelChoiceField
 from toolkit.forms import CCESimpleSearchForm, CCEModelSearchForm
 
-from .models import ActivityLog
+from .models import ToolkitActivityLog
 
 
 class UserModelChoiceField(ModelChoiceField):
@@ -16,7 +16,7 @@ class ActivityLogSearchForm(CCESimpleSearchForm):
     search_placeholder = 'Search by Type, Activity, or Description'
 
     class Meta(CCESimpleSearchForm.Meta):
-        model = ActivityLog
+        model = ToolkitActivityLog
         field_lookups = {
             'search': (
                 'activity_type__icontains',
@@ -33,7 +33,7 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
     group = forms.ModelChoiceField(queryset=Group.objects.all())
 
     class Meta:
-        model = ActivityLog
+        model = ToolkitActivityLog
         field_lookups = {
             'activity_type': 'activity_type',
             'activity': 'summary__icontains',
