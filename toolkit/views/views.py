@@ -96,7 +96,7 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
                 show_add_button = True
                 popover_rows = [
                     ('Description', 'description'),
-                    ('Choices', lambda poll: poll.get_choices_as_one_line())
+                    ('Choices', lambda poll: some_function(poll)),
                 ]
 
                 def context_menu_items(self):
@@ -164,7 +164,7 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
                 success_message = "Poll saved successfully."
 
                 def context_menu_items(self):
-                    items = super(PollListView, self).context_menu_items()
+                    items = super(PollUpdateView, self).context_menu_items()
                     items.append(
                         # label, reversed url, icon class, sidebar_group
                         (
@@ -185,6 +185,51 @@ class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin,
                     AbstractedDetailMixin, DetailContextMenuMixin, DetailView):
     """
     This view includes all the mixins required in all DetailViews.
+
+    Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollDetailView(CCEDetailView):
+                model = Poll
+                page_title = "Poll Details"
+                sidebar_group = ['polls']
+                detail_fields = [
+                    ('Name', 'name'),
+                    ('Active', 'active'),
+                    ('Description', 'description'),
+                    ('Choices', lambda poll: some_function(poll)),
+                ]
+                show_context_menu = True
+
+    Advanced Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollDetailView(CCEDetailView):
+                model = Poll
+                page_title = "Poll Details"
+                sidebar_group = ['polls']
+                detail_fields = [
+                    ('Name', 'name'),
+                    ('Active', 'active'),
+                    ('Description', 'description'),
+                    ('Choices', lambda poll: some_function(poll)),
+                ]
+                show_context_menu = True
+
+                def context_menu_items(self):
+                    items = super(PollDetailView, self).context_menu_items()
+                    items.append(
+                        # label, reversed url, icon class, sidebar_group
+                        (
+                            "Link to something else you want",
+                            reverse('link_to_something_else'),
+                            "glyphicon glyphicon-fire",
+                            "something_else",
+                        )
+                    )
+                    return items
     """
     permissions = {'get': ['can_view'],
                    'post': ['can_view'], }
@@ -264,6 +309,80 @@ class CCESearchView(CCEListView):
 
     The field 'allow_empty' (inherited from MultipleObjectMixin) is ignored,
     since this view must allow an empty object_list.
+
+    Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollListView(CCESearchView):
+                model = Poll
+                paginate_by = 10
+                page_title = "Browse Polls"
+                sidebar_group = ['polls', ]
+                search_form_class = PollSimpleSearchForm
+                advanced_search_form_class = PollAdvancedSearchForm
+                columns = [
+                    ('Name', 'name'),
+                    ('Active', 'active'),
+                ]
+                show_context_menu = True
+
+    Advanced Usage:
+        .. code-block:: python
+            :linenos:
+
+            class PollListView(CCESearchView):
+                model = Poll
+                paginate_by = 10
+                template_name = "polls/list.html"
+                ordering = ['-created_at']
+                page_title = "Browse Polls"
+                sidebar_group = ['polls', ]
+                search_form_class = PollSimpleSearchForm
+                advanced_search_form_class = PollAdvancedSearchForm
+                # Column widths should add up to 12
+                columns = [
+                    ('Name', 'name', 4),
+                    ('Active', 'active', 5),
+                ]
+                actions_column_width = 3
+                show_context_menu = True
+                show_add_button = True
+                popover_rows = [
+                    ('Description', 'description'),
+                    ('Choices', lambda poll: some_function(poll)),
+                ]
+
+                def context_menu_items(self):
+                    items = super(PollListView, self).context_menu_items()
+                    items.append(
+                        # label, reversed url, icon class, sidebar_group
+                        (
+                            "Edit All Polls at Once",
+                            reverse('edit_all_polls'),
+                            "glyphicon glyphicon-pencil",
+                            "edit_all_polls",
+                        )
+                    )
+                    return items
+
+                def render_buttons(self, user, obj, **kwargs):
+                    button_list = super(PollListView, self).render_buttons(user, obj, **kwargs)
+                    button_list.extend([
+                        self.render_button(
+                            url_name='edit_poll_permissions',
+                            pk=obj.pk,
+                            icon_classes='fa fa-lock',
+                        ),
+                        self.render_button(
+                            btn_class='warning',
+                            label='Button text',
+                            icon_classes='glyphicon glyphicon-fire',
+                            url=reverse('some_url_name_no_pk_required'),
+                            condensed=False,
+                        ),
+                    ])
+                    return button_list
     """
     search_form_class = None
     advanced_search_form_class = None
