@@ -32,8 +32,9 @@ setup(
         'toolkit': [
             '*.py',
             'apps/*.py',
-            'apps/activity_log/*.py',
-            'apps/activity_log/templates/*.html',
+            'apps/toolkit_activity_log/*.py',
+            'apps/toolkit_activity_log/migrations/*.py',
+            'apps/toolkit_activity_log/templates/toolkit_activity_log/*.html',
             'apps/breadcrumbs/*.py',
             'apps/breadcrumbs/middleware/*.py',
             'apps/breadcrumbs/templates/*.html',
