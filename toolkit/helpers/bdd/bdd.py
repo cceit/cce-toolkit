@@ -137,17 +137,21 @@ def compare_content_types(browser, context, file_type):
     Attempts to find the download link, request the file and asserts that
     the file extension matches the expected file type
     """
-    try:
-        file_url = browser.find_by_name('download').first['href']
-        result = requests.get(file_url, cookies=browser.cookies.all())
-        received_type = result.headers['content-type']
-    except ElementDoesNotExist:
+
+    if hasattr(context, 'file_url'):
+        result = requests.get(context.file_url, cookies=browser.cookies.all())
+    else:
         try:
-            received_type = context.result.headers['content-type']
-        except AttributeError:
-            result = requests.get(context.url, cookies=browser.cookies.all())
-            received_type = result.headers['content-type']
+            file_url = browser.find_by_name('download').first['href']
+            result = requests.get(file_url, cookies=browser.cookies.all())
+        except ElementDoesNotExist:
+            try:
+                result = context.result.headers['content-type']
+            except AttributeError:
+                result = requests.get(context.url, cookies=browser.cookies.all())
+
     target_type = get_file_content_type(file_type)
+    received_type = result.headers['content-type']
 
     return target_type, received_type
 
