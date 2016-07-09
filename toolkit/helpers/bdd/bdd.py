@@ -146,7 +146,7 @@ def compare_content_types(browser, context, file_type):
             result = requests.get(file_url, cookies=browser.cookies.all())
         except ElementDoesNotExist:
             try:
-                result = context.result.headers['content-type']
+                result = context.result
             except AttributeError:
                 result = requests.get(context.url, cookies=browser.cookies.all())
 

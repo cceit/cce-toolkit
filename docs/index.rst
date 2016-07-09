@@ -30,7 +30,7 @@ Toolkit Apps
    :maxdepth: 2
 
    toolkit/apps/breadcrumbs
-   toolkit/apps/activity_log
+   toolkit/apps/toolkit_activity_log
    toolkit/apps/fabfiles
 
 License

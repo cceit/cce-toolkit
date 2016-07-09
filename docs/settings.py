@@ -3,6 +3,9 @@ SECRET_KEY = 'ctqay9sxnh2$mvaii)-^r@^dw#kj%4jsb9!lqn*k1vuid_*dcc'
 INSTALLED_APPS = (
     'cuser',
     'toolkit',
+
+    'django.contrib.auth',
+    'django.contrib.contenttypes'
 )
 
 MIDDLEWARE_CLASSES = (
