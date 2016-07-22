@@ -14,6 +14,17 @@
 {% endblock mobile_context_nav %}
 
 {% block table %}
+
+    {% block details %}
+    {% endblock details %}
+
+    {% if page_details %}
+        <div class="row">
+            <div class="col-sm-12">
+                {{ page_details|safe }}
+            </div>
+        </div>
+    {% endif %}
     {% for row in table %}
         {% if forloop.first and forloop.last %} {# there's only a header row in the table #}
             {% include 'alert.html' with type='warning' message=empty_list_message %}
