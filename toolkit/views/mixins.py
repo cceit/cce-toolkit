@@ -442,8 +442,8 @@ class AbstractedListMixin(object):
     columns = None
     popover_rows = None
     show_add_button = False
-
-    # will be coerced to a string and put into a Bootstrap class.
+    disable_actions_column = False
+    # actions_column_width will be coerced to a string and put into a Bootstrap class.
     actions_column_width = '1'
 
     def render_button(self, pk=None, btn_class='', url_name='', label='',
@@ -673,6 +673,7 @@ class AbstractedListMixin(object):
         """
         context = super(AbstractedListMixin, self).get_context_data(**kwargs)
         try:
+            # Make sure the actions column doesn't get added multiple times
             columns = copy.copy(self.get_columns())
         except NotImplementedError:
             # If self.columns was not defined, just return the super context
@@ -687,10 +688,10 @@ class AbstractedListMixin(object):
             quicklook = None
         else:
             quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
-        # If we didn't use copy above, this next line would keep adding
         # Actions columns every time the page is accessed
-        columns += [('Actions', lambda x: self.render_buttons(
-            self.request.user, x), self.actions_column_width)]
+        if not self.disable_actions_column:
+            columns += [('Actions', lambda x: self.render_buttons(
+                self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
         context.update({
@@ -698,6 +699,7 @@ class AbstractedListMixin(object):
             'table': table,
             'quicklook': quicklook,
             'add_button_url': self.get_add_button_url(),
+            'disable_actions_column': self.disable_actions_column,
         })
         return context
 

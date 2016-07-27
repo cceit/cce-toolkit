@@ -45,7 +45,7 @@
             {% else %}
                         <tr>
                             {% for item in row %}
-                                {% if forloop.last %}
+                                {% if forloop.last and not disable_actions_column %}
                                     <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">
                                         {# item is a list of button tuples #}
                                         {% for t in item %}
@@ -53,7 +53,6 @@
                                             {% include '_button_condensed.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
                                             {% else %}
                                             {% include '_button.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
-
                                             {% endif %}
                                         {% endfor %}
                                     </td>
