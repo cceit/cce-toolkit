@@ -591,11 +591,19 @@ def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=
         ws = wb.active
         ws.title("Empty Report")
     else:
-        for sheetname, content in data.items():
-            table = content['table']
-            ws = wb.create_sheet(sheetname.title())
+        counter = 1
+        for sheet_name, content in data.items():
             widths = dict()
             heights = dict()
+            table = content['table']
+
+            if counter == 1:
+                ws = wb.active
+                ws.title = sheet_name
+            else:
+                ws = wb.create_sheet(title=sheet_name)
+
+            counter += 1
 
             for r, row in enumerate(table, start=1):
                 for c, cell in enumerate(row, start=1):
