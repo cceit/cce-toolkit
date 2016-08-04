@@ -236,112 +236,6 @@ def write_to_worksheet(ws, row, column, cell):
     return width, height
 
 
-def xls_multiple_worksheets_response(filename, data):
-    """
-    Take a filename and a dictionary (data) and return a .xls response that
-    can have multiple sheets.
-
-    The user may indicate a style for a cell by passing in a dictionary with
-    keys 'label' and 'style' instead of just a string.
-
-    The user may provide a header for each sheet. A header is a set of cells
-    under the key "header" that appears first in the sheet.
-
-    data dict format:
-
-    .. code-block:: python
-        :linenos:
-
-        mystyle = 'font: bold 1'
-        data = {
-            sheet_name: {
-                'header': [
-                    ['cell 1:1', 'cell 1:2'],
-                    ['cell 2:1', {'label': 'cell 2:2', 'style': mystyle}]
-                ],
-                'table': [
-                    [{'label': 'cell 3:1', 'style': mystyle}, 'cell 3:2'],
-                    ['cell 4:1', 'cell 4:2']
-                ]
-            },
-        }
-
-    Styles are XFStyle strings. Comprehensive documentation for the format of
-    these strings is difficult to find.
-
-    Brief example:
-        http://xlwt.readthedocs.org/en/latest/api.html#xlwt.Style.easyxf
-
-    Our example:
-        .. code-block:: python
-            :linenos:
-
-            style = 'font: bold 1,
-                    'name Tahoma, ' \\
-                    'height 160;' \\
-                    'borders: left thick, right thick, top thick, ' \\
-                    'bottom thick;  ' \\
-                    'pattern: pattern solid, pattern_fore_colour  ' \\
-                    'yellow,pattern_back_colour yellow'
-    """
-    response = HttpResponse(content_type='application/vnd.ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="%s.xls"' \
-                                      % filename
-    wb = xlwt.Workbook(style_compression=2)
-    if not data:
-        wb.add_sheet("Empty report")
-        wb.save(response)
-        return response
-    for sheetname, content in data.items():
-        table = content['table']
-        ws = wb.add_sheet(sheetname.title(), cell_overwrite_ok=True)
-        widths = dict()
-        heights = dict()
-        row_offset = 0
-        max_column = 0
-
-        if 'header' in data[sheetname] \
-                and data[sheetname]['header'] is not None:
-            header = data[sheetname].pop('header')
-            for r, row in enumerate(header):
-                for c, cell in enumerate(row):
-                    width, height = write_to_worksheet(ws, r, c, cell)
-
-                    if height > heights.get(r, 0):
-                        heights[r] = height
-                        ws.row(r).height = height
-
-                    if width > widths.get(c, 0):
-                        widths[c] = width
-                        try:
-                            ws.col(c).width = width
-                        except ValueError:
-                            ws.col(c).width = 8000
-
-                row_offset += 1
-            row_offset += 1
-
-        data_table = [list(x) for x in table]
-        for r, row in enumerate(data_table):
-            r += row_offset
-            for c, cell in enumerate(row):
-                width, height = write_to_worksheet(ws, r, c, cell)
-
-                if height > heights.get(r, 0):
-                    heights[r] = height
-                    ws.row(r).height = height
-
-                if width > widths.get(c, 0):
-                    widths[c] = width
-                    try:
-                        ws.col(c).width = width
-                    except ValueError:
-                        ws.col(c).width = 8000
-
-                if c > max_column:
-                    max_column = c
-    wb.save(response)
-    return response
 
 
 def csv_response(filename, table):
@@ -523,6 +417,113 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     return response
 
 
+def xls_multiple_worksheets_response(filename, data):
+    """
+    Take a filename and a dictionary (data) and return a .xls response that
+    can have multiple sheets.
+
+    The user may indicate a style for a cell by passing in a dictionary with
+    keys 'label' and 'style' instead of just a string.
+
+    The user may provide a header for each sheet. A header is a set of cells
+    under the key "header" that appears first in the sheet.
+
+    data dict format:
+
+    .. code-block:: python
+        :linenos:
+
+        mystyle = 'font: bold 1'
+        data = {
+            sheet_name: {
+                'header': [
+                    ['cell 1:1', 'cell 1:2'],
+                    ['cell 2:1', {'label': 'cell 2:2', 'style': mystyle}]
+                ],
+                'table': [
+                    [{'label': 'cell 3:1', 'style': mystyle}, 'cell 3:2'],
+                    ['cell 4:1', 'cell 4:2']
+                ]
+            },
+        }
+
+    Styles are XFStyle strings. Comprehensive documentation for the format of
+    these strings is difficult to find.
+
+    Brief example:
+        http://xlwt.readthedocs.org/en/latest/api.html#xlwt.Style.easyxf
+
+    Our example:
+        .. code-block:: python
+            :linenos:
+
+            style = 'font: bold 1,
+                    'name Tahoma, ' \\
+                    'height 160;' \\
+                    'borders: left thick, right thick, top thick, ' \\
+                    'bottom thick;  ' \\
+                    'pattern: pattern solid, pattern_fore_colour  ' \\
+                    'yellow,pattern_back_colour yellow'
+    """
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="%s.xls"' \
+                                      % filename
+    wb = xlwt.Workbook(style_compression=2)
+    if not data:
+        wb.add_sheet("Empty report")
+        wb.save(response)
+        return response
+    for sheetname, content in data.items():
+        table = content['table']
+        ws = wb.add_sheet(sheetname.title(), cell_overwrite_ok=True)
+        widths = dict()
+        heights = dict()
+        row_offset = 0
+        max_column = 0
+
+        if 'header' in data[sheetname] and data[sheetname]['header'] is not None:
+            header = data[sheetname].pop('header')
+            for r, row in enumerate(header):
+                for c, cell in enumerate(row):
+                    width, height = write_to_worksheet(ws, r, c, cell)
+
+                    if height > heights.get(r, 0):
+                        heights[r] = height
+                        ws.row(r).height = height
+
+                    if width > widths.get(c, 0):
+                        widths[c] = width
+                        try:
+                            ws.col(c).width = width
+                        except ValueError:
+                            ws.col(c).width = 8000
+
+                row_offset += 1
+            row_offset += 1
+
+        data_table = [list(x) for x in table]
+        for r, row in enumerate(data_table):
+            r += row_offset
+            for c, cell in enumerate(row):
+                width, height = write_to_worksheet(ws, r, c, cell)
+
+                if height > heights.get(r, 0):
+                    heights[r] = height
+                    ws.row(r).height = height
+
+                if width > widths.get(c, 0):
+                    widths[c] = width
+                    try:
+                        ws.col(c).width = width
+                    except ValueError:
+                        ws.col(c).width = 8000
+
+                if c > max_column:
+                    max_column = c
+    wb.save(response)
+    return response
+
+
 def xlsx_response(filename, table, max_width=118, max_height=90):
     """Return a Microsoft Excel 2007+ file of the given table as an
      HttpResponse.
@@ -541,10 +542,8 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
         Content-Disposition.
 
     """
-    response = HttpResponse(content_type='application/vnd.openxmlformats-'
-                                         'officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % \
-                                      filename
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % filename
     wb = openpyxl.Workbook()
     ws = wb.active
     widths = dict()
@@ -570,6 +569,53 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
         ws.row_dimensions[row].height = height
 
     # Save to temporary file
+    if settings.FILE_UPLOAD_TEMP_DIR:
+        my_temp_file = tempfile.NamedTemporaryFile(
+            suffix='.xlsx', dir=settings.FILE_UPLOAD_TEMP_DIR)
+    else:
+        my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx')
+    print my_temp_file.name
+    wb.save(my_temp_file.name)
+    my_file = my_temp_file.file
+    response.write(my_file.read())
+    my_file.close()
+    return response
+
+
+def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=90):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % filename
+    wb = openpyxl.Workbook()
+
+    if not data:
+        ws = wb.active
+        ws.title("Empty Report")
+    else:
+        for sheetname, content in data.items():
+            table = content['table']
+            ws = wb.create_sheet(sheetname.title())
+            widths = dict()
+            heights = dict()
+
+            for r, row in enumerate(table, start=1):
+                for c, cell in enumerate(row, start=1):
+                    ws_cell = ws.cell(row=r, column=c)
+                    ws_cell.value = cell
+                    if type(cell) in [str, unicode]:
+                        cell_str = ws_cell.value.encode('utf-8')
+                    else:
+                        cell_str = str(cell)
+
+                    widths[c] = min(max((widths.get(c, 0), len(cell_str))), max_width)
+                    cell_height = int(len(cell_str.split('\n')) * 15)
+                    heights[r] = min(max((heights.get(r, 0), cell_height)), max_height)
+
+            for column, width in widths.items():
+                ws.column_dimensions[get_column_letter(column)].width = width + 1
+
+            for row, height in heights.items():
+                ws.row_dimensions[row].height = height
+
     if settings.FILE_UPLOAD_TEMP_DIR:
         my_temp_file = tempfile.NamedTemporaryFile(
             suffix='.xlsx', dir=settings.FILE_UPLOAD_TEMP_DIR)

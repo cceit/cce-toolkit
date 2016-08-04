@@ -499,7 +499,7 @@ class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
             try:  # for PDF methods
                 return getattr(model.reports, str('%s' % report['method']))(
                     request=request,
-                    obj=[self.get_object()]  # Converted to a list to use the list report template
+                    obj=self.get_object()
                 )
             except TypeError:  # for XLS(X)
                 return getattr(model.reports, str('%s' % report['method']))(
