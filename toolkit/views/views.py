@@ -473,11 +473,14 @@ class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
             model = report['model'] if 'model' in report else self.model
             try:  # for PDF methods
                 return getattr(model.reports, str('%s' % report['method']))(
-                    request=request, qs=self.get_queryset(), form=self.search_form
+                    request=request,
+                    qs=self.get_queryset(),
+                    form=self.search_form
                 )
             except TypeError:  # for XLS(X)
                 return getattr(model.reports, str('%s' % report['method']))(
-                    qs=self.get_queryset(), form=self.search_form
+                    qs=self.get_queryset(),
+                    form=self.search_form
                 )
         return super(ReportDownloadSearchView, self).get(request, *args, **kwargs)
 
@@ -495,7 +498,8 @@ class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
             model = report['model'] if 'model' in report else self.model
             try:  # for PDF methods
                 return getattr(model.reports, str('%s' % report['method']))(
-                    request=request, obj=self.get_object()
+                    request=request,
+                    obj=[self.get_object()]  # Converted to a list to use the list report template
                 )
             except TypeError:  # for XLS(X)
                 return getattr(model.reports, str('%s' % report['method']))(
