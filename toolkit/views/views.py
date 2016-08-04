@@ -452,7 +452,7 @@ class ReportDownloadView(object):
 
 class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
     """
-    Variant of SearchView that downloads the search results as an xls file.
+    Variant of CCESearchView that downloads the search results as an xls or pdf report.
 
     Raises Http404 if the GET parameters do not form a valid search query.
     If no query string is specified, gives a report of all objects returned
@@ -462,30 +462,29 @@ class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
      - model or queryset (per BaseListView)
      - search_form_class (per SearchView)
      - report_function (see ReportView)
-
-    The following fields have default values that should probably be
-     overridden:
-     - filename
-     - sheet_name
     """
 
     def get(self, request, *args, **kwargs):
         self.search_form = self.search_form_class(request.GET)
-        report_selector = self.get_report_selector_form()
         reports = self.get_reports()
         selected_report = request.GET.get('get_reports')
         if self.search_form.is_valid() and selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            return getattr(model.reports, str('%s' % report['method']))(
-                qs=self.get_queryset(), form=self.search_form)
-        return super(ReportDownloadSearchView, self).get(request, *args,
-                                                         **kwargs)
+            try:  # for PDF methods
+                return getattr(model.reports, str('%s' % report['method']))(
+                    request=request, qs=self.get_queryset(), form=self.search_form
+                )
+            except TypeError:  # for XLS(X)
+                return getattr(model.reports, str('%s' % report['method']))(
+                    qs=self.get_queryset(), form=self.search_form
+                )
+        return super(ReportDownloadSearchView, self).get(request, *args, **kwargs)
 
 
 class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
     """
-
+    Variant of CCEDetailView that downloads the object as an xls or pdf report.
     """
 
     def get(self, request, *args, **kwargs):
@@ -494,7 +493,12 @@ class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
         if selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            return getattr(model.reports, str('%s' % report['method']))(
-                obj=self.get_object())
-        return super(ReportDownloadDetailView, self).get(request, *args,
-                                                         **kwargs)
+            try:  # for PDF methods
+                return getattr(model.reports, str('%s' % report['method']))(
+                    request=request, obj=self.get_object()
+                )
+            except TypeError:  # for XLS(X)
+                return getattr(model.reports, str('%s' % report['method']))(
+                    obj=self.get_object()
+                )
+        return super(ReportDownloadDetailView, self).get(request, *args, **kwargs)
