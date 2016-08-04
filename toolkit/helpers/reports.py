@@ -583,6 +583,33 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
 
 
 def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=90):
+    """
+        Takes a filename and an ordered dictionary (data) and returns an .xlsx response that
+        can have multiple worksheets.
+
+        data dict format:
+
+        .. code-block:: python
+            :linenos:
+
+            data = {
+                sheet_name1: {
+                    'table': [
+                        ['cell 1:1', 'cell 1:2', 'cell 1:3'],  # This is often the header row
+                        ['cell 2:1', 'cell 2:2', 'cell 2:3'],
+                        ['cell 3:1', 'cell 3:2', 'cell 3:3'],
+                    ]
+                },
+                sheet_name2: {
+                    'table': [
+                        ['cell 1:1', 'cell 1:2'],
+                        ['cell 2:1', 'cell 2:2'],
+                        ['cell 3:1', 'cell 3:2'],
+                        ['cell 4:1', 'cell 4:2'],
+                    ]
+                },
+            }
+        """
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="%s.xlsx"' % filename
     wb = openpyxl.Workbook()
