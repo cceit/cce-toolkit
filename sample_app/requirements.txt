@@ -1,0 +1,28 @@
+# Custom Django model-views-forms requirements
+Django==1.8.12
+django-extra-views
+django-cuser==2014.9.28
+python-magic
+
+# Documentation requirements
+sphinx
+sphinx_rtd_theme
+
+# Custom Report helpers requirements
+openpyxl
+xlwt
+
+# Fabric recipes requirements
+Fabric
+
+# Testing helpers requirements
+pyvirtualdisplay
+requests
+splinter
+django-behave
+
+#CCE Toolkit
+git+https://github.com/cceit/cce-toolkit.git@latest
+
+#Postgres
+psycopg2==2.6.1

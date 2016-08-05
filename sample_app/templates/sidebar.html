@@ -1,0 +1,8 @@
+{#{% load template_helpers %}#}
+    {% if request.user.is_authenticated %}
+        <li class="{% if 'dashboard' in sidebar_group %}active{% endif %}">
+            <a href="{% url 'dashboard' %}">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard
+            </a>
+        </li>
+    {% endif %}

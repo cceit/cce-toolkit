@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block page_title %}{% block page_headline_txt %}Sign In{% endblock page_headline_txt %}{% endblock page_title %}
+
+{% block content %}
+    <div class="col-md-8 col-sm-12">
+        {% if not user.is_authenticated %}
+            {% include "registration/_login_form.html" %}
+        {% else %}
+            <p>You are already logged in.</p>
+        {% endif %}
+    </div>
+{% endblock content %}
+
+{% block extra_header %}
+    <style>
+        .control-label {
+            text-align: left;
+        }
+
+        .form-control, .fieldalert {
+            width: 100% !important;
+        }
+    </style>
+{% endblock extra_header %}
