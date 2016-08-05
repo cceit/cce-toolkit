@@ -29,6 +29,7 @@ STATIC_ROOT = normpath(join(STORAGE_DIR, 'static'))
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(STORAGE_DIR, 'media'))
 
+MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -151,3 +152,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATICFILES_DIRS = (normpath(join(BASE_DIR, 'assets')),)
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = "/"

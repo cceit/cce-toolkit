@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title>
-            Timesheets - {% block page_title %}{{ page_title }}{% endblock page_title %}
+            DaBoard - {% block page_title %}{{ page_title }}{% endblock page_title %}
         </title>
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}?time={% now "fyhims" %}"/>
@@ -74,7 +74,7 @@
                     <div class="row page-header">
                         {% block page_header %}
                             {% block page_headline %}
-                                <div class="col-sm-4">
+                                <div class="col-md-7 col-sm-12">
                                     <h1>
                                         {% block page_headline_txt %}
                                             {{ page_headline }}
@@ -85,11 +85,8 @@
                                 </div>
                             {% endblock page_headline %}
                             {% block page_options %}
-                                <div class="page-options col-sm-4">
+                                <div class="page-options col-md-5 col-sm-12">
                                     {% block page_options_1 %}{% endblock page_options_1 %}
-                                </div>
-                                <div class="page-options col-sm-4">
-                                    {% block page_options_2 %}{% endblock page_options_2 %}
                                 </div>
                             {% endblock page_options %}
                         {% endblock page_header %}

@@ -1,3 +1,3 @@
-from django.contrib import admin
+from toolkit.helpers.admin import auto_admin_register
 
-# Register your models here.
+auto_admin_register(__package__)

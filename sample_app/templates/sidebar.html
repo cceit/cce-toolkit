@@ -1,8 +1,6 @@
 {% load template_helpers %}
-    {% if request.user.is_authenticated %}
-        <li class="{% if 'home' in sidebar_group %}active{% endif %}">
-            <a href="{% url 'home' %}">
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
-            </a>
-        </li>
-    {% endif %}
+<li class="{% if 'home' in sidebar_group %}active{% endif %}">
+    <a href="{% url 'home' %}">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+    </a>
+</li>

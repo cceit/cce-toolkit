@@ -1265,3 +1265,52 @@ button.action {
       margin: 0;
   }
 }
+
+/* Boards List */
+@media (max-width: 767px) {
+  .boards {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .boards {
+    margin-left: -55px;
+    margin-right: -55px;
+    padding: 55px;
+  }
+}
+
+.boards {
+  background-size: cover;
+  @media (min-width: 768px) {
+    .board {
+      height: 200px;
+    }
+  }
+  .board {
+    border: solid 1px;
+    padding: 15px;
+    color: #EEEEEE;
+    a {
+      text-decoration: none;
+    }
+  }
+  .col-md-4 {
+    margin-bottom: 30px;
+  }
+}
+
+.board-img {
+  width: 80%;
+  height: 100%;
+  padding-bottom: 5px;
+}
+
+@media screen and (min-width: 767px) {
+  .board-description {
+    padding-top: 40px;
+  }
+}
