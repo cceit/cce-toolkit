@@ -1,12 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
 from toolkit.models import CCEAuditModel
 
 
 class Profile(CCEAuditModel):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     picture = models.FileField(null=True, blank=True)
 
     def can_update(self, user_obj):

@@ -45,18 +45,8 @@
                     <!-- GlobalHeader Include -->
                     <!-- /GlobalHeader Include -->
                     {% if request.user.pk %}
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                                <i class="fa fa-user fa-fw"></i> Hello, {{ request.user.first_name }} <i class="fa fa-caret-down"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="{% url 'edit_user_preferences'  %}"><i class="fa fa-gear fa-fw"></i> Edit Preferences</a></li>
-                                <li><a href="{% url 'pending_notifications' %}"><i class="fa fa-envelope fa-fw"></i> Notifications</a></li>
-                                <li class="divider"></li>
-
-                                <li><a href="{% url 'logout' %}" id="logout_button"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>
-                            </ul>
-                            <!-- /.dropdown-user -->
+                        <li>
+                            <a href="{% url 'logout' %}" id="logout_button"><i class="fa fa-sign-out fa-fw"></i> Log out</a>
                         </li>
                     {% else %}
                         <li>
@@ -92,10 +82,6 @@
                                         {% block action_buttons %}
                                         {% endblock action_buttons %}
                                     </h1>
-                                    <h4 id="video-tutorial">
-                                        {% block video_tutorial %}
-                                        {% endblock video_tutorial %}
-                                    </h4>
                                 </div>
                             {% endblock page_headline %}
                             {% block page_options %}
