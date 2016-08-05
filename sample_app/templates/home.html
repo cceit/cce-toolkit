@@ -12,7 +12,7 @@
                         <div class="media board">
                             {% if board.image %}
                                 <div class="media-left media-top">
-{#                                    <a id="board{{ board.pk }}"  href="{% url 'view_board' slug=board.slug pk=board.pk %}">#}
+                                    <a id="board{{ board.pk }}"  href="{% url 'view_board' slug=board.slug %}">
                                         <img class="media-object" src="{{ MEDIA_URL }}{{ board.image }}"
                                              data-holder-rendered="true" style="width: 100px; height: 120px;"
                                              alt="{{ board.image }}">
@@ -21,7 +21,7 @@
                             {% endif %}
                             <div class="media-body">
                                 <h3 class="media-heading">
-{#                                    <a href="{% url 'view_board' slug=board.slug pk=board.pk %}">{{ board.name }}</a>#}
+                                    <a href="{% url 'view_board' slug=board.slug %}">{{ board.name }}</a>
                                 </h3>
                                 <p></p>
                                 <p>{{ board.description|truncatechars_html:100 }}</p>

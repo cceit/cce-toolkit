@@ -5,7 +5,7 @@ from boards.models import Board
 
 
 class BoardSimpleSearch(CCESimpleSearchForm):
-    search_placeholder = 'Search Events'
+    search_placeholder = 'Search Boards'
 
     class Meta(CCESimpleSearchForm.Meta):
         model = Board

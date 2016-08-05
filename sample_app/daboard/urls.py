@@ -23,7 +23,7 @@ from boards.views import BoardListView
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    # url(r'^boards/', include("boards.urls")),
+    url(r'^boards/', include("boards.urls")),
     url(r'^profiles/', include("profiles.urls")),
 
 

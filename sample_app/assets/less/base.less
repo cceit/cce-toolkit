@@ -953,364 +953,51 @@ footer {
   }
 }
 
-/* Fix for Anchor + Fixed Header */
-h2 a {
-  padding-top: 81px;
-}
-
-#search_li {
-
-  width: 100%;
-
-}
-
-#custom-search-input {
-  margin: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-#custom-search-input .input-group {
-
-  width: 100%;
-}
-
-#custom-search-input .input-group-btn {
-  display: block;
-}
-
-#custom-search-input .search-query {
-  padding-right: 3px;
-  padding-right: 4px \9;
-  padding-left: 3px;
-  padding-left: 4px \9;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
-
-  margin-bottom: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-#custom-search-input button {
-  border: 0;
-  background: none;
-  /** belows styles are working good */
-  padding: 2px 5px;
-  margin-top: 5px;
-  position: relative;
-  left: -28px;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
-  margin-bottom: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #D9230F;
-}
-
-.search-query:focus + button {
-  z-index: 3;
-}
-
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus, .badge {
-  background-color: #630D0D;
-}
-
-.true_icon {
-  color: green;
-  font-size: 25px;
-}
-
-.false_icon {
-  color: red;
-  font-size: 25px;
-}
-
-.transaction_charge {
-  color: green;
-}
-
-.transaction_payment {
-  color: red;
-}
-
-.context-aware-nav, .navbar .navbar-nav > .context-aware-nav > a {
-  background-color: #1c6089;
-  color: white;
-}
-
-.side-nav > .context-aware-nav > ul > li > a.active {
-  background-color: #fff;
-  color: #222;
-  font-weight: bolder;
-}
-
-.side-nav > .context-aware-nav > ul > li > a {
-  background-color: #eee;
-  color: #481515;
-}
-
-.side-nav > li > ul > li > ul > li > a {
-  padding: 10px 15px 10px 60px;
-}
-
-.side-nav > li > ul > li > a:hover {
-  color: #444;
-  background: #ddd;
-}
-
-.select2-container, .form-control, .fieldalert {
-  width: 60% !important;
-}
-
-.status-submitted {
-
-  &:extend(.label-primary);
-  color: white;
-}
-
-.status-returned {
-
-  &:extend(.label-default);
-  color: white;
-}
-
-.status-draft {
-
-  &:extend(.label-warning);
-  color: white;
-}
-
-.status-reviewed {
-
-  &:extend(.label-info);
-  color: white;
-}
-
-.status-approved, .status-offline_approved, .status-verified {
-
-  &:extend(.label-success);
-  color: white;
-}
-
-.status-verified {
-  background-color: #845CB8 !important;
-  color: white;
-}
-
-.status-rejected {
-
-  &:extend(.label-danger);
-  color: white;
-}
-
-.status-filed {
-
-  background-color: #1b1b1b;
-  color: white;
-}
-
-.action_button_form {
-  float: left;
-  padding: 0 2px
-}
-
-.panel-heading button {
-  height: 20px;
-  width: 20px;
-  padding: 0;
-  margin: 0;
-
-}
-
-#dashboard-widgets .panel {
-  padding: 0
-}
-
-.nav .dropdown:hover {
-  background-color: black;
-}
-
-.nav .dropdown-toggle {
-  height: 55px;
-  padding-top: 20px;
-}
-
-.new_marker {
-  position: absolute;
-  font-size: 12px;
-  text-align: center;
-  padding-top: 7px;
-  width: 30px;
-  height: 30px;
-  /* margin-right: 10px; */
-  /* border-radius: 17px; */
-  /* border: solid 1px #FDDE00; */
-  /* background-color: #FDDE00; */
-  top: 9px;
-  right: 0;
-  background-color: #c94642;
-  color: white;
-  font-weight: bold;
-  /* font-size: 0.55em; */
-  border-radius: 30px;
-  box-shadow: 1px 1px 1px gray;
-}
-
-@media (max-width: 767px) {
-  .new_marker {
-    top: -20px;
-  }
-}
-
-.list-group-item .new_marker {
-  top: -10px;
-
-}
-
-/*CSS Overrides*/
-.sr-only {
-  background-color: white;
-  color: black;
-}
-
-a:focus {
-  border: 1px dotted white;
-}
-
-.modal-header {
-  background-color: #2c872c;
-  color: #ffffff;
-}
-
-button.action {
-  background-color: #3a7f94;
-}
-
-.label-success {
-  background-color: #158915;
-}
-
-.btn-info:hover {
-  color: #3a7f94;
-  background-color: #fff;
-  border-color: #3a7f94;
-}
-
-.btn-info:focus, .btn-info.focus {
-  color: #3a7f94;
-  background-color: #fff;
-  border-color: #3a7f94;
-}
-
-.btn-success {
-  background-color: #158915;
-}
-
-.btn-success:hover {
-  background-color: #0F690F;
-}
-
-.btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
-  background-color: #0F690F;
-}
-
-.btn-danger {
-  background-color: #c74b48;
-}
-
-.label-danger, .status-rejected {
-  background-color: #c74b48;
-}
-
-.status-draft {
-  color: black;
-}
-
-.close:focus {
-  border: 2px dotted white;
-}
-
-.alert .close {
-  color: black !important;
-}
-
-#video-tutorial {
-  .fa-play-circle {
-    color: dimgray;
-    //font-size: 1.2em;
-  }
-  a {
-    color: black;
-  }
-  a:hover {
-    .fa-play-circle {
-      color: red;
-    }
-  }
-
-}
-
-.fancybox-skin{
-  background: none !important;
-}
-
-.fancybox-opened .fancybox-skin{
-  box-shadow: none !important;
-}
-
-@media screen and (max-width: 435px) {
-  .modal-dialog {
-      width: 300px;
-      margin: 0;
-  }
-}
-
 /* Boards List */
-@media (max-width: 767px) {
-  .boards {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .boards {
-    margin-left: -55px;
-    margin-right: -55px;
-    padding: 55px;
-  }
-}
-
-.boards {
-  background-size: cover;
-  @media (min-width: 768px) {
-    .board {
-      height: 200px;
-    }
-  }
-  .board {
-    border: solid 1px;
-    padding: 15px;
-    color: #EEEEEE;
-    a {
-      text-decoration: none;
-    }
-  }
-  .col-md-4 {
-    margin-bottom: 30px;
-  }
-}
-
-.board-img {
-  width: 80%;
-  height: 100%;
-  padding-bottom: 5px;
-}
-
-@media screen and (min-width: 767px) {
-  .board-description {
-    padding-top: 40px;
-  }
-}
+//@media (max-width: 767px) {
+//  .boards {
+//    margin-left: 0;
+//    margin-right: 0;
+//    padding: 0;
+//  }
+//}
+//
+//@media (min-width: 768px) {
+//  .boards {
+//    margin-left: -55px;
+//    margin-right: -55px;
+//    padding: 55px;
+//  }
+//}
+//
+//.boards {
+//  background-size: cover;
+//  @media (min-width: 768px) {
+//    .board {
+//      height: 200px;
+//    }
+//  }
+//  .board {
+//    border: solid 1px;
+//    padding: 15px;
+//    color: #EEEEEE;
+//    a {
+//      text-decoration: none;
+//    }
+//  }
+//  .col-md-4 {
+//    margin-bottom: 30px;
+//  }
+//}
+//
+//.board-img {
+//  width: 80%;
+//  height: 100%;
+//  padding-bottom: 5px;
+//}
+//
+//@media screen and (min-width: 767px) {
+//  .board-description {
+//    padding-top: 40px;
+//  }
+//}
