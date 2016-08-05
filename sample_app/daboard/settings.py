@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 DJANGO_APPS = (
+    'toolkit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,11 +49,16 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'cuser',  # CurrentUserField
+    'django_behave',
+    'splinter',
+)
 CUSTOM_APPS = (
     'boards',
     'planks',
     'splinters',
+    'profiles',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
@@ -66,6 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'cuser.middleware.CuserMiddleware',  # CurrentUserField
 )
 
 ROOT_URLCONF = 'daboard.urls'

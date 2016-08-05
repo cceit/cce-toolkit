@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.text import slugify
+from toolkit.models import CCEAuditModel
 
 
-class Board(models.Model):
-    image = models.ImageField(upload_to='board_images', blank=False, null=False)
+class Board(CCEAuditModel):
+    image = models.FileField(upload_to='board_images', blank=False, null=False)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -18,3 +19,18 @@ class Board(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Board, self).save(*args, **kwargs)
+
+    def can_update(self, user_obj):
+        return True
+
+    def can_delete(self, user_obj):
+        return True
+
+    def can_create(self, user_obj):
+        return True
+
+    def can_view_list(self, user_obj):
+        return True
+
+    def can_view(self, user_obj):
+        return True
