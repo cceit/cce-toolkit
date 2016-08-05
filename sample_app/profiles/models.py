@@ -7,7 +7,7 @@ from toolkit.models import CCEAuditModel
 
 class Profile(CCEAuditModel):
     user = models.ForeignKey(User)
-    picture = models.FileField()
+    picture = models.FileField(null=True, blank=True)
 
     def can_update(self, user_obj):
         return True

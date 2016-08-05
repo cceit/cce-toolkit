@@ -19,16 +19,14 @@ from django.contrib import admin
 from django.conf.urls.static import static
 
 from boards.views import BoardListView
-from daboard.views import RegistrationView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # url(r'^boards/', include("boards.urls")),
+    url(r'^profiles/', include("profiles.urls")),
 
-    url(r'^register/', include([
-        url(r'^$', RegistrationView.as_view(), name="registration"),
-    ])),
+
     url(r'^$', BoardListView.as_view(), name='home', ),
 
     url(r'^login/', 'django.contrib.auth.views.login', name="login", ),

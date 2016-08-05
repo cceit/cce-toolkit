@@ -1,15 +1,11 @@
-from django.contrib.auth.models import User
 from toolkit.forms import CCEModelForm
+
+from profiles.models import Profile
 
 
 class ProfileCreateForm(CCEModelForm):
     class Meta:
-        model = User
+        model = Profile
         fields = (
-            'user__first_name',
-            'user__last_name',
-            'user__username',
-            'user__email',
-            'user__password',
             'picture',
         )

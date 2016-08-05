@@ -51,6 +51,7 @@ DJANGO_APPS = (
 )
 THIRD_PARTY_APPS = (
     'cuser',  # CurrentUserField
+    'widget_tweaks',  # django widget tweaks
     'django_behave',
     'splinter',
 )
