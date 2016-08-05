@@ -25,7 +25,6 @@ class RegistrationView(CCEFormView):
             messages.warning(self.request, "That username is already in use. Please try another.")
             return self.form_invalid(form)
         else:
-            login(self.request, user)
             return HttpResponseRedirect(reverse('login'))
 
     def get_success_url(self):
