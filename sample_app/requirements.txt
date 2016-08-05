@@ -26,3 +26,5 @@ git+https://github.com/cceit/cce-toolkit.git@latest
 
 #Postgres
 psycopg2==2.6.1
+
+Pillow
