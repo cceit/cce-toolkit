@@ -3,10 +3,9 @@ from behave import *
 
 from django.conf import settings
 from django.contrib.auth.models import User
-
+from toolkit.helpers.bdd import fill_and_submit_form
 from toolkit.helpers.bdd.shared_steps import *
 
-from toolkit.helpers.bdd import fill_and_submit_form
 from boards.models import Board
 
 
