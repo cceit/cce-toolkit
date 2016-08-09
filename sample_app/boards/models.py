@@ -2,12 +2,15 @@ from django.db import models
 from django.utils.text import slugify
 from toolkit.models import CCEAuditModel
 
+from boards.reports import BoardsReports
+
 
 class Board(CCEAuditModel):
     image = models.FileField(upload_to='board_images', blank=False, null=False)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    created = models.DateTimeField(verbose_name=None, auto_now_add=True, null=True)
+    reports = BoardsReports()
 
     def __unicode__(self):
         return  self.name

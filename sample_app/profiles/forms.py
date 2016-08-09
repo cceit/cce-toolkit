@@ -10,7 +10,7 @@ class ProfileCreateForm(forms.Form):
     """
     Form for an applicant to register an account.
     """
-    picture = forms.FileField()
+    picture = forms.FileField(required=False)
     first_name = forms.CharField(max_length=30, help_text="30 characters or fewer.")
     last_name = forms.CharField(max_length=30, help_text="30 characters or fewer.")
     username = forms.CharField(max_length=30,

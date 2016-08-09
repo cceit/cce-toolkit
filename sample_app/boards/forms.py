@@ -1,5 +1,5 @@
 from django import forms
-from toolkit.forms import CCESimpleSearchForm, CCEModelSearchForm
+from toolkit.forms import CCESimpleSearchForm, CCEModelSearchForm, CCEModelForm
 
 from boards.models import Board
 
@@ -27,3 +27,11 @@ class BoardAdvancedSearchForm(CCEModelSearchForm):
             'name',
             'description',
         )
+
+
+class BoardForm(CCEModelForm):
+    class Meta:
+        model = Board
+        fields = ('image',
+                  'name',
+                  'description',)

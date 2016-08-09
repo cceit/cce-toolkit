@@ -5,13 +5,14 @@ from django.utils.text import slugify
 from toolkit.models import CCEAuditModel
 
 from planks.models import Plank
+from splinters.reports import SplinterReports
 
 
 class Splinter(CCEAuditModel):
     owner = models.ForeignKey(User)
     plank = models.ForeignKey(Plank)
     comment = models.TextField(max_length=1000, unique=False)
-    slug = models.SlugField(unique=False)
+    reports = SplinterReports()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.comment)

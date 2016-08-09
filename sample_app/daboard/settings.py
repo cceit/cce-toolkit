@@ -23,11 +23,11 @@ STORAGE_DIR = normpath(join(BASE_DIR, 'storage'))
 
 # STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(STORAGE_DIR, 'static'))
+STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
 
 # MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = normpath(join(STORAGE_DIR, 'media'))
+MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
 
 MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
@@ -38,6 +38,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
+os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000-8100'
 
 # Application definition
 

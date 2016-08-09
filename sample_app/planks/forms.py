@@ -1,6 +1,7 @@
 from django import forms
-from toolkit.forms import CCESimpleSearchForm, CCEModelSearchForm
+from toolkit.forms import CCESimpleSearchForm, CCEModelSearchForm, CCEModelForm
 
+from boards.models import Board
 from planks.models import Plank
 
 
@@ -25,3 +26,15 @@ class PlankAdvancedSearchForm(CCEModelSearchForm):
         fields = (
             'title',
         )
+
+
+class PlankForm(CCEModelForm):
+    class Meta:
+        model = Plank
+        fields = ('image',
+                  'title',
+                  'board',
+                  'owner',
+        )
+        widgets = {'board': forms.HiddenInput,
+                   'owner': forms.HiddenInput}

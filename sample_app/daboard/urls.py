@@ -18,18 +18,19 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 
-from boards.views import BoardListView
+from boards.views import BoardListView, BoardCreateView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^boards/', include("boards.urls")),
+    url(r'^board/', include("boards.urls")),
+    url(r'^plank/', include("planks.urls")),
+    url(r'^splinter/', include("splinters.urls")),
     url(r'^profiles/', include("profiles.urls")),
-
 
     url(r'^$', BoardListView.as_view(), name='home', ),
 
-    url(r'^login/', 'django.contrib.auth.views.login', name="login", ),
-    url(r'^logout/', 'django.contrib.auth.views.logout', name="logout", ),
+    url(r'^accounts/login/', 'django.contrib.auth.views.login', name="login", ),
+    url(r'^accounts/logout/', 'django.contrib.auth.views.logout', name="logout", ),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

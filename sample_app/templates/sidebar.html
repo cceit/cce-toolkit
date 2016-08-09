@@ -5,14 +5,14 @@
     </a>
 </li>
 
-<li class="{% if 'management' in sidebar_group %}active{% endif %}">
-    <a href="#" data-toggle="collapse" data-target="#management"
-       class="{% if 'management' in sidebar_group %}collapsed{% endif %}" aria-expanded="true" id="id_management">
-        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Management <span class="caret"></span>
-    </a>
-
-    <ul id="management" class="sidebar-items collapse {% if 'service_desk' in sidebar_group %}in{% endif %}"
-        aria-expanded="true">
-        <li>{% include '_sidebar_item.html' with url='home' label='Manage Boards' %}</li>
-    </ul>
-</li>
+{#<li class="{% if 'management' in sidebar_group %}active{% endif %}">#}
+{#    <a href="#" data-toggle="collapse" data-target="#management"#}
+{#       class="{% if 'management' in sidebar_group %}collapsed{% endif %}" aria-expanded="true" id="id_management">#}
+{#        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Management <span class="caret"></span>#}
+{#    </a>#}
+{##}
+{#    <ul id="management" class="sidebar-items collapse {% if 'management' in sidebar_group %}in{% endif %}"#}
+{#        aria-expanded="true">#}
+{#        <li>{% include '_sidebar_item.html' with url='add_board' label='Create Board' %}</li>#}
+{#    </ul>#}
+{#</li>#}

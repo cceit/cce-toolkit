@@ -4,16 +4,17 @@ from django.utils.text import slugify
 from toolkit.models import CCEAuditModel
 
 from boards.models import Board
+from planks.reports import PlankReports
 
 
 class Plank(CCEAuditModel):
     image = models.FileField(upload_to='plank_images', blank=True, null=True)
     created = models.DateTimeField(verbose_name=None, auto_now_add=True)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, null=True)
     board = models.ForeignKey(Board)
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    pinned = models.BooleanField(default=False)
+    reports = PlankReports()
+
 
     @staticmethod
     def is_owner(userobj, plank):
