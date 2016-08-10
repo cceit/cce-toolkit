@@ -33,7 +33,7 @@ Documentation for CCE Toolkit can be found at [Read The Docs](http://cce-toolkit
 
 #### General policy
 
-All changes and contributions to the [CCE Toolkit repository](github.com/cceit/cce-toolkit) are under the CCE Toolkit license.
+All changes and contributions to the [CCE Toolkit repository](https://github.com/cceit/cce-toolkit) are under the CCE Toolkit license.
 
 By issuing a pull request or sending your changes over in any other form, you accept the [CCE Toolkit license](https://github.com/cceit/cce-toolkit/blob/master/LICENSE) to apply to your changes.
 
