@@ -155,3 +155,24 @@ STATICFILES_DIRS = (normpath(join(BASE_DIR, 'assets')),)
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "/"
+
+#
+# FABRIC_SETTINGS = {
+#     'PROJECT_NAME': 'sample_app',
+#     'GIT_LINK': 'https://github.com/cceit/cce-toolkit.git',
+#     'SERVERS': {
+#         'uat': {
+#             'name': 'latest',
+#             'branch': 'latest',
+#             'production': False,
+#             'server': 'user@server',
+#             'project_dir': '/home/project/app',
+#             'virtualenv': '/home/project/env',
+#             'django_root': '/home/project/app',
+#             'settings_file': '/app/dir/settings.py',
+#             'settings_param': 'dir.settings',
+#             'requirements_path': '/home/project/app/',
+#         },
+#     }
+# }
+
