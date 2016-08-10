@@ -156,9 +156,9 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "/"
 
-#
+# project_name = 'sample_app'
 # FABRIC_SETTINGS = {
-#     'PROJECT_NAME': 'sample_app',
+#     'PROJECT_NAME': project_name,
 #     'GIT_LINK': 'https://github.com/cceit/cce-toolkit.git',
 #     'SERVERS': {
 #         'uat': {
