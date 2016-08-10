@@ -9,7 +9,7 @@ from toolkit.helpers.utils import snakify
 def before_scenario(context, scenario):
     setup_test_environment(context, scenario)
     call_command('flush', verbosity=0, interactive=False)
-    call_command('loaddata', 'user.json')
+    call_command('loaddata', 'auth.json')
 
 
 def after_step(context, step):
