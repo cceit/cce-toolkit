@@ -44,7 +44,7 @@ class Task(CCEAuditModel):
         return True
 
     def can_delete(self, user_obj):
-        return True
+        return self.created_by == user_obj or user_obj.is_staff
 
     def can_create(self, user_obj):
         return True
