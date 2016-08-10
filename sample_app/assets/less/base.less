@@ -1,9 +1,17 @@
 //@import url("boot.less");
 @import url("boot.less");
-@import url("ouheader.less");
+//@import url("ouheader.less");
 @import url("oufooter.less");
 @import url("helpers.less");
 
+#id_search{
+  width: 40%;
+}
+
+.required-warning {
+    font-size: 24px;
+    color: red;
+}
 /* Table centering for images */
 td {
   vertical-align: middle !important;
@@ -772,7 +780,7 @@ ul.alert-dropdown {
 @media (min-width: 768px) {
   .side-nav {
     position: fixed;
-    top: 86px;
+    top: 56px;
     left: 225px;
     width: 225px;
     margin-left: -225px;
@@ -802,7 +810,7 @@ ul.alert-dropdown {
 }
 
 .side-nav > li > ul > li > a:hover {
-  color: #fff;
+    color: #660000;
 }
 
 /* Flot Chart Containers */
@@ -902,7 +910,7 @@ body {
 }
 
 footer {
-  height: 300px;
+  height: 50px;
   margin-top: 0;
 }
 

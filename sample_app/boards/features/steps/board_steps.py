@@ -9,11 +9,11 @@ from toolkit.helpers.bdd.shared_steps import *
 from boards.models import Board
 
 
-@step("I submit valid (registration|board|plank|splinter) information")
+@step("I submit valid (registration|board|task|splinter) information")
 def create_profile(context, target_variable):
     context.board_name = "Test Board"
     context.board_description = "Test Description"
-    context.plank_title = "Test Plank"
+    context.task_title = "Test Task"
     context.splinter_comment = "Test Splinter Comment"
 
     if target_variable == "regiestration":
@@ -32,7 +32,7 @@ def create_profile(context, target_variable):
 
     elif target_variable == "board":
         return None
-    elif target_variable == "plank":
+    elif target_variable == "task":
         return None
     else:
         return None
@@ -43,7 +43,7 @@ def check_for_registration(context):
     assert User.objects.get(pk=1).is_authenticated()
 
 
-@then("I should see the (board|plank|splinter)")
+@then("I should see the (board|task|splinter)")
 def check_for_object(context, target_variable):
     b = context.browser
     expected_count = 1

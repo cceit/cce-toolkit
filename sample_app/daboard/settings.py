@@ -23,11 +23,11 @@ STORAGE_DIR = normpath(join(BASE_DIR, 'storage'))
 
 # STATIC FILE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
+STATIC_ROOT = normpath(join(STORAGE_DIR, 'static'))
 
 # MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
+MEDIA_ROOT = normpath(join(STORAGE_DIR, 'media'))
 
 MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
@@ -36,10 +36,9 @@ MEDIA_URL = '/media/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
-os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8000-8100'
 
 # Application definition
 
@@ -52,6 +51,7 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+
 THIRD_PARTY_APPS = (
     'cuser',  # CurrentUserField
     'widget_tweaks',  # django widget tweaks
@@ -60,8 +60,7 @@ THIRD_PARTY_APPS = (
 )
 CUSTOM_APPS = (
     'boards',
-    'planks',
-    'splinters',
+    'tasks',
     'profiles',
 )
 

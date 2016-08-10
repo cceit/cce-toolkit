@@ -9,17 +9,18 @@ class BoardSimpleSearch(CCESimpleSearchForm):
 
     class Meta(CCESimpleSearchForm.Meta):
         model = Board
-        field_lookups = {'search': ('name__icontains', 'description__icontains')}
+        field_lookups = {'search': ('name__icontains',
+                                    'description__icontains')}
 
 
 class BoardAdvancedSearchForm(CCEModelSearchForm):
-    """Advanced Search Form for Events"""
+    """Advanced Search Form for Boards"""
     description = forms.CharField(max_length=1000, required=False)
 
     class Meta:
         model = Board
         field_lookups = {
-            'name': 'name__icontains',
+            'name': ('name__icontains', 'tasks__title__icontains'),
             'description': 'description__icontains',
         }
 
@@ -28,10 +29,13 @@ class BoardAdvancedSearchForm(CCEModelSearchForm):
             'description',
         )
 
+        labels = {
+            'name': 'Boards/Tasks'
+        }
+
 
 class BoardForm(CCEModelForm):
     class Meta:
         model = Board
-        fields = ('image',
-                  'name',
+        fields = ('name',
                   'description',)

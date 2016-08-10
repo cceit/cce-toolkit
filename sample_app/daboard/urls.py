@@ -18,19 +18,23 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 
-from boards.views import BoardListView, BoardCreateView
+from tasks.views import TaskListView
 
-urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+              + [
+                    url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^board/', include("boards.urls")),
-    url(r'^plank/', include("planks.urls")),
-    url(r'^splinter/', include("splinters.urls")),
-    url(r'^profiles/', include("profiles.urls")),
+                    url(r'^p/', include("tasks.urls")),
+                    url(r'^profiles/', include("profiles.urls")),
 
-    url(r'^$', BoardListView.as_view(), name='home', ),
+                    url(r'^accounts/login/', 'django.contrib.auth.views.login',
+                        name="login", ),
+                    url(r'^accounts/logout/',
+                        'django.contrib.auth.views.logout',
+                        name="logout", ),
 
-    url(r'^accounts/login/', 'django.contrib.auth.views.login', name="login", ),
-    url(r'^accounts/logout/', 'django.contrib.auth.views.logout', name="logout", ),
+                    url(r'', include("boards.urls")),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+              ]
+

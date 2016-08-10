@@ -18,13 +18,8 @@
         {% include 'header.html' %}
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}?time={% now "fyhims" %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/calendar.css' %}?time={% now "fyhims" %}"/>
         <link rel="shortcut icon" href="{% static 'img/favicon.png' %}"/>
 
-        <!-- Fancy Box CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-buttons.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/helpers/jquery.fancybox-thumbs.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css">
 
         {% block extra_header %}
             <link rel="stylesheet" type="text/css" href="{% static 'toolkit/toolkit.css' %}" />
@@ -39,23 +34,7 @@
 
         {% block navigation %}
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                {% include "_ouheader.html" %}
                 <h3 class="navbar-title" >DaBoard</h3>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- GlobalHeader Include -->
-                    <!-- /GlobalHeader Include -->
-                    {% if request.user.pk %}
-                        <li>
-
-                            <a href="{% url 'logout' %}" id="logout_button"><i class="fa fa-sign-out fa-fw"></i> Log out</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{% url 'login' %}" class="dropdown-toggle" role="button" aria-expanded="false">Login</a>
-                        </li>
-                    {% endif %}
-                </ul>
 
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">

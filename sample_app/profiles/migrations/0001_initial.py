@@ -20,10 +20,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('last_updated_at', models.DateTimeField(auto_now=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('picture', models.FileField(upload_to=b'')),
+                ('picture', models.FileField(null=True, upload_to=b'', blank=True)),
                 ('created_by', cuser.fields.CurrentUserField(related_name='profiles_profile_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('last_updated_by', cuser.fields.CurrentUserField(related_name='profiles_profile_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'abstract': False,

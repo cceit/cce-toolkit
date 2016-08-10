@@ -22,7 +22,8 @@ class RegistrationView(CCEFormView):
         try:
             user = form.create_user()
         except IntegrityError:
-            messages.warning(self.request, "That username is already in use. Please try another.")
+            messages.warning(self.request, "That username is already in use. "
+                                           "Please try another.")
             return self.form_invalid(form)
         else:
             return HttpResponseRedirect(reverse('login'))
