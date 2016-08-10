@@ -21,7 +21,7 @@ class TaskListView(ReportDownloadSearchView):
         ('Created at', 'created_at'),
         ('Created by', 'created_by'),
     ]
-    paginate_by = 2
+    paginate_by = 25
     show_context_menu = True
 
     def get_reports(self):
