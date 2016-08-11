@@ -47,8 +47,7 @@ class ToolkitActivityLog(CCEAuditModel):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     absolute_url_name = models.CharField(max_length=64, blank=True)
-    objects = models.Manager()
-    permissions = ActivitiesPermissionManager()
+    objects = ActivitiesPermissionManager()  # this is the default manager on purpose
 
     class Meta:
         db_table = 'cce_toolkit_activity_log'

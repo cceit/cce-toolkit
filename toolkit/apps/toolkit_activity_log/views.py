@@ -35,5 +35,4 @@ class ToolkitActivityLogListView(CCESearchView):
                                    url=obj.resolved_url)]
 
     def get_queryset(self):
-        return super(ToolkitActivityLogListView, self).permissions.scoped_by_user(self.request.user)
-
+        return super(ToolkitActivityLogListView, self).get_queryset().scoped_by_user(self.request.user)
