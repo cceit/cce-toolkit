@@ -1,4 +1,5 @@
 from django.template.defaultfilters import title
+from django.db.models import Q
 from toolkit.views import CCESearchView, mark_safe
 
 from .forms import ActivityLogSearchForm, ActivityLogAdvancedSearchForm
@@ -35,4 +36,8 @@ class ToolkitActivityLogListView(CCESearchView):
                                    url=obj.resolved_url)]
 
     def get_queryset(self):
-        return super(ToolkitActivityLogListView, self).get_queryset().scoped_by_user(self.request.user)
+        # This repeats the functionality of ActivitiesPermissionManager.scoped_by_user().
+        return super(ToolkitActivityLogListView, self).get_queryset().filter(
+            Q(activity_type__groups__user=self.request.user) |
+            Q(activity_type__include_creator=True, created_by=self.request.user)
+        )
