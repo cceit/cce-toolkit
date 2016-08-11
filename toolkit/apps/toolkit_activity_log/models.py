@@ -72,7 +72,7 @@ class ToolkitActivityLog(CCEAuditModel):
                 return reverse(self.absolute_url_name)
             except NoReverseMatch:
                 try:
-                    return reverse(self.absolute_url_name, {'pk': self.object_id})
+                    return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
                 except NoReverseMatch:
                     return ''
 
