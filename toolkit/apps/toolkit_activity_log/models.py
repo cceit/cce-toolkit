@@ -13,8 +13,7 @@ class ToolkitActivityType(CCEModel):
     logo = models.CharField(max_length=128, blank=True)
     groups = models.ManyToManyField(to=Group)
     include_creator = models.BooleanField(default=True)
-    objects = models.Manager()
-    permissions = ActivityTypePermissionManager()
+    objects = ActivityTypePermissionManager.as_manager()
 
     class Meta:
         db_table = 'cce_toolkit_activity_types'
@@ -47,8 +46,7 @@ class ToolkitActivityLog(CCEAuditModel):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     absolute_url_name = models.CharField(max_length=64, blank=True)
-    objects = models.Manager()
-    permissions = ActivitiesPermissionManager()
+    objects = ActivitiesPermissionManager.as_manager()
 
     class Meta:
         db_table = 'cce_toolkit_activity_log'
@@ -73,7 +71,7 @@ class ToolkitActivityLog(CCEAuditModel):
                 return reverse(self.absolute_url_name)
             except NoReverseMatch:
                 try:
-                    return reverse(self.absolute_url_name, {'pk': self.object_id})
+                    return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
                 except NoReverseMatch:
                     return ''
 

@@ -1,0 +1,117 @@
+{% load staticfiles %}
+{% load static %}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>
+            DaBoard - {% block page_title %}{{ page_title }}{% endblock page_title %}
+        </title>
+        {% include 'header.html' %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}?time={% now "fyhims" %}"/>
+        <link rel="shortcut icon" href="{% static 'img/favicon.png' %}"/>
+
+
+        {% block extra_header %}
+            <link rel="stylesheet" type="text/css" href="{% static 'toolkit/toolkit.css' %}" />
+        {% endblock extra_header %}
+    </head>
+{% endblock head %}
+
+
+<body>
+{% block wrapper %}
+    <div id="wrapper">
+
+        {% block navigation %}
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <h3 class="navbar-title" >DaBoard</h3>
+
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        {% block context_nav %}
+                        {% endblock context_nav %}
+                        {% include 'sidebar.html' %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+        {% endblock navigation %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid" id="main">
+                {% block page-header-row %}
+                    <div class="row page-header">
+                        {% block page_header %}
+                            {% block page_headline %}
+                                <div class="col-md-7 col-sm-12">
+                                    <h1>
+                                        {% block page_headline_txt %}
+                                            {{ page_headline }}
+                                        {% endblock page_headline_txt %}
+                                        {% block action_buttons %}
+                                        {% endblock action_buttons %}
+                                    </h1>
+                                </div>
+                            {% endblock page_headline %}
+                            {% block page_options %}
+                                <div class="page-options col-md-5 col-sm-12">
+                                    {% block page_options_1 %}{% endblock page_options_1 %}
+                                </div>
+                            {% endblock page_options %}
+                        {% endblock page_header %}
+                    </div>
+                {% endblock page-header-row %}
+
+                {% include 'messageBox.html' %}
+                {% block content %}
+                {% endblock content %}
+                <br/>
+
+                {% block comments %}{% endblock comments %}
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+        <!-- Footer Include -->
+        {% block footer %}
+            {% include "_oufooter.html" %}
+        {% endblock footer %}
+        <!-- /Footer Include -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock wrapper %}
+
+{# Third-party JS packages #}
+{% block js %}
+
+        {% include 'footer.html' %}
+
+
+    {% block extra_js %}
+        <script type="application/javascript">
+            $(document).ready(initialize_plugins({% if advanced_search_form %}{{ advanced_search_form.is_bound|lower }}{% else %}false{% endif %}));
+        </script>
+    {% endblock extra_js %}
+{% endblock js %}
+
+{% block extra_footer %}
+{% endblock extra_footer %}
+</body>
+
+</html>
