@@ -37,7 +37,5 @@ class ToolkitActivityLogListView(CCESearchView):
 
     def get_queryset(self):
         # This repeats the functionality of ActivitiesPermissionManager.scoped_by_user().
-        return super(ToolkitActivityLogListView, self).get_queryset().filter(
-            Q(activity_type__groups__user=self.request.user) |
-            Q(activity_type__include_creator=True, created_by=self.request.user)
-        )
+        return super(ToolkitActivityLogListView, self).get_queryset().for_user(self.request.user)
+

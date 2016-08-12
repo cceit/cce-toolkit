@@ -13,8 +13,7 @@ class ToolkitActivityType(CCEModel):
     logo = models.CharField(max_length=128, blank=True)
     groups = models.ManyToManyField(to=Group)
     include_creator = models.BooleanField(default=True)
-    objects = models.Manager()
-    permissions = ActivityTypePermissionManager()
+    objects = ActivityTypePermissionManager.as_manager()
 
     class Meta:
         db_table = 'cce_toolkit_activity_types'
@@ -47,7 +46,7 @@ class ToolkitActivityLog(CCEAuditModel):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     absolute_url_name = models.CharField(max_length=64, blank=True)
-    objects = ActivitiesPermissionManager()  # this is the default manager on purpose
+    objects = ActivitiesPermissionManager.as_manager()
 
     class Meta:
         db_table = 'cce_toolkit_activity_log'
