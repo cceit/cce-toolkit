@@ -471,17 +471,10 @@ class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
         if self.search_form.is_valid() and selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            try:  # for PDF methods
-                return getattr(model.reports, str('%s' % report['method']))(
-                    request=request,
-                    qs=self.get_queryset(),
-                    form=self.search_form
-                )
-            except TypeError:  # for XLS(X)
-                return getattr(model.reports, str('%s' % report['method']))(
-                    qs=self.get_queryset(),
-                    form=self.search_form
-                )
+            return getattr(model.reports, str('%s' % report['method']))(
+                qs=self.get_queryset(),
+                form=self.search_form
+            )
         return super(ReportDownloadSearchView, self).get(request, *args, **kwargs)
 
 
