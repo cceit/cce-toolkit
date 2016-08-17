@@ -40,6 +40,10 @@ ALLOWED_HOSTS = ['*']
 
 TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
 
+FIXTURE_DIRS = (
+    normpath(join(BASE_DIR, 'fixtures')),
+)
+
 # Application definition
 
 DJANGO_APPS = (
