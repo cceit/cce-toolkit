@@ -25,12 +25,15 @@ class CCEModelSearchForm(SearchFormMixin, forms.ModelForm):
 
     """
     required_fields = []
+    extra_kwargs = {}
 
     def __init__(self, *args, **kwargs):
         """
         Disables the require property of all form fields, allowing them to be
         used as optional search fields.
         """
+        if 'extra_kwargs' in kwargs:
+            self.extra_kwargs = kwargs.pop('extra_kwargs')
         super(CCEModelSearchForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             if field not in self.required_fields:
