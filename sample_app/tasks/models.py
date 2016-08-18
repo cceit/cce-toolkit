@@ -18,7 +18,7 @@ class Task(CCEAuditModel):
     )
     title = models.CharField(max_length=200)
     description = models.CharField(blank=True, max_length=200)
-    image = models.ImageField(upload_to='task_images')
+    image = models.ImageField(upload_to='task_images', blank=True, null=True)
     attachment = models.FileField(upload_to='task_attachment', blank=True,
                                   null=True)
     board = models.ForeignKey(Board, related_name='tasks')

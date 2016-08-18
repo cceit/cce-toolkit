@@ -387,12 +387,20 @@ class CCESearchView(CCEListView):
     search_form_class = None
     advanced_search_form_class = None
 
+    def get_advanced_search_form_extra_kwargs(self):
+        return {}
+
+    def get_search_form_extra_kwargs(self):
+        return {}
+
     def get_search_form(self):
-        return self.search_form_class(self.request.GET or None)
+        return self.search_form_class(self.request.GET or None,
+                                      extra_kwargs=self.get_search_form_extra_kwargs())
 
     def get_advanced_search_form_class(self):
         if self.advanced_search_form_class:
-            return self.advanced_search_form_class(self.request.GET or None)
+            return self.advanced_search_form_class(self.request.GET or None,
+                                                   extra_kwargs=self.get_advanced_search_form_extra_kwargs())
         return None
 
     def get_queryset(self):
@@ -465,7 +473,7 @@ class ReportDownloadSearchView(ReportDownloadView, CCESearchView):
     """
 
     def get(self, request, *args, **kwargs):
-        self.search_form = self.search_form_class(request.GET)
+        self.search_form = self.get_search_form()
         reports = self.get_reports()
         selected_report = request.GET.get('get_reports')
         if self.search_form.is_valid() and selected_report in reports:
