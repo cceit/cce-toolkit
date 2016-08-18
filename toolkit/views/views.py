@@ -489,13 +489,7 @@ class ReportDownloadDetailView(ReportDownloadView, CCEDetailView):
         if selected_report in reports:
             report = reports[selected_report]
             model = report['model'] if 'model' in report else self.model
-            try:  # for PDF methods
-                return getattr(model.reports, str('%s' % report['method']))(
-                    request=request,
-                    obj=self.get_object()
-                )
-            except TypeError:  # for XLS(X)
-                return getattr(model.reports, str('%s' % report['method']))(
-                    obj=self.get_object()
-                )
+            return getattr(model.reports, str('%s' % report['method']))(
+                obj=self.get_object()
+            )
         return super(ReportDownloadDetailView, self).get(request, *args, **kwargs)
