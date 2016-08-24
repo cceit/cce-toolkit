@@ -208,6 +208,11 @@ def verify_file_download(context, should_or_shouldnt, file_type):
         raise NotImplementedError
 
 
+@then("I should see a success message")
+def confirm_success_message(context):
+    assert context.browser.find_by_css('.alert-success')
+
+
 @step("I submit (valid|updated) (board|task) information")
 def create_profile(context, add_or_edit, target_variable):
     b = context.browser
