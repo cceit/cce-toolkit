@@ -4,9 +4,11 @@
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
                 {% if field.field.required %}<span class="required-warning">*</span>{% endif %}
-                {% block field_label_text %}
+                {% if form.override_labels %}
+                    {{ field.label }}
+                {% else %}
                     {{ field.label|title }}
-                {% endblock field_label_text %}
+                {% endif %}
                 {{ field.field.label_suffix|default_if_none:":" }}
             </label>
         {% endblock field_label %}
