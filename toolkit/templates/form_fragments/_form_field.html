@@ -3,7 +3,11 @@
     <div class="form-group row">
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
-                {% if field.field.required %}<span class="required-warning">*</span>{% endif %}{{ field.label }}{{ field.field.label_suffix|default_if_none:":" }}
+                {% if field.field.required %}<span class="required-warning">*</span>{% endif %}
+                {% block field_label_text %}
+                    {{ field.label|title }}
+                {% endblock field_label_text %}
+                {{ field.field.label_suffix|default_if_none:":" }}
             </label>
         {% endblock field_label %}
         <div class="col-sm-9">
