@@ -3,6 +3,8 @@ from django.core.management import call_command
 from pyvirtualdisplay import Display
 from splinter import Browser
 
+from toolkit.helpers.utils import snakify
+
 
 def setup_test_environment(context, scenario):
     """
@@ -29,3 +31,15 @@ def setup_test_environment(context, scenario):
     settings.DEBUG = True
     context.scenario = scenario.name
     call_command('flush', verbosity=0, interactive=False)
+
+
+def save_failure_screenshot(context, step):
+    if step.status == "failed":
+        file_path = '%s_%s_error.png' % (snakify(context.scenario), snakify(step.name))
+        context.browser.driver.save_screenshot(file_path)
+
+
+def flush_context(context, scenario):
+    context.browser.quit()  # Close the browser to get a fresh one for each test
+    context.browser = None  # Flush browser from context
+    context.display.stop()  # Closes the virtual display
