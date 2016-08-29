@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, NoReverseMatch
 from behave import *
 import requests
@@ -12,6 +13,7 @@ __all__ = [
     'verify_post_form',
     'verify_file_download',
     'confirm_success_message',
+    'assert_text_on_page',
 ]
 
 use_step_matcher("re")
@@ -35,7 +37,10 @@ def log_in_as(context, user):
 
     """
     b = context.browser
-    context.user = user
+    context.user = User.objects.get(username=user)
+    context.user.is_active = True
+    context.user.save()
+
     b.visit(context.server_url + reverse('login'))
 
     fields = [
@@ -210,3 +215,12 @@ def verify_file_download(context, should_or_shouldnt, file_type):
 @then("I should see a success message")
 def confirm_success_message(context):
     assert context.browser.find_by_css('.alert-success')
+
+
+@then("I should( not)? see the text '(.*)'")
+def assert_text_on_page(context, should_not, text_to_find):
+    b = context.browser
+    if should_not:
+        assert not b.is_text_present(text_to_find), "Expected not to see %s but did" % text_to_find
+    else:
+        assert b.is_text_present(text_to_find), "Expected to see %s but didn't" % text_to_find
