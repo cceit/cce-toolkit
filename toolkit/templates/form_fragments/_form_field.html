@@ -30,7 +30,7 @@
                 {% block field_help %}
                     {% if field.help_text %}
                         <span>
-                            {{ field.help_text }}
+                            {{ field.help_text|safe }}
                         </span>
                     {% endif %}
                 {% endblock field_help %}
