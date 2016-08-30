@@ -3,6 +3,7 @@ django
 django-extra-views
 django-cuser
 python-magic
+arrow
 
 # Documentation requirements
 sphinx

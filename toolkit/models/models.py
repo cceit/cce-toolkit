@@ -1,3 +1,5 @@
+import arrow
+from django.conf import settings
 from django.db import models
 from .mixins import ModelPermissionsMixin
 
@@ -33,3 +35,15 @@ class CCEAuditModel(CCEModel):
 
     class Meta:
         abstract = True
+
+    @property
+    def tz_last_updated_at(self):
+        if not hasattr(settings, 'TIME_ZONE'):
+            return arrow.get(self.last_updated_at).datetime
+        return arrow.get(self.last_updated_at, settings.TIME_ZONE).datetime
+
+    @property
+    def tz_created_at(self):
+        if not hasattr(settings, 'TIME_ZONE'):
+            return arrow.get(self.created_at).datetime
+        return arrow.get(self.created_at, settings.TIME_ZONE).datetime
