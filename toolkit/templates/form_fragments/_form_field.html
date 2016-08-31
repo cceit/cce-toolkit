@@ -46,7 +46,7 @@
                                             <h4 class="modal-title">{{ field.label }} Help</h4>
                                         </div>
                                         <div class="modal-body">
-                                            {{ field.help_text }}
+                                            {{ field.help_text|safe }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
