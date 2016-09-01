@@ -3,7 +3,7 @@
     <div class="form-group row">
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
-                {% if field.name not in form.override_dynamic_help %}
+                {% if field.name not in form.override_help_text_display %}
                     {% if field.help_text|length > 55  %}
                     <span>
                         <a id="{{ field.id_for_label }}_help" title="{{ field.label }} Help"
@@ -38,7 +38,7 @@
                 {% include "form_fragments/_field_errors.html" with errors=field.errors %}
                 {% block field_help %}
                     {% if field.help_text %}
-                        {% if field.name not in form.override_dynamic_help %}
+                        {% if field.name not in form.override_help_text_display %}
                             {% if field.help_text|length > 55  %}
                                 <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
                                     <div class="modal-dialog modal-lg" role="document">

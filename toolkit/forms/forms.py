@@ -141,4 +141,5 @@ class CCEModelForm(forms.ModelForm):
     """
     Django model form using CCE ModelFormMetaClass
     """
+    override_help_text_display = tuple()
     __metaclass__ = CCEModelFormMetaclass
