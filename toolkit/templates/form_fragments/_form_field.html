@@ -5,8 +5,8 @@
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
                 {% if field.help_text|length > 55 %}
                 <span>
-                    <a id="{{ field.id }}_help" title="{{ field.label }} Help"
-                       data-toggle="modal" data-target="#{{ field.id }}_modal" style="cursor:pointer">
+                    <a id="{{ field.id_for_label }}_help" title="{{ field.label }} Help"
+                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
                         <i class="glyphicon glyphicon-question-sign"></i>
                     </a>
                 </span>
@@ -38,7 +38,7 @@
                 {% block field_help %}
                     {% if field.help_text %}
                         {% if field.help_text|length > 55 %}
-                            <div id="{{ field.id }}_modal" class="modal fade" role="dialog">
+                            <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
