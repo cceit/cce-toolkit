@@ -12,6 +12,7 @@ setup(
 
     extras_require={
         "cuser": ["django-cuser"],
+        "arrow": ["arrow"],
     },
     classifiers=[
         'Development Status :: 1.0.0-b0',
