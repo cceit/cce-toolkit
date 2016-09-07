@@ -10,9 +10,10 @@ setup(
     author='University of Oklahoma - College of Continuing Education - IT',
     license='BSD',
 
-    extras_require={
-        "cuser": ["django-cuser"],
-    },
+    install_requires=[
+        "django-cuser",
+        "arrow"
+    ],
     classifiers=[
         'Development Status :: 1.0.0-b0',
         'Environment :: Web Environment',
