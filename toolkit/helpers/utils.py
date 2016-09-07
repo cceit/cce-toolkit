@@ -195,3 +195,9 @@ def hasfield(model, field_name):
             model_fields = related_field.related_model._meta.fields
         i += 1
     return False
+
+
+def get_subclass_instance(obj):
+    subclasses = [rel_obj.name for rel_obj in obj._meta.get_all_related_objects() if rel_obj.parent_link]
+    subclass_instance_name = next(name for name in subclasses if hasattr(obj, name))
+    return getattr(obj, subclass_instance_name)
