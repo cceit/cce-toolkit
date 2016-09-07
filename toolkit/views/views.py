@@ -2,6 +2,7 @@ from django.core.exceptions import FieldError
 from django.db import ProgrammingError
 from django.views.generic import CreateView, ListView, UpdateView, \
     DetailView, DeleteView, TemplateView, FormView
+from django.views.generic import RedirectView
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, \
     ModelFormSetView
 
@@ -292,6 +293,16 @@ class CCETemplateView(ViewMetaMixin, TemplateView):
     This view includes all the mixins required in all TemplateViews.
     """
     pass
+
+
+class CCERedirectView(ClassPermissionsMixin, RedirectView):
+    """
+    This view includes all the mixins required in all RedirectViews.
+    """
+    permissions = {
+        'get': ['can_view', ],
+        'post': ['can_view', ],
+    }
 
 
 class CCEFormView(ViewMetaMixin, FormView):
