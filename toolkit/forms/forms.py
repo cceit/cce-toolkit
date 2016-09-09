@@ -141,5 +141,12 @@ class CCEModelForm(forms.ModelForm):
     """
     Django model form using CCE ModelFormMetaClass
     """
+    required_fields = tuple()
     override_help_text_display = tuple()
+    override_labels = False
     __metaclass__ = CCEModelFormMetaclass
+
+    def __init__(self, *args, **kwargs):
+        super(CCEModelForm, self).__init__(*args, **kwargs)
+        for field in self.required_fields:
+            self.fields[field].required = True
