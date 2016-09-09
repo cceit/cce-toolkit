@@ -198,6 +198,19 @@ def hasfield(model, field_name):
 
 
 def get_subclass_instance(obj):
-    subclasses = [rel_obj.name for rel_obj in obj._meta.get_all_related_objects() if rel_obj.parent_link]
-    subclass_instance_name = next(name for name in subclasses if hasattr(obj, name))
+    """
+        Returns the utilized child class instance of a superclass instance.
+
+        :param Model obj: Django Model instance
+
+        :returns: Subclass instance or None
+    """
+    subclass_instance_name = next(
+        rel_obj.name
+        for rel_obj
+        in obj._meta.get_all_related_objects()
+        if rel_obj.parent_link and hasattr(obj, rel_obj.name)
+    )
+    if not subclass_instance_name:
+        return None
     return getattr(obj, subclass_instance_name)
