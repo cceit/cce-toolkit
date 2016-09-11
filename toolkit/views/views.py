@@ -305,6 +305,15 @@ class CCERedirectView(ClassPermissionsMixin, RedirectView):
     }
 
 
+class CCEObjectRedirectView(ObjectPermissionsMixin, RedirectView):
+    """
+    This view includes all the mixins required in all RedirectViews.
+    """
+    permissions = {
+        'get': ['can_view', ],
+        'post': ['can_view', ],
+    }
+
 class CCEFormView(ViewMetaMixin, FormView):
     """
     This view includes the mixins required for all FormViews.

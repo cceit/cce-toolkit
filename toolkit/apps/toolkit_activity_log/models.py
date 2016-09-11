@@ -65,15 +65,15 @@ class ToolkitActivityLog(CCEAuditModel):
             try:
                 return self.content_object.get_absolute_url()
             except NoReverseMatch:
-                return ''
-        else:
+                pass
+
+        try:
+            return reverse(self.absolute_url_name)
+        except NoReverseMatch:
             try:
-                return reverse(self.absolute_url_name)
+                return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
             except NoReverseMatch:
-                try:
-                    return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
-                except NoReverseMatch:
-                    return ''
+                return ''
 
     @classmethod
     def create_log(cls, summary, description, activity_type, content_type_model, object_id, absolute_url_name=None):

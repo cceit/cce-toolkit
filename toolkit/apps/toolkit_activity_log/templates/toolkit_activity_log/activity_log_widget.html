@@ -18,7 +18,7 @@
                 <abbr class="timeago" title="{{ activity.created_at|date:'c' }}"></abbr>
             </span>
             <i class="{{ activity.activity_type.logo }}"></i>
-            {{ activity.activity_type }} - {{ activity.summary }} ({{ activity.created_by }})
+            {{ activity.activity_type }} - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
             </a>
             {% empty %}
                 {% include 'alert.html' with type='warning' message='No activities logged yet.' %}

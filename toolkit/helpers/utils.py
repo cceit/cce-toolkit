@@ -205,12 +205,13 @@ def get_subclass_instance(obj):
 
         :returns: Subclass instance or None
     """
-    subclass_instance_name = next(
-        rel_obj.name
-        for rel_obj
-        in obj._meta.get_all_related_objects()
-        if rel_obj.parent_link and hasattr(obj, rel_obj.name)
-    )
-    if not subclass_instance_name:
+    try:
+        subclass_instance_name = next(
+            rel_obj.name
+            for rel_obj
+            in obj._meta.get_all_related_objects()
+            if rel_obj.parent_link and hasattr(obj, rel_obj.name)
+        )
+    except StopIteration:
         return None
     return getattr(obj, subclass_instance_name)
