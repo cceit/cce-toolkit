@@ -9,6 +9,17 @@ class Command(BaseCommand):
     """
     loads list of initial fixtures
     Usage: python manage.py load_initial_fixtures --env [local|uat|dev|prod]
+
+    Add the following dictionary to the django settings file
+
+
+    INITIAL_FIXTURES = {
+        'common': [''],
+        'uat': [''],
+        'dev': [''],
+        'prod': [''],
+        'local': [''],
+    }
     """
     help = 'loads list of initial fixtures'
 
