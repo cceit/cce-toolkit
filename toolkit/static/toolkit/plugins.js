@@ -50,9 +50,13 @@ function initialize_plugins(advanced_search_form_bound) {
         $advanced_search_form.toggle();
     }
 
-    $('[data-toggle="popover"]').popover('show');
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
+    });
+
+    //Help Text Popovers
+    $('a[id$="_popover"] i').on("click", function(){
+        $(this).parents("a").popover('toggle');
     });
 
     //This is needed for accessibility on the modals
