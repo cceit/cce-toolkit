@@ -4,13 +4,21 @@
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
                 {% if field.name not in form.override_help_text_display %}
-                    {% if field.help_text|length > 55  %}
+                    {% if field.help_text|length > 200  %}
                     <span>
-                        <a id="{{ field.id_for_label }}_help" title="{{ field.label }} Help"
-                           data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
+                    <a href="javascript:void(0)" id="{{ field.id_for_label }}_modal_btn" title="{{ field.label }} Help"
+                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                    </a>
+                    </span>
+                    {% elif field.help_text|length > 55  %}
+                        <span>
+                        <a href="javascript:void(0)" id="{{ field.id_for_label }}_popover" title="{{ field.label }} Help"
+                           data-trigger='click' data-toggle="popover" style="cursor:pointer"
+                           data-placement="top" data-content="{{ field.help_text|safe }}">
                             <i class="glyphicon glyphicon-question-sign"></i>
                         </a>
-                    </span>
+                        </span>
                     {% endif %}
                 {% endif %}
                 {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
@@ -39,7 +47,7 @@
                 {% block field_help %}
                     {% if field.help_text %}
                         {% if field.name not in form.override_help_text_display %}
-                            {% if field.help_text|length > 55  %}
+                            {% if field.help_text|length > 200  %}
                                 <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
@@ -58,7 +66,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            {% else %}
+                            {% elif field.help_text|length <= 56 %}
                                 <span>{{ field.help_text|safe }}</span>
                             {% endif %}
                         {% else %}
