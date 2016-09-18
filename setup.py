@@ -40,6 +40,8 @@ setup(
             'apps/breadcrumbs/middleware/*.py',
             'apps/breadcrumbs/templates/*.html',
             'apps/breadcrumbs/templatetags/*.py',
+            'management/*.py',
+            'management/commands/*.py',
             'apps/fabfile/*.py',
             'forms/*.py',
             'helpers/*.py',
