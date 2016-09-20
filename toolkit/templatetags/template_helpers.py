@@ -109,7 +109,7 @@ def make_list(parser, token):
             "%r expected format is 'item [item ...] as varname'" % bits[0])
 
 
-@register.tag
+@register.filter
 def snake(value):
     return snakify(value)
 
