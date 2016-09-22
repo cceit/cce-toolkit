@@ -1,0 +1,7 @@
+[default]
+name :  database_name
+user :  database_user
+password : database_password
+host : database_host
+env : [local|dev|uat|prod]
+key : django secret key
