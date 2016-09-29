@@ -772,7 +772,7 @@ class AbstractedDetailMixin(object):
         if not self.get_detail_fields():
             return details
         obj = self.get_object()
-        for tupple in self.detail_fields:
+        for tupple in self.get_detail_fields():
             label = tupple[0]
             dotted_or_function = tupple[1]
             param = tupple[2] if len(tupple) > 2 else None
