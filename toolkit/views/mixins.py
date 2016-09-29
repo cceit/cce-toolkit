@@ -719,6 +719,12 @@ class AbstractedDetailMixin(object):
     template_name = "generic_detail.html"
     detail_fields = None
 
+    def get_detail_fields(self):
+        """
+        Override this method to make the details shown dynamic.
+        """
+        return self.detail_fields
+
     def get_details(self):
         """
         How self.fields should be formatted:
@@ -763,7 +769,7 @@ class AbstractedDetailMixin(object):
             return new_ob
 
         details = OrderedDict()
-        if not self.detail_fields:
+        if not self.get_detail_fields():
             return details
         obj = self.get_object()
         for tupple in self.detail_fields:
