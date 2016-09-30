@@ -40,7 +40,11 @@ class SearchFormMixin(object):
             value = self.cleaned_data[field_name]
 
             if inspect.isfunction(custom_field_lookup):
-                q_filters.append(custom_field_lookup(self, queryset, value))
+                processed_filters = custom_field_lookup(self, queryset, value)
+                if type(processed_filters) is list:
+                    q_filters.extend(processed_filters)
+                else:
+                    q_filters.append(processed_filters)
                 if field_name in kwargs:
                     kwargs.pop(field_name)
             if type(custom_field_lookup) is tuple:
