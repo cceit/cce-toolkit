@@ -1,6 +1,6 @@
-import arrow
-from django.conf import settings
 from django.db import models
+from django.utils.timezone import localtime
+
 from .mixins import ModelPermissionsMixin
 
 
@@ -25,12 +25,9 @@ class CCEAuditModel(CCEModel):
     """
     from cuser.fields import CurrentUserField
 
-    last_updated_by = CurrentUserField(
-        related_name='%(app_label)s_%(class)s_last_updated')
+    last_updated_by = CurrentUserField(related_name='%(app_label)s_%(class)s_last_updated')
     last_updated_at = models.DateTimeField(auto_now=True)
-    created_by = CurrentUserField(add_only=True,
-                                  related_name='%(app_label)s_%(class)s_'
-                                               'last_created')
+    created_by = CurrentUserField(add_only=True, related_name='%(app_label)s_%(class)s_last_created')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -38,12 +35,8 @@ class CCEAuditModel(CCEModel):
 
     @property
     def tz_last_updated_at(self):
-        if not hasattr(settings, 'TIME_ZONE'):
-            return arrow.get(self.last_updated_at).datetime
-        return arrow.get(self.last_updated_at, settings.TIME_ZONE).datetime
+        return localtime(self.last_updated_at)
 
     @property
     def tz_created_at(self):
-        if not hasattr(settings, 'TIME_ZONE'):
-            return arrow.get(self.created_at).datetime
-        return arrow.get(self.created_at, settings.TIME_ZONE).datetime
+        return localtime(self.created_at)
