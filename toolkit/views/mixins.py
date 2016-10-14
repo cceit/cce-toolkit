@@ -1,5 +1,6 @@
 import copy
 from collections import OrderedDict
+import warnings
 
 import os
 from django.contrib import messages
@@ -885,7 +886,15 @@ class ListContextMenuMixin(ContextMenuMixin):
             except NoReverseMatch:
                 pass
             else:
-                if self.model.can_create(self.request.user):
+                try:
+                    cc = self.model.can_create(self.request.user)
+                except TypeError:
+                    warnings.warn("Calling can_create as an instance method is deprecated.", DeprecationWarning)
+                    try:
+                        cc = self.get_object().can_create(self.request.user)
+                    except (TypeError, AttributeError) as e:
+                        cc = False
+                if cc:
                     # label, reversed url, icon class, sidebar_group
                     menu_links.append(
                         ("Add %s" % name.title(), add_url,
@@ -927,7 +936,15 @@ class CreateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            if self.model.can_view_list(self.request.user):
+            try:
+                cvl = self.model.can_view_list(self.request.user)
+            except TypeError:
+                warnings.warn("Calling can_view_list as an instance method is deprecated.", DeprecationWarning)
+                try:
+                    cvl = self.get_object().can_view_list(self.request.user)
+                except (TypeError, AttributeError) as e:
+                    cvl = False
+            if cvl:
                 menu_links.append(
                     ("Browse %s" % plural_name.title(), browse_url,
                      "glyphicon glyphicon-list")
