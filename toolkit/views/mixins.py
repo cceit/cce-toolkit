@@ -885,11 +885,12 @@ class ListContextMenuMixin(ContextMenuMixin):
             except NoReverseMatch:
                 pass
             else:
-                # label, reversed url, icon class, sidebar_group
-                menu_links.append(
-                    ("Add %s" % name.title(), add_url,
-                     "glyphicon glyphicon-plus", "add_%s" % name_underscored)
-                )
+                if self.model.can_create(self.request.user):
+                    # label, reversed url, icon class, sidebar_group
+                    menu_links.append(
+                        ("Add %s" % name.title(), add_url,
+                         "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                    )
         return menu_links
 
 
@@ -906,10 +907,11 @@ class DetailContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("Edit %s" % name.title(), edit_url,
-                 "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
-            )
+            if self.get_object().can_update(self.request.user):
+                menu_links.append(
+                    ("Edit %s" % name.title(), edit_url,
+                     "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
+                )
         return menu_links
 
 
@@ -925,10 +927,11 @@ class CreateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("Browse %s" % plural_name.title(), browse_url,
-                 "glyphicon glyphicon-list")
-            )
+            if self.model.can_view_list(self.request.user):
+                menu_links.append(
+                    ("Browse %s" % plural_name.title(), browse_url,
+                     "glyphicon glyphicon-list")
+                )
         return menu_links
 
 
@@ -945,8 +948,9 @@ class UpdateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("View %s" % name.title(), view_url,
-                 "glyphicon glyphicon-info-sign")
-            )
+            if self.get_object().can_view(self.request.user):
+                menu_links.append(
+                    ("View %s" % name.title(), view_url,
+                     "glyphicon glyphicon-info-sign")
+                )
         return menu_links
