@@ -6,14 +6,16 @@ class ModelPermissionsMixin(object):
 
     :raises NotImplementedError: if they have not been overridden.
     """
-    def can_create(self, user_obj):
+    @classmethod
+    def can_create(cls, user_obj):
         """
         CreateView needs permissions at class (table) level.
         We'll try it at instance level for a while and see how it goes.
         """
         raise NotImplementedError
 
-    def can_view_list(self, user_obj):
+    @classmethod
+    def can_view_list(cls, user_obj):
         """
         ListView needs permissions at class (table) level.
         We'll try it at instance level for a while and see how it goes.
