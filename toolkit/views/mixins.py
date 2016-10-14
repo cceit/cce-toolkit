@@ -891,7 +891,7 @@ class ListContextMenuMixin(ContextMenuMixin):
                 except TypeError:
                     warnings.warn("Calling can_create as an instance method is deprecated.", DeprecationWarning)
                     try:
-                        cc = self.get_object().can_create(self.request.user)
+                        cc = self.model().can_create(self.request.user)
                     except (TypeError, AttributeError) as e:
                         cc = False
                 if cc:
@@ -941,7 +941,7 @@ class CreateContextMenuMixin(ContextMenuMixin):
             except TypeError:
                 warnings.warn("Calling can_view_list as an instance method is deprecated.", DeprecationWarning)
                 try:
-                    cvl = self.get_object().can_view_list(self.request.user)
+                    cvl = self.model().can_view_list(self.request.user)
                 except (TypeError, AttributeError) as e:
                     cvl = False
             if cvl:
