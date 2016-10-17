@@ -27,6 +27,11 @@ class CCEModelSearchForm(SearchFormMixin, forms.ModelForm):
     required_fields = []
     extra_kwargs = {}
 
+    def clean(self):
+        # disables unique check
+        # https://github.com/django/django/blob/master/django/forms/models.py#L287
+        return self.cleaned_data
+
     def __init__(self, *args, **kwargs):
         """
         Disables the require property of all form fields, allowing them to be

@@ -610,7 +610,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
@@ -637,7 +639,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
