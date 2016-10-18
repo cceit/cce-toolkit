@@ -19,9 +19,10 @@ function initialize_plugins(advanced_search_form_bound) {
     $('.timefield').datetimepicker({
         format: 'LT'
     });
-    
+
     $('.datetimefield').datetimepicker({
-        format: 'YYYY-MM-DD hh:mm:ss'});
+        format: 'MM/DD/YYYY hh:mm A'
+    });
 
     var $advance_search_toggle = $('#advance_search_toggle');
     var $advanced_search_form = $('#advanced_search_form');
@@ -50,9 +51,13 @@ function initialize_plugins(advanced_search_form_bound) {
         $advanced_search_form.toggle();
     }
 
-    $('[data-toggle="popover"]').popover('show');
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
+    });
+
+    //Help Text Popovers
+    $('a[id$="_popover"] i').on("click", function(){
+        $(this).parents("a").popover('toggle');
     });
 
     //This is needed for accessibility on the modals

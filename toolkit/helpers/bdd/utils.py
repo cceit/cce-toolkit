@@ -6,7 +6,7 @@ from splinter import Browser
 from toolkit.helpers.utils import snakify
 
 
-def setup_test_environment(context, scenario):
+def setup_test_environment(context, scenario, visible=0, use_xvfb=True):
     """
     Method used to setup the BDD test environment
      - Sets up Virtual Display
@@ -16,10 +16,15 @@ def setup_test_environment(context, scenario):
      - Turn on debug(useful when capturing screenshots of the errors)
      - Sets Scenario
      - Truncates database tables
+
+    Options:
+     - visible (0 or 1) - Toggle Xephyr to view the Xvfb instance for limited debugging. 0: Off, 1: On.
+     - use_xvfb (True/False) - Toggle Xvfb to run the tests on your desktop for in-depth debugging.
     """
-    # Our virtual display to run firefox
-    context.display = Display(visible=0, size=(1920, 1080))
-    context.display.start()
+    if use_xvfb:
+        # Our virtual display to run firefox
+        context.display = Display(visible=visible, size=(1920, 1080))
+        context.display.start()
     # This is our base webdriver instance. It uses Firefox by default.
     context.browser = Browser()
     context.browser.driver.set_window_size(1920, 1080)
@@ -42,4 +47,5 @@ def save_failure_screenshot(context, step):
 def flush_context(context, scenario):
     context.browser.quit()  # Close the browser to get a fresh one for each test
     context.browser = None  # Flush browser from context
-    context.display.stop()  # Closes the virtual display
+    if hasattr(context, 'display'):
+        context.display.stop()  # Closes the virtual display (if it exists)

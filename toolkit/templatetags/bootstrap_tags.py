@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.db.models import Manager
 from django.db.models.fields.files import FieldFile, ImageFieldFile
-
+import arrow
 register = template.Library()
 
 
@@ -45,9 +45,11 @@ def render_detail(value, param):
     if isinstance(value, bool):
         return boolean_icon(value)
     if isinstance(value, datetime.datetime):
-        return value.strftime("%-m/%-d/%Y, %I:%M %p")
+        arrow_obj = arrow.get(value)
+        return arrow_obj.format("MM/D/YYYY, h:mm a")
     elif isinstance(value, datetime.date):
-        return value.strftime("%-m/%-d/%Y")
+        arrow_obj = arrow.get(value)
+        return arrow_obj.format("MM/D/YYYY")
     elif isinstance(value, datetime.time):
         return value.strftime("%I:%M %p").lstrip('0')
     elif isinstance(value, Manager):

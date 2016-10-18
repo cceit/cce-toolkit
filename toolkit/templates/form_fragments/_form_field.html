@@ -6,11 +6,19 @@
                 {% if field.name not in form.override_help_text_display %}
                     {% if field.help_text|length > 55  %}
                     <span>
-                        <a id="{{ field.id_for_label }}_help" title="{{ field.label }} Help"
-                           data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
-                            <i class="glyphicon glyphicon-question-sign"></i>
-                        </a>
+                    <a href="javascript:void(0)" id="{{ field.id_for_label }}_modal_btn" title="{{ field.label }} Help"
+                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
+                        <i class="glyphicon glyphicon-question-sign"></i>
+                    </a>
                     </span>
+{#                    {% elif field.help_text|length > 55  %}#}
+{#                        <span>#}
+{#                        <a href="javascript:void(0)" id="{{ field.id_for_label }}_popover" title="{{ field.label }} Help"#}
+{#                           data-trigger='click' data-toggle="popover" style="cursor:pointer"#}
+{#                           data-placement="top" data-content="{{ field.help_text|safe }}">#}
+{#                            <i class="glyphicon glyphicon-question-sign"></i>#}
+{#                        </a>#}
+{#                        </span>#}
                     {% endif %}
                 {% endif %}
                 {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
@@ -38,29 +46,25 @@
                 {% include "form_fragments/_field_errors.html" with errors=field.errors %}
                 {% block field_help %}
                     {% if field.help_text %}
-                        {% if field.name not in form.override_help_text_display %}
-                            {% if field.help_text|length > 55  %}
-                                <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">{{ field.label }} Help</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ field.help_text|safe }}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                    Close
-                                                </button>
-                                            </div>
+                        {% if field.name not in form.override_help_text_display and field.help_text|length > 55 %}
+                            <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">{{ field.label }} Help</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ field.help_text|safe }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                Close
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            {% else %}
-                                <span>{{ field.help_text|safe }}</span>
-                            {% endif %}
+                            </div>
                         {% else %}
                             <span>{{ field.help_text|safe }}</span>
                         {% endif %}

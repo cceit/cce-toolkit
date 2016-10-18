@@ -2,6 +2,7 @@ from django import template
 from django.forms import widgets
 
 from toolkit.forms import DynamicNullBooleanSelect
+from toolkit.helpers.utils import snakify
 
 register = template.Library()
 
@@ -106,6 +107,11 @@ def make_list(parser, token):
     else:
         raise template.TemplateSyntaxError(
             "%r expected format is 'item [item ...] as varname'" % bits[0])
+
+
+@register.filter
+def snake(value):
+    return snakify(value)
 
 
 class MakeListNode(template.Node):

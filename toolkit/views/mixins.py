@@ -1,5 +1,6 @@
 import copy
 from collections import OrderedDict
+import warnings
 
 import os
 from django.contrib import messages
@@ -609,7 +610,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
@@ -636,7 +639,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
@@ -719,6 +724,12 @@ class AbstractedDetailMixin(object):
     template_name = "generic_detail.html"
     detail_fields = None
 
+    def get_detail_fields(self):
+        """
+        Override this method to make the details shown dynamic.
+        """
+        return self.detail_fields
+
     def get_details(self):
         """
         How self.fields should be formatted:
@@ -763,10 +774,10 @@ class AbstractedDetailMixin(object):
             return new_ob
 
         details = OrderedDict()
-        if not self.detail_fields:
+        if not self.get_detail_fields():
             return details
         obj = self.get_object()
-        for tupple in self.detail_fields:
+        for tupple in self.get_detail_fields():
             label = tupple[0]
             dotted_or_function = tupple[1]
             param = tupple[2] if len(tupple) > 2 else None
@@ -879,11 +890,20 @@ class ListContextMenuMixin(ContextMenuMixin):
             except NoReverseMatch:
                 pass
             else:
-                # label, reversed url, icon class, sidebar_group
-                menu_links.append(
-                    ("Add %s" % name.title(), add_url,
-                     "glyphicon glyphicon-plus", "add_%s" % name_underscored)
-                )
+                try:
+                    cc = self.model.can_create(self.request.user)
+                except TypeError:
+                    warnings.warn("Calling can_create as an instance method is deprecated.", DeprecationWarning)
+                    try:
+                        cc = self.model().can_create(self.request.user)
+                    except (TypeError, AttributeError) as e:
+                        cc = False
+                if cc:
+                    # label, reversed url, icon class, sidebar_group
+                    menu_links.append(
+                        ("Add %s" % name.title(), add_url,
+                         "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                    )
         return menu_links
 
 
@@ -900,10 +920,11 @@ class DetailContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("Edit %s" % name.title(), edit_url,
-                 "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
-            )
+            if self.get_object().can_update(self.request.user):
+                menu_links.append(
+                    ("Edit %s" % name.title(), edit_url,
+                     "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
+                )
         return menu_links
 
 
@@ -919,10 +940,19 @@ class CreateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("Browse %s" % plural_name.title(), browse_url,
-                 "glyphicon glyphicon-list")
-            )
+            try:
+                cvl = self.model.can_view_list(self.request.user)
+            except TypeError:
+                warnings.warn("Calling can_view_list as an instance method is deprecated.", DeprecationWarning)
+                try:
+                    cvl = self.model().can_view_list(self.request.user)
+                except (TypeError, AttributeError) as e:
+                    cvl = False
+            if cvl:
+                menu_links.append(
+                    ("Browse %s" % plural_name.title(), browse_url,
+                     "glyphicon glyphicon-list")
+                )
         return menu_links
 
 
@@ -939,8 +969,9 @@ class UpdateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            menu_links.append(
-                ("View %s" % name.title(), view_url,
-                 "glyphicon glyphicon-info-sign")
-            )
+            if self.get_object().can_view(self.request.user):
+                menu_links.append(
+                    ("View %s" % name.title(), view_url,
+                     "glyphicon glyphicon-info-sign")
+                )
         return menu_links

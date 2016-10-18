@@ -10,7 +10,7 @@ sphinx
 sphinx_rtd_theme
 
 # Custom Report helpers requirements
-openpyxl
+openpyxl==2.2.3
 xlwt
 
 # Fabric recipes requirements
