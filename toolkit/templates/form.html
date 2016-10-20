@@ -21,7 +21,8 @@
     {% block form %}
         <div class="row">
             <form action="" method="{{ form_method|default:'POST' }}" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
-                <span class="required-warning">*</span> - indicates a required field.
+                <span class="required-warning">*</span> - indicates a required field.<br>
+                <span class="glyphicon glyphicon-question-sign" style="font-size: 12pt"></span> - indicates additional information.
                 <div class="form-content">
                     {% block render_form %}
                         {% include 'render_form.html' %}
