@@ -1,5 +1,6 @@
 import copy
 from collections import OrderedDict
+import warnings
 
 import os
 from django.contrib import messages
@@ -609,7 +610,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
@@ -636,7 +639,9 @@ class AbstractedListMixin(object):
                     new_obj = obj
                     attrs = f.split('.')
                     for attr in attrs:
-                        if hasattr(new_obj, attr):
+                        if new_obj is None:
+                            new_obj = '--'
+                        elif hasattr(new_obj, attr):
                             new_obj = getattr(new_obj, attr)
                         else:
                             raise Exception("Bad dotted attributes passed "
@@ -885,7 +890,15 @@ class ListContextMenuMixin(ContextMenuMixin):
             except NoReverseMatch:
                 pass
             else:
-                if self.model.can_create(self.request.user):
+                try:
+                    cc = self.model.can_create(self.request.user)
+                except TypeError:
+                    warnings.warn("Calling can_create as an instance method is deprecated.", DeprecationWarning)
+                    try:
+                        cc = self.model().can_create(self.request.user)
+                    except (TypeError, AttributeError) as e:
+                        cc = False
+                if cc:
                     # label, reversed url, icon class, sidebar_group
                     menu_links.append(
                         ("Add %s" % name.title(), add_url,
@@ -927,7 +940,15 @@ class CreateContextMenuMixin(ContextMenuMixin):
         except NoReverseMatch:
             pass
         else:
-            if self.model.can_view_list(self.request.user):
+            try:
+                cvl = self.model.can_view_list(self.request.user)
+            except TypeError:
+                warnings.warn("Calling can_view_list as an instance method is deprecated.", DeprecationWarning)
+                try:
+                    cvl = self.model().can_view_list(self.request.user)
+                except (TypeError, AttributeError) as e:
+                    cvl = False
+            if cvl:
                 menu_links.append(
                     ("Browse %s" % plural_name.title(), browse_url,
                      "glyphicon glyphicon-list")

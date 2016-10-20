@@ -6,7 +6,7 @@ from .mixins import SearchFormMixin
 
 DEFAULT_DATEFIELD_FORMAT = '%m/%d/%Y'
 DEFAULT_TIMEFIELD_FORMAT = '%I:%M %p'
-
+DEFAULT_DATETIMEFIELD_FORMAT = '%m/%d/%Y %I:%M %p'
 
 class SearchForm(SearchFormMixin, forms.Form):
     """
@@ -26,6 +26,11 @@ class CCEModelSearchForm(SearchFormMixin, forms.ModelForm):
     """
     required_fields = []
     extra_kwargs = {}
+
+    def clean(self):
+        # disables unique check
+        # https://github.com/django/django/blob/master/django/forms/models.py#L287
+        return self.cleaned_data
 
     def __init__(self, *args, **kwargs):
         """
@@ -119,6 +124,13 @@ def cce_formfield_callback(f, **kwargs):
             formfield.input_formats = [settings.DEFAULT_TIMEFIELD_FORMAT]
         except AttributeError:
             formfield.input_formats = [DEFAULT_TIMEFIELD_FORMAT]  # set default
+
+    if isinstance(formfield, forms.DateTimeField):
+        try:  # set default
+            formfield.input_formats = [settings.DEFAULT_DATETIMEFIELD_FORMAT]
+        except AttributeError:
+            formfield.input_formats = [
+                DEFAULT_DATETIMEFIELD_FORMAT]  # set default
 
     return formfield
 
