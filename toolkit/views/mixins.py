@@ -366,6 +366,8 @@ class ViewMetaMixin(object):
 
     """
     page_details = ''
+    page_details_top = ''
+    page_details_bottom = ''
     page_title = ''
     page_headline = ''
     page_icon = ''
@@ -373,6 +375,12 @@ class ViewMetaMixin(object):
 
     def get_page_details(self):
         return self.page_details
+
+    def get_page_details_top(self):
+        return self.page_details_top
+
+    def get_page_details_bottom(self):
+        return self.page_details_bottom
 
     def get_page_title(self):
         if not self.page_title:
@@ -397,6 +405,8 @@ class ViewMetaMixin(object):
         context.update({
             'page_title': self.get_page_title(),
             'page_details': self.get_page_details(),
+            'page_details_top': self.get_page_details_top(),
+            'page_details_bottom': self.get_page_details_bottom(),
             'page_headline': self.get_page_headline(),
             'page_icon': self.get_page_icon(),
             'sidebar_group': self.get_sidebar_group(),

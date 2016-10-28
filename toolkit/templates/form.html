@@ -7,6 +7,15 @@
 {% endblock page_headline %}
 
 {% block content %}
+
+    {% if page_details_top %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_top %}
+            </div>
+        </div>
+    {% endif %}
+
     {% block details %}
     {% endblock details %}
 
@@ -43,6 +52,15 @@
             </form>
         </div>
     {% endblock form %}
+
+    {% if page_details_bottom %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_bottom %}
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock content %}
     {% block extra_details %}
     {% endblock extra_details %}
