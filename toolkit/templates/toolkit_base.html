@@ -1,0 +1,241 @@
+{% load staticfiles %}
+{% load static %}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>
+            DaBoard -
+            {% block page_title %}{{ page_title }}{% endblock page_title %}
+        </title>
+        {% include 'header.html' %}
+
+        {#        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}?time={% now "fyhims" %}"/>#}
+        <link rel="shortcut icon" href="{% static 'img/favicon.png' %}"/>
+
+
+        {% block extra_header %}
+            <link rel="stylesheet" type="text/css"
+                  href="{% static 'toolkit/css/toolkit.css' %}"/>
+        {% endblock extra_header %}
+
+    </head>
+{% endblock head %}
+
+
+<body>
+{% block wrapper %}
+    <div id="wrapper">
+        {% block navigation %}
+            <nav class="navbar navbar-inverse navbar-fixed-top"
+                 role="navigation">
+                {% block ou_global_header %}
+                    {% include 'ou_global_header.html' %}
+                {% endblock ou_global_header %}
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"
+                            data-toggle="collapse"
+                            data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h3 class="navbar-title">Sidebar Style</h3>
+                </div>
+
+
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+
+                    <div class="sidebar">
+
+                        <a class="navbar-brand" href="#">Sample App</a>
+                        <div class="clear"></div>
+                        <ul class="nav nav-sidebar">
+                            {% block context_nav %}
+                            {% endblock context_nav %}
+                            {% include 'sidebar.html' %}
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+
+        {% endblock navigation %}
+        <div id="page-wrapper">
+
+            <div class="container-fluid page-content" id="main">
+                        <div class="row fancy">
+                                {% block page_header %}
+                                        <h2>
+                                            {% block page_headline_txt %}
+                                                {{ page_icon }} {{ page_headline }}
+                                            {% endblock page_headline_txt %}
+                                        </h2>
+                                {% endblock page_header %}
+                                {% block page_search %}
+                                        {% if search_form %}
+                                                {% include 'simple_search_form.html' with form=search_form %}
+                                        {% endif %}
+
+                                        <div class="clear"></div>
+                                         {% if advanced_search_form %}
+                                                {% include 'advanced_search_form.html' with form=advanced_search_form %}
+                                        {% endif %}
+
+                                {% endblock page_search %}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 action">
+                                <div class="download">
+                                       {% if report_selector_form %}
+                                            <div class="col-md-3 col-sm-12 page-options report_selector">
+                                                {% include 'report_selector_form.html' with form=report_selector_form %}
+                                            </div>
+                                        {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 action">
+                                {% block page_options %}
+                                {% endblock page_options %}
+                                <ul class="nav">
+                                    <li><a class="btn action">Action 1</a></li>
+                                    <li><a class="btn action">Action 2</a></li>
+                                    <li><a class="btn action">Action 3</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-12 action">
+                                <hr/>
+                            </div>
+                        </div>
+
+                        {% include 'messageBox.html' %}
+                        {% if page_details_top %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% include page_details_top %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% block content %}
+                        {% endblock content %}
+                        {% block comments %}{% endblock comments %}
+                        {% if page_details_bottom %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% include page_details_bottom %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <br/>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+        <div class="push"></div>
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- Footer Include -->
+        {% block footer %}
+            <!-- Footer Include -->
+
+            <footer>
+                <ul class="col1 col-lg-3">
+                    <address>
+                        <strong>OU CCE IT</strong><br>
+                        3200 Marshall Avenue, Suite 110<br>
+                        Norman, OK 73072<br>
+                        <abbr title="Phone">P:</abbr> (405) 325-2250,
+                        <abbr title="Email">E:</abbr> <a
+                            href="mailto:cceit@ou.edu">cceit@ou.edu</a>
+                    </address>
+                </ul>
+                <div class="footer_nav">
+                    <ul class="col2">
+                        <li>
+                            <a href="http://www.ou.edu/publicaffairs/WebPolicies/accessstatement.html">Accessibility</a>
+                        </li>
+                        <li><a href="http://www.ou.edu/sustainability.html">Sustainability</a>
+                        </li>
+                        <li><a href="http://ouhsc.edu/hipaa/">HIPAA</a></li>
+                        <li><a href="http://www.hr.ou.edu/employment/">OU Job
+                            Search</a></li>
+                    </ul>
+                    <ul class="col3">
+                        <li>
+                            <a href="http://www.ou.edu/content/web/landing/policy.html">Policies</a>
+                        </li>
+                        <li>
+                            <a href="http://www.ou.edu/content/web/landing/legalnotices.html">Legal
+                                Notices</a></li>
+                        <li>
+                            <a href="http://www.ou.edu/content/publicaffairs/WebPolicies/copyright.html">Copyright</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <p class="developed">
+                    Developed by <a href="#">CCE <img alt="CCE-IT" class="tagline"
+                                                      src="../img/tagline.png"/>
+                    IT</a>
+                </p>
+            </footer>
+
+            <!-- /Footer Include -->
+
+
+
+        {% endblock footer %}
+    <!-- /Footer Include -->
+
+    <!-- /#wrapper -->
+{% endblock wrapper %}
+
+{# Third-party JS packages #}
+{% block js %}
+
+    {% include 'footer.html' %}
+
+
+    {% block extra_js %}
+        <script type="application/javascript">
+            $(document).ready(initialize_plugins({% if advanced_search_form %}{{ advanced_search_form.is_bound|lower }}{% else %}false{% endif %}));
+        </script>
+    {% endblock extra_js %}
+
+
+
+    <script>
+        $(".advanced-search-button span.glyphicon").click(function () {
+            if ($(this).css("transform") == 'none') {
+                $(this).css("transform", "rotate(180deg)");
+            } else {
+                $(this).css("transform", "");
+            }
+        });
+    </script>
+{% endblock js %}
+
+{% block extra_footer %}
+{% endblock extra_footer %}
+</body>
+
+</html>

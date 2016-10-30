@@ -75,6 +75,9 @@ class TaskForm(CCEModelForm):
                   'attachment',
                   'image',
                   'board', )
+        help_texts = {
+            'title': 'asddsadsa asd asd asdasd asd asd asd asdasd asd asd asd asd asasdsadas as ads asasd sad'
+        }
 
 
 class UpdateTaskStatusForm(CCEModelForm):
