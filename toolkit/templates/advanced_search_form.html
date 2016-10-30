@@ -1,0 +1,40 @@
+{% load widget_tweaks %}
+
+<div id="advanced-search" class="collapse">
+    <hr />
+{#<div class="col-sm-12">#}
+    <form class="form-inline" action="" method="GET" enctype="multipart/form-data">
+            <div class="form-group">
+            <label class="sr-only" for="exampleInputAmount">Advanced Search</label>
+            <div class="row">
+                    {% for field in form %}
+                        <div class="input-group col-md-3">
+                            <label for="{{ field.id_for_label }}">{{ field.label|capfirst }}</label>
+                            {{ field|add_class:'form-control' }}
+            {#                <div class="btn-group" role="group">#}
+            {#                    <button id="search_btn" type="submit" class="btn btn-sm btn-primary" role="button"#}
+            {#                            aria-pressed="false" name="submit_search" aria-label="Search" title="Search"><span#}
+            {#                            class="glyphicon glyphicon-search" aria-hidden="true"></span></button>#}
+            {#                    {% if advanced_search_form %}#}
+            {#                    <button id="advance_search_toggle" type="button" class="btn btn-sm btn-success"#}
+            {#                            name="advanced_search_toggle" role="button" aria-pressed="false"#}
+            {#                            aria-label="Advanced Search" title="Advanced Search">#}
+            {#                        <span class="glyphicon glyphicon-plus" id="reveal_advanced_form" aria-hidden="true"></span>#}
+            {#                        &nbsp;Advanced Search#}
+            {#                    </button>#}
+            {#                    {% endif %}#}
+                            </div>
+                    {% endfor %}
+
+                <div class="row push-top">
+                    <div class="input-group col-md-12 advanced-buttons">
+                        <button type="submit" class="btn btn-default">Sign in</button>
+                        <button type="submit" class="btn btn-default">Reset</button>
+                    </div>
+                </div>
+                </div>
+                </div>
+    </form>
+{#</div>#}
+
+</div>

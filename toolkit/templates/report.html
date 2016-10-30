@@ -1,40 +1,8 @@
 {% extends "base.html" %}
 
 
-{% block page_options_1 %}
-    {% if search_form %}
-            {% include 'simple_search_form.html' with form=search_form %}
-    {% endif %}
-{% endblock page_options_1 %}
-
-{% block page_options_2 %}
-    {% if report_selector_form %}
-            {% include 'report_selector_form.html' with form=report_selector_form %}
-    {% endif %}
-{% endblock page_options_2 %}
 
 {% block content %}
-    {% block advanced_search_form %}
-        {% if advanced_search_form %}
-            <div id="advanced_search_form">
-                <form action="" method="GET" enctype="multipart/form-data">
-                    {% include '3_col_render_form.html' with form=advanced_search_form %}
-                    <input type="submit" id="advanced_search" name="advanced_search" value="Search"
-                           class="btn btn-default btn-success">
-                </form>
-                <hr/>
-            </div>
-        {% endif %}
-    {% endblock advanced_search_form %}
-
     {% block table %}{% endblock table %}
     {% include 'pagination.html' %}
 {% endblock content %}
-
-{% block extra_footer %}
-    <style>
-        #id_search {
-            margin-left: -15px;
-        }
-    </style>
-{% endblock extra_footer %}

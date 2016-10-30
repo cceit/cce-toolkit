@@ -1,4 +1,9 @@
 <div class="row detail">
-    <label class="col-sm-3 control-label detail item">{{ label|capfirst }}:</label>
-    <p class="col-sm-9 detail value">{{ value|default:"--" }}</p>
+    <div class="col-sm-3 detail label">
+        <h4>{{ label|capfirst }}</h4>
+    </div>
+
+    <div class="col-sm-9 detail info">
+        <p class="value">{{ value|default:"--" }}</p>
+    </div>
 </div>
