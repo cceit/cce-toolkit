@@ -1,6 +1,6 @@
 {% load widget_tweaks template_helpers %}
 {% block form_field %}
-    <div class="form-group row">
+    <div id="{{ field.id_for_label }}_row" class="form-group row">
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
                 {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
