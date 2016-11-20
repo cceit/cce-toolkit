@@ -1,0 +1,185 @@
+/* GlobalHeader */
+.globalheader {
+  background: #1b1b1b;
+  position: fixed;
+  width: 100%;
+  z-index: 9001;
+  padding: 0 15px;
+}
+.globalheader ul {
+  height: 30px;
+  float: right;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.globalheader ul li {
+  text-align: center;
+  float: left;
+}
+.globalheader ul li a.home,
+.globalheader ul li a.search,
+.globalheader ul li a.social {
+  display: block;
+  height: 30px;
+  width: 30px;
+}
+.globalheader ul li a:hover {
+  background-color: #e8e8e8;
+  border: none;
+}
+.globalheader ul li a.tip {
+  position: relative;
+}
+.globalheader ul li a.tip i.fa {
+  font-size: 15px;
+  color: #fff;
+  line-height: 30px;
+}
+.globalheader ul li a.tip .caret {
+  display: none;
+}
+.globalheader ul li a.tip span {
+  display: none;
+}
+.globalheader ul li a.tip span::before {
+  content: "";
+  width: 100%;
+  display: block;
+  background-image: url(../img/ou-globalheader-tiparrow.png);
+  background-repeat: no-repeat;
+  background-position: top center;
+  bottom: 100%;
+  left: 0;
+  height: 9px;
+  position: absolute;
+}
+.globalheader ul li a.tip:hover i.fa {
+  color: #1b1b1b;
+}
+.globalheader ul li a.tip:hover span {
+  position: absolute;
+  z-index: 25;
+  top: 135%;
+  left: -3.75em;
+  width: 10em;
+  display: block;
+  margin: 0;
+  padding: 1.25em 0 0.85em;
+  border: 1px solid #444;
+  background: #1b1b1b;
+  white-space: nowrap;
+  text-align: center;
+  color: #FFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.75em;
+}
+.globalheader ul li a.tip:hover .caret {
+  display: inline-block;
+  color: #e8e8e8;
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  margin-left: -9px;
+  border-top: 9px dashed;
+  border-top: 9px solid\9;
+  border-right: 9px solid transparent;
+  border-left: 9px solid transparent;
+}
+.globalheader ul li.wordmark {
+  width: 200px;
+  height: 30px;
+  margin-left: 1em;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.globalheader ul li.wordmark span {
+  font-family: 'EB Garamond', serif;
+  color: #fff;
+  font-size: 13px;
+  line-height: 30px;
+}
+.globalheader ul::after {
+  content: "";
+  display: block;
+  width: 90%;
+}
+.globalheader::after {
+  content: "";
+  background-color: #777;
+  border-top: 1px solid #000;
+  height: 1px;
+  display: block;
+  width: 100%;
+}
+.globalheader-wrapper {
+  margin: 0 auto;
+  width: 100%;
+}
+/* GlobalFooter */
+footer {
+  background: #1b1b1b;
+  color: #999;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  margin-top: -250px;
+  height: 331px;
+  clear: both;
+  margin-top: 0;
+}
+footer a:link,
+footer a:visited {
+  color: #fff;
+}
+footer a:hover,
+footer a:active {
+  text-decoration: underline;
+}
+footer .container {
+  padding: 0;
+}
+footer ul.col1,
+footer .footer_nav,
+footer .social_media {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  float: left;
+}
+footer ul.col1 {
+  background: transparent url(../img/ou_footer.png) no-repeat 0px 0px;
+  padding-left: 60px;
+}
+footer ul.col2,
+footer ul.col3 {
+  float: left;
+}
+footer ul {
+  list-style: none;
+}
+footer .social_media {
+  float: right;
+}
+footer .social_media ul {
+  margin: 0;
+  padding: 0;
+}
+footer .social_media ul li {
+  display: inline-block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  position: relative;
+  overflow: hidden;
+}
+footer .social_media ul li img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+footer .social_media ul li:hover img {
+  top: -46px;
+}
+footer hr {
+  clear: both;
+  border-color: #474747;
+}

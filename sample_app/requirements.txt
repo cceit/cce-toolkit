@@ -23,7 +23,7 @@ splinter
 django-behave
 
 #CCE Toolkit
-git+https://github.com/cceit/cce-toolkit.git@latest
+git+https://github.com/cceit/cce-toolkit.git@new-theme
 
 #Postgres
 psycopg2==2.6.1

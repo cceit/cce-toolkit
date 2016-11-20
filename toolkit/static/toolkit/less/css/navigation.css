@@ -1,0 +1,291 @@
+/* Colors */
+.navbar .navbar-nav.side-nav > .active.context-aware-nav,
+.active.context-aware-nav {
+  background: #fff;
+}
+.active.context-aware-nav a,
+.active.context-aware-nav ul li a {
+  color: #323232;
+}
+.active.context-aware-nav ul li a.active {
+  color: #323232;
+  background: #eee;
+  box-shadow: 0 0 5px #fff;
+}
+/* Navbar */
+/* ------------------------------------------------------ */
+.navbar {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+.navbar .navbar-nav li a {
+  z-index: 2;
+}
+.navbar-right {
+  padding: 0 15px;
+}
+@media (max-width: 767px) {
+  .navbar-collapse,
+  .navbar-collapse {
+    height: auto;
+    max-height: none;
+  }
+}
+a.navbar-brand {
+  float: none;
+}
+.nav {
+  padding-top: 15px;
+}
+.nav > li > a:focus,
+.nav > li > a:hover {
+  background: #fff;
+  color: #630d0d;
+}
+/* OU Logo */
+h3.navbar-title img {
+  height: 30px;
+  width: auto;
+  margin-right: 10px;
+  margin-top: -5px;
+}
+a.navbar-brand img {
+  display: inline-block;
+  height: 32px;
+  width: auto;
+  margin-right: 0px;
+  margin-top: -5px;
+}
+.navbar {
+  height: 0px;
+  min-height: 0px;
+  z-index: 1;
+}
+.navbar .navbar-brand {
+  color: #fff;
+}
+.navbar .nav-sidebar li ul {
+  background: transparent;
+}
+.navbar .nav-sidebar li ul li:hover {
+  background: #fff;
+  color: #630d0d;
+}
+.navbar .nav-sidebar li.context-aware-nav ul li:hover {
+  background: #630d0d;
+}
+.navbar .nav-sidebar li.context-aware-nav ul li:hover a {
+  color: #630d0d;
+}
+.navbar .nav-sidebar li.context-aware-nav ul li:hover a.active {
+  color: #298ac4;
+}
+.navbar .nav-sidebar li.context-aware-nav .caret {
+  transform: rotate(180deg);
+}
+.navbar .nav-sidebar > .active > a.context-top:hover {
+  color: #323232;
+}
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+  background: #fff;
+  color: #630d0d;
+}
+.navbar .navbar-title {
+  padding-left: 15px;
+  color: #eee;
+}
+.navbar .sidebar {
+  margin-bottom: 130px;
+  background: #1b1b1b;
+  width: 180px;
+  margin-left: -180px;
+  left: 180px;
+  top: 30px;
+  z-index: 1;
+}
+.navbar .sidebar a {
+  font-size: 13px;
+}
+.navbar .sidebar a.navbar-brand {
+  font-size: 22px;
+}
+.navbar .sidebar #context-menu .active {
+  background: #630d0d;
+  color: #fff;
+}
+/* OU Branding */
+.navbar .navbar-title {
+  font-family: 'EB Garamond', serif;
+}
+a.navbar-brand {
+  color: #fff;
+}
+.navbar .navbar-nav.side-nav > .active.context-aware-nav,
+.active.context-aware-nav {
+  color: #fff;
+}
+.navbar .navbar-nav.side-nav > .active.context-aware-nav a,
+.active.context-aware-nav a {
+  background-color: #1c6089;
+  color: #fff;
+}
+.navbar .navbar-nav.side-nav > .active.context-aware-nav ul li a,
+.active.context-aware-nav ul li a {
+  background-color: #fff;
+  color: #323232;
+}
+.navbar .navbar-nav.side-nav > .active.context-aware-nav ul li a.active,
+.active.context-aware-nav ul li a.active {
+  background-color: #fff;
+  color: #323232;
+  font-weight: bolder;
+}
+.navbar {
+  background: #630d0d;
+}
+.navbar .navbar-nav li.active a {
+  background: #630d0d;
+  color: #fff;
+}
+.navbar .navbar-nav li.active a:hover,
+.navbar .navbar-nav li.active a:focus {
+  background: #630d0d;
+}
+.navbar .navbar-nav li.active ul li a {
+  background: #323232;
+}
+.navbar .navbar-nav li a {
+  color: #fff;
+}
+.navbar .navbar-nav li a:hover,
+.navbar .navbar-nav li a:focus {
+  color: #fff;
+}
+/* Sidebar */
+/* ------------------------------------------------------ */
+.sidebar a.navbar-brand {
+  font-family: 'EB Garamond', serif;
+  font-size: 22px;
+  line-height: 24px;
+  display: block;
+  height: auto;
+  text-align: center;
+}
+.sidebar {
+  background: #323232;
+  border-bottom: solid 1px #fff;
+}
+.sidebar {
+  background: #323232;
+}
+.sidebar {
+  margin-bottom: 331px;
+}
+.sidebar {
+  background: #323232;
+}
+.sidebar-items > li > a.active {
+  font-weight: bolder;
+}
+@media (min-width: 768px) {
+  .side-nav,
+  .sidebar {
+    position: fixed;
+    top: 86px;
+    left: 225px;
+    width: 225px;
+    margin-left: -225px;
+    border: none;
+    border-radius: 0;
+    overflow-y: auto;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    padding-top: 15px;
+  }
+  .side-nav > li > a,
+  .sidebar > li > a {
+    width: 225px;
+  }
+}
+.side-nav li ul,
+.sidebar li ul {
+  padding: 0;
+}
+.side-nav li ul li a,
+.sidebar li ul li a {
+  display: block;
+  padding: 10px 15px 10px 38px;
+  text-decoration: none;
+}
+.side-nav li ul li ul li a,
+.sidebar li ul li ul li a {
+  padding: 10px 15px 10px 60px;
+}
+@media (min-width: 768px) {
+  .side-nav {
+    background-color: #323232;
+  }
+}
+.side-nav {
+  background-color: #323232;
+  border-top: solid 1px #323232;
+}
+.side-nav li ul li a {
+  color: #fff;
+}
+.side-nav li ul li a:hover {
+  color: #323232;
+  background: #fff;
+}
+@media screen and (max-width: 767px) {
+  .nav-sidebar {
+    background-color: #323232;
+    border-top: solid 3px #630d0d;
+    border-bottom: solid 3px #630d0d;
+  }
+  hr {
+    border-color: #630d0d;
+  }
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus,
+.nav-sidebar .active .active a {
+  background: #630d0d;
+  color: #fff;
+}
+.nav-sidebar li a {
+  color: #fff;
+}
+.nav-sidebar li ul {
+  background: #fff;
+  list-style: none;
+}
+.nav-sidebar li ul li {
+  position: relative;
+  display: block;
+}
+.nav-sidebar li ul li a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-sidebar li ul li a:hover,
+.nav-sidebar li ul li a:active {
+  text-decoration: none;
+  color: #630d0d;
+}
+.nav-sidebar li ul li:hover {
+  background: #630d0d;
+}
+.nav-sidebar li ul ul {
+  background: #630d0d;
+}
+.sidebar-items > li > a.active {
+  background-color: #fff;
+  color: #323232;
+}
