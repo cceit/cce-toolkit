@@ -1,13 +1,20 @@
 {% load widget_tweaks template_helpers %}
 {% block form_field %}
-    <div class="form-group row">
+    <div id="{{ field.id_for_label }}_row" class="form-group row">
         {% block field_label %}
             <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
+                {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
+                {% if form.override_labels %}
+                    {{ field.label }}
+                {% else %}
+                    {{ field.label|title }}
+                {% endif %}
+                {{ field.field.label_suffix|default_if_none:":" }}
                 {% if field.name not in form.override_help_text_display %}
                     {% if field.help_text|length > 55  %}
                     <span>
                     <a href="javascript:void(0)" id="{{ field.id_for_label }}_modal_btn" title="{{ field.label }} Help"
-                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer">
+                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer; font-size: 12pt;">
                         <i class="glyphicon glyphicon-question-sign"></i>
                     </a>
                     </span>
@@ -21,13 +28,6 @@
 {#                        </span>#}
                     {% endif %}
                 {% endif %}
-                {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
-                {% if form.override_labels %}
-                    {{ field.label }}
-                {% else %}
-                    {{ field.label|title }}
-                {% endif %}
-                {{ field.field.label_suffix|default_if_none:":" }}
             </label>
         {% endblock field_label %}
         <div class="col-sm-9">

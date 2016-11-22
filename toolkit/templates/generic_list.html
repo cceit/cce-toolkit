@@ -15,6 +15,14 @@
 
 {% block table %}
 
+    {% if page_details_top %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_top %}
+            </div>
+        </div>
+    {% endif %}
+
     {% block details %}
     {% endblock details %}
 
@@ -90,6 +98,15 @@
         </div>
         {% endfor %}
     {% endfor %}
+
+    {% if page_details_bottom %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_bottom %}
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock table %}
 
 {% block extra_header %}

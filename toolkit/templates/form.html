@@ -7,6 +7,15 @@
 {% endblock page_headline %}
 
 {% block content %}
+
+    {% if page_details_top %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_top %}
+            </div>
+        </div>
+    {% endif %}
+
     {% block details %}
     {% endblock details %}
 
@@ -21,7 +30,8 @@
     {% block form %}
         <div class="row">
             <form action="" method="{{ form_method|default:'POST' }}" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
-                <span class="required-warning">*</span> - indicates a required field.
+                <span class="required-warning">*</span> - indicates a required field.<br>
+                <span class="glyphicon glyphicon-question-sign" style="font-size: 12pt"></span> - indicates additional information.
                 <div class="form-content">
                     {% block render_form %}
                         {% include 'render_form.html' %}
@@ -42,6 +52,15 @@
             </form>
         </div>
     {% endblock form %}
+
+    {% if page_details_bottom %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_bottom %}
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock content %}
     {% block extra_details %}
     {% endblock extra_details %}
