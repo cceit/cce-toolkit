@@ -11,6 +11,12 @@
 
 <div id="{{ formset.prefix }}">
     {% for form in formset.forms %}
+        {% if forloop.first %}
+        <div class="dynamic-form" id="{{ form.prefix }}-seed" style="display: none">
+            {% include "4_col_render_formset.html" %}
+            <hr/>
+        </div>
+        {% endif %}
         <div class="dynamic-form" id="{{ form.prefix }}-row">
             {% include "4_col_render_formset.html" %}
             <hr/>
