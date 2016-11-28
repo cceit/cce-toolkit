@@ -1,0 +1,561 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Sidebar Style</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css"/>
+    <link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    <div id="wrapper">
+
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="globalheader">
+    <div class="ouheader">
+        <div class="globalheader-wrapper">
+            <ul>
+                <li><a class="tip home" href="http://www.ou.edu/web.html"
+                       alt="OU Home link"><span>OU Homepage</span></a></li>
+                <li><a class="tip search" href="http://www.ou.edu/content/ousearch.html"
+                       alt="OU Search link"><span>Search OU</span></a>
+                </li>
+                <li><a class="tip social" href="http://www.ou.edu/web/socialmediadirectory.html"
+                       alt="OU Social Media link"><span>OU Social Media</span></a></li>
+                <li class="wordmark"><span style="font-family: Garamond, serif; color: #fff; font-size: 13px; line-height: 30px;"><span style="font-style: italic;">The</span> UNIVERSITY <span style="font-style: italic;">of</span> OKLAHOMA</span></li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+  <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h3 class="navbar-title">Sidebar Style</h3>
+        </div>
+
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+
+            <div class="sidebar">
+
+                          <a class="navbar-brand" href="#">Style Demo</a>
+                          <div class="clear"></div>
+                          <ul class="nav nav-sidebar">
+
+                            <li class="active context-aware-nav ">
+    <a href="#" data-toggle="collapse" data-target="#context-menu" class="collapsed" aria-expanded="true">
+        <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Context Aware Nav <span class="caret"></span>
+    </a>
+
+    <ul id="context-menu" class="collapse in" aria-expanded="true">
+        <li>
+            <a href="sample-page.html" class="">
+    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span> Sample Page
+</a>
+        </li>
+
+        
+            
+                <li>
+                    <a href="sample-detail.html" class="active">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Sample Detail
+</a>
+                </li>
+                <li>
+                    <a href="sample-form.html" class="">
+    <span class="glyphicon glyphicon-import" aria-hidden="true"> </span> Sample Form
+</a>
+                </li>
+                <li>
+                    <a href="sample-table.html" class="">
+    <span class="glyphicon glyphicon-import" aria-hidden="true"> </span> Sample Table
+</a>
+                </li>
+            
+        
+
+
+    </ul>
+</li>
+
+
+                            
+                            
+                            
+
+    <li class="active">
+        <a href="/">
+            <i class="glyphicon glyphicon-home" aria-hidden="true"></i> Home
+        </a>
+    </li>
+
+
+
+
+    <li class="">
+    <a href="#" data-toggle="collapse" data-target="#roles" class="">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Dropdown Item <span class="caret"></span>
+        </a>
+
+        <ul id="roles" class="sidebar-items collapse">
+            
+                <li><a href="/users/browse/" class="">Dropdown 1</a></li>
+                <li><a href="/users/add/" class="">Dropdown 2</a></li>
+            
+        </ul>
+
+        
+    </li>
+
+
+
+    <li class="">
+        <a href="/accounts/logout/">
+            <i class="fa fa-sign-out fa-fw"></i> Logout
+        </a>
+    </li>
+
+                          </ul>
+                        </div>
+
+
+
+
+
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    
+
+    <div id="page-wrapper">
+        <div class="container-fluid" id="main">
+            <div class="row page-header">
+                <div class="col-sm-12 col-md-12">
+                    <div class="row fancy">
+                        <h2>Detail Style</h2>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="sr-only" for="exampleInputAmount">Basic Search</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    <a class="input-group-addon advanced-search-button" role="button" data-toggle="collapse" href="#advanced-search" aria-expanded="false" aria-controls="advanced-search"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Advanced Search</a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clear"></div>
+                                
+                        <div id="advanced-search" class="collapse">
+                            <hr />
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputAmount">Advanced Search</label>
+                                    <div class="input-group col-md-3">
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Item Name</h3>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label 1</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label 2</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label 1</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac. Aliquam pharetra facilisis felis viverra commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras et dui finibus, congue ante et, faucibus justo.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label 2</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label 1</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 detail label">
+                            <h4>Label</h4>
+                        </div>
+
+                        <div class="col-md-9 detail info">
+                            <p>Detail Info - Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+        <div class="push"></div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Footer Include -->
+    
+        <footer>
+        <ul class="col1 col-lg-3">
+            <address>
+                <strong>OU CCE IT</strong><br>
+                3200 Marshall Avenue,  Suite 110<br>
+                Norman, OK 73072<br>
+                <abbr title="Phone">P:</abbr> (405) 325-2250, 
+                <abbr title="Email">E:</abbr> <a href="mailto:cceit@ou.edu">cceit@ou.edu</a>
+            </address>
+        </ul>
+        <div class="footer_nav">
+            <ul class="col2">
+                <li><a href="http://www.ou.edu/publicaffairs/WebPolicies/accessstatement.html">Accessibility</a>
+                </li>
+                <li><a href="http://www.ou.edu/sustainability.html">Sustainability</a></li>
+                <li><a href="http://ouhsc.edu/hipaa/">HIPAA</a></li>
+                <li><a href="http://www.hr.ou.edu/employment/">OU Job Search</a></li>
+            </ul>
+            <ul class="col3">
+                <li><a href="http://www.ou.edu/content/web/landing/policy.html">Policies</a></li>
+                <li><a href="http://www.ou.edu/content/web/landing/legalnotices.html">Legal Notices</a></li>
+                <li><a href="http://www.ou.edu/content/publicaffairs/WebPolicies/copyright.html">Copyright</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <p class="developed">
+            Developed by <a href="#">CCE <img class="tagline" src="img/tagline.png" /> IT</a>
+        </p>
+</footer>
+    
+    <!-- /Footer Include -->
+
+
+
+
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script>
+        $( ".advanced-search-button span.glyphicon" ).click(function() {
+            if (  $( this ).css( "transform" ) == 'none' ){
+                $(this).css("transform","rotate(180deg)");
+            } else {
+                $(this).css("transform","" );
+            }
+        });
+    </script>
+    <script src="bootstrap-custom/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/modernizr.js"></script>
+</body>
+
+</html>

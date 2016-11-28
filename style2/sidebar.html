@@ -1,0 +1,386 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Sidebar Style</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css"/>
+    <link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    <div id="wrapper">
+
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="globalheader">
+    <div class="ouheader">
+        <div class="globalheader-wrapper">
+            <ul>
+                <li><a class="tip home" href="http://www.ou.edu/web.html"
+                       alt="OU Home link"><span>OU Homepage</span></a></li>
+                <li><a class="tip search" href="http://www.ou.edu/content/ousearch.html"
+                       alt="OU Search link"><span>Search OU</span></a>
+                </li>
+                <li><a class="tip social" href="http://www.ou.edu/web/socialmediadirectory.html"
+                       alt="OU Social Media link"><span>OU Social Media</span></a></li>
+                <li class="wordmark"><span style="font-family: Garamond, serif; color: #fff; font-size: 13px; line-height: 30px;"><span style="font-style: italic;">The</span> UNIVERSITY <span style="font-style: italic;">of</span> OKLAHOMA</span></li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+  <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h3 class="navbar-title">Sidebar Style</h3>
+        </div>
+
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+
+            <div class="sidebar">
+
+                          <a class="navbar-brand" href="#">CSRDE Portal</a>
+                          <div class="clear"></div>
+                          <ul class="nav nav-sidebar">
+
+                            <li class="active context-aware-nav ">
+    <a href="#" data-toggle="collapse" data-target="#context-menu" class="collapsed" aria-expanded="true">
+        <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Users <span class="caret"></span>
+    </a>
+
+    <ul id="context-menu" class="collapse in" aria-expanded="true">
+        <li>
+            <a href="/users/browse/" class="active">
+    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span> Browse Users
+</a>
+        </li>
+
+        
+            
+                <li>
+                    <a href="/users/add/" class="">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add User
+</a>
+                </li>
+                <li>
+                    <a href="/users/import_from_ad/" class="">
+    <span class="glyphicon glyphicon-import" aria-hidden="true"> </span> Import from AD
+</a>
+                </li>
+                <li>
+                    <a href="/users/sync_from_ad/" class="">
+    <span class="glyphicon glyphicon-import" aria-hidden="true"> </span> Sync from AD
+</a>
+                </li>
+            
+        
+
+
+    </ul>
+</li>
+
+
+                            
+                            
+                            
+
+    <li class="active">
+        <a href="/">
+            <i class="glyphicon glyphicon-home" aria-hidden="true"></i> Dashboard
+        </a>
+    </li>
+
+
+
+
+    <li class="">
+    <a href="#" data-toggle="collapse" data-target="#roles" class="" aria-expanded="true">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Users <span class="caret"></span>
+        </a>
+
+        <ul id="roles" class="sidebar-items collapse in" aria-expanded="true">
+            
+                <li><a href="/users/browse/" class="">Browse Users</a></li>
+                <li><a href="/users/add/" class="">Add User</a></li>
+                <li><a href="/users/import_from_ad/" class="">Import from AD</a></li>
+                <li><a href="/users/sync_from_ad/" class="">Sync from AD</a></li>
+            
+        </ul>
+
+        
+    </li>
+
+<li class="">
+    <a href="#" data-toggle="collapse" data-target="#institutions" class="" aria-expanded="true">
+        <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Institutions <span class="caret"></span>
+    </a>
+
+    <ul id="institutions" class="sidebar-items collapse " aria-expanded="true">
+        <li><a href="/institutions/browse/" class="">Browse Institutions</a></li>
+        <li><a href="/institutions/import/" class="">Import Institutions</a></li>
+        <li><a href="/institutions/export/" class="">Export Institutions</a></li>
+    </ul>
+</li>
+<li class="">
+    <a href="#" data-toggle="collapse" data-target="#profiles" class="" aria-expanded="true">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profiles <span class="caret"></span>
+    </a>
+
+    <ul id="profiles" class="sidebar-items collapse " aria-expanded="true">
+        <li><a href="/profiles/browse/" class="">Browse Profiles</a></li>
+        <li><a href="/profiles/import/" class="">Import Contacts</a></li>
+        <li><a href="/profiles/export_main/" class="">Export Main Contacts</a></li>
+        <li><a href="/profiles/export_ida/" class="">Export IDA Contacts</a></li>
+    </ul>
+</li>
+<li class="">
+    <a href="#" data-toggle="collapse" data-target="#webinars" class="" aria-expanded="true">
+        <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Webinars <span class="caret"></span>
+    </a>
+
+    <ul id="webinars" class="sidebar-items collapse " aria-expanded="true">
+        <li><a href="/webinars/browse/" class="">Browse Webinars</a></li>
+        <li><a href="/webinars/export/" class="">Export Webinars</a></li>
+    </ul>
+</li>
+<li class="">
+    <a href="#" data-toggle="collapse" data-target="#carnegie_types" class="" aria-expanded="true">
+        <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Carnegie Types <span class="caret"></span>
+    </a>
+
+    <ul id="carnegie_types" class="sidebar-items collapse " aria-expanded="true">
+        <li><a href="/classifications/browse/" class="">Browse Carnegie Types</a></li>
+    </ul>
+</li>
+
+    <li class="">
+        <a href="/accounts/logout/">
+            <i class="fa fa-sign-out fa-fw"></i> Logout
+        </a>
+    </li>
+
+                          </ul>
+                        </div>
+
+
+
+
+
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+    
+
+    <div id="page-wrapper">
+        <div class="container-fluid" id="main">
+            <div class="row page-header">
+                <div class="col-sm-12 col-md-12">
+                    <h1>Sidebar Style</h1>
+                    <hr />
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac. Aliquam pharetra facilisis felis viverra commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras et dui finibus, congue ante et, faucibus justo. Donec finibus elementum lacinia. Mauris volutpat, elit sed porttitor placerat, felis enim egestas elit, sit amet blandit orci enim placerat nisi. Proin ut rutrum lectus. Sed viverra orci felis, in venenatis erat pellentesque ac. Curabitur eget feugiat sem, eu imperdiet nibh. Mauris maximus aliquam elit, a tristique massa facilisis vel. Cras vehicula, arcu et luctus varius, justo dolor sagittis lectus, non malesuada nulla sem id augue. Proin vitae mi varius, elementum nisi at, laoreet tortor. Quisque consectetur pretium risus sed sagittis. Cras in libero enim. In ultricies sem id ligula lobortis fringilla. Aliquam eget placerat nunc.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="block">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="block">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="block">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="block secondary">
+                                <h3>Extended Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac. Aliquam pharetra facilisis felis viverra commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras et dui finibus, congue ante et, faucibus justo.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="block secondary">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="block tertiary">
+                                <h3>Mini Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="block tertiary">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget imperdiet lectus rhoncus ac.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="block tertiary">
+                                <h3>Content Block</h3>
+                                <hr />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum diam velit, eget.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table-striped">
+                                <thead> <tr> <th>#</th> <th>First Name</th> <th>Last Name</th> <th>Username</th> </tr> </thead>
+                                <tbody> <tr> <th scope="row">1</th> <td>Mark</td> <td>Otto</td> <td>@mdo</td> </tr> <tr> <th scope="row">2</th> <td>Jacob</td> <td>Thornton</td> <td>@fat</td> </tr> <tr> <th scope="row">3</th> <td>Larry</td> <td>the Bird</td> <td>@twitter</td> </tr> </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row fancy">
+                        <h2>Fancy Heading</h2>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="sr-only" for="exampleInputAmount">Basic Search</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    <a class="input-group-addon advanced-search-button" role="button" data-toggle="collapse" href="#advanced-search" aria-expanded="false" aria-controls="advanced-search">Advanced Search <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span></a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clear"></div>
+                        <hr />
+                                
+                        <div id="advanced-search" class="collapse">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label class="sr-only" for="exampleInputAmount">Advanced Search</label>
+                                    <div class="input-group col-md-3">
+                                        <a class="input-group-addon" role="button"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <a class="input-group-addon" role="button"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <a class="input-group-addon" role="button"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="input-group col-md-3">
+                                        <a class="input-group-addon" role="button"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+                                        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search...">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+        <div class="push"></div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Footer Include -->
+    
+        <footer>
+        <ul class="col1 col-lg-3">
+            <address>
+                <strong>OU CCE IT</strong><br>
+                3200 Marshall Avenue,  Suite 110<br>
+                Norman, OK 73072<br>
+                <abbr title="Phone">P:</abbr> (405) 325-2250, 
+                <abbr title="Email">E:</abbr> <a href="mailto:cceit@ou.edu">cceit@ou.edu</a>
+            </address>
+        </ul>
+        <div class="footer_nav">
+            <ul class="col2">
+                <li><a href="http://www.ou.edu/publicaffairs/WebPolicies/accessstatement.html">Accessibility</a>
+                </li>
+                <li><a href="http://www.ou.edu/sustainability.html">Sustainability</a></li>
+                <li><a href="http://ouhsc.edu/hipaa/">HIPAA</a></li>
+                <li><a href="http://www.hr.ou.edu/employment/">OU Job Search</a></li>
+            </ul>
+            <ul class="col3">
+                <li><a href="http://www.ou.edu/content/web/landing/policy.html">Policies</a></li>
+                <li><a href="http://www.ou.edu/content/web/landing/legalnotices.html">Legal Notices</a></li>
+                <li><a href="http://www.ou.edu/content/publicaffairs/WebPolicies/copyright.html">Copyright</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <p class="developed">
+            Developed by <a href="#">CCE <img class="tagline" src="img/tagline.png" /> IT</a>
+        </p>
+</footer>
+    
+    <!-- /Footer Include -->
+
+
+
+
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script>
+        $( ".advanced-search-button span.glyphicon" ).click(function() {
+            if (  $( this ).css( "transform" ) == 'none' ){
+                $(this).css("transform","rotate(180deg)");
+            } else {
+                $(this).css("transform","" );
+            }
+        });
+    </script>
+    <script src="bootstrap-custom/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/modernizr.js"></script>
+</body>
+
+</html>

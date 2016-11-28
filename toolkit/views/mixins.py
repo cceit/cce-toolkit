@@ -448,7 +448,7 @@ class AbstractedListMixin(object):
     """
     Assumes that it's mixed in with a ListView that has self.model.
     """
-    template_name = "generic_list.html"
+    template_name = "toolkit_templates/views/generic_list.html"
     model = None
     columns = None
     popover_rows = None
@@ -731,7 +731,7 @@ class AbstractedDetailMixin(object):
 
 
     """
-    template_name = "generic_detail.html"
+    template_name = "toolkit_templates/views/generic_detail.html"
     detail_fields = None
 
     def get_detail_fields(self):
@@ -808,7 +808,7 @@ class AbstractedDetailMixin(object):
 
 
 class AbstractedDeleteMixin(object):
-    template_name = "generic_delete.html"
+    template_name = "toolkit_templates/views/generic_delete.html"
     no_url_path = None
 
     @staticmethod

@@ -1,0 +1,15 @@
+{% block form_fragment %}
+
+    {{ form.media }}
+    {% block non_field_errors %}
+        {% include "toolkit_templates/forms/form_fragments/_non_field_errors.html" with errors=form.non_field_errors popover_title="Form Errors:" %}
+    {% endblock non_field_errors %}
+
+    {% for field in form %}
+        {% if field.field.widget.is_hidden %}
+            {% include "toolkit_templates/forms/form_fragments/_form_field_hidden.html" %}
+        {% else %}
+            {% include "toolkit_templates/forms/form_fragments/_form_field.html" %}
+        {% endif %}
+    {% endfor %}
+{% endblock form_fragment %}

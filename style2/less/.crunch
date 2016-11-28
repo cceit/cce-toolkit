@@ -1,0 +1,21 @@
+{
+	"files": {
+		"sidebar.less": {
+			"engines": [
+				{
+					"compiler": "less",
+					"output": "../css/sidebar.css",
+					"options": {
+						"compress": false,
+						"ieCompat": false,
+						"strictMath": false,
+						"strictUnits": false,
+						"javascriptEnabled": false,
+						"sourcemap": true
+					}
+				}
+			],
+			"sources": []
+		}
+	}
+}

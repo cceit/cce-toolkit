@@ -1,5 +1,3 @@
-/* --< Theme >-- */
-/* Needed for stand-alone functionality, but can be separated into theming file for project */
 /* Colors */
 .navbar .navbar-nav.side-nav > .active.context-aware-nav,
 .active.context-aware-nav {
@@ -165,6 +163,19 @@ a.navbar-brand {
 .navbar .navbar-nav li a:focus {
   color: #fff;
 }
+/* Breadcrumb */
+/* ------------------------------------------------------ */
+.breadcrumb {
+  background-color: transparent;
+  margin: 0;
+}
+.breadcrumb a {
+  color: #630d0d;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus {
+  color: #1c6089;
+}
 /* Sidebar */
 /* ------------------------------------------------------ */
 .sidebar a.navbar-brand {
@@ -219,7 +230,7 @@ a.navbar-brand {
 .side-nav li ul li a,
 .sidebar li ul li a {
   display: block;
-  padding: 10px 15px 10px 38px;
+  padding: 10px 15px 10px 38px !important;
   text-decoration: none;
 }
 .side-nav li ul li ul li a,
@@ -680,11 +691,6 @@ body #wrapper #page-wrapper .page-content .row.fancy .btn.action {
   float: left;
   margin-top: 24px;
   margin-left: 10px;
-  background: #6191B0;
-  border: solid 1px #eee;
-}
-body #wrapper #page-wrapper .page-content .row.fancy .btn.action:hover {
-  color: #eee;
 }
 body #wrapper #page-wrapper .page-content .row.fancy .form-group {
   position: relative;
@@ -795,37 +801,17 @@ body #wrapper #page-wrapper .page-content .row.fancy #advanced-search form .inpu
 body #wrapper #page-wrapper .page-content .row.fancy #advanced-search form .input-group[class*=col-] .form-control {
   border-radius: 4px;
 }
-body #wrapper #page-wrapper .page-content .action .download select.form-control {
-  width: auto;
-  min-width: 200px;
-  display: inline-block;
-  z-index: 2;
-  position: relative;
-  border-color: #630d0d;
-}
-body #wrapper #page-wrapper .page-content .action .download .glyphicon {
-  background: #298ac4;
-  color: #fff;
-  padding: 10px;
-  padding-left: 12px;
-  margin-left: -8px;
-  position: relative;
-  z-index: 1;
-  top: 3px;
-}
-body #wrapper #page-wrapper .page-content .action .nav {
+body #wrapper #page-wrapper .page-content ul.actions {
   text-align: right;
   padding-top: 0;
 }
-body #wrapper #page-wrapper .page-content .action .nav > li {
+body #wrapper #page-wrapper .page-content ul.actions li {
   display: inline-block;
 }
-body #wrapper #page-wrapper .page-content .action .nav > li > a {
+body #wrapper #page-wrapper .page-content ul.actions li > a {
   padding: 5px 10px;
-  background: #999;
-  color: #fff;
 }
-body #wrapper #page-wrapper .page-content .action hr {
+body #wrapper #page-wrapper .page-content ul.actions hr {
   margin-top: 10px;
 }
 body footer {

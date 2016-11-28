@@ -1,0 +1,118 @@
+{% extends "toolkit_templates/views/list.html" %}
+{% load bootstrap_tags pagination %}
+
+{% block action_buttons %}
+    {% if add_button_url %}
+        <a href="{{ add_button_url }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add</a>
+    {% endif %}
+{% endblock action_buttons %}
+
+{% block mobile_context_nav %}
+    {% block context_nav %}
+        {% include "toolkit_templates/components/generic_context_menu.html" %}
+    {% endblock context_nav %}
+{% endblock mobile_context_nav %}
+
+{% block table %}
+    {% block details %}
+    {% endblock details %}
+
+    {% if page_details %}
+        <div class="row">
+            <div class="col-sm-12">
+                {{ page_details|safe }}
+            </div>
+        </div>
+    {% endif %}
+    {% for row in table|slice:"1:" %}
+            {% if forloop.first %}
+                <div class="table-responsive">
+                <table class="table table-striped table-condensed tabled-bordered">
+                    <thead>
+                        <tr>
+                            {% for title_tuple in table.0 %}
+                                <th class="col-sm-{{ title_tuple.1 }}">
+                                    {% generate_ordering_links request title_tuple.0 title_tuple.2 %}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+            {% endif %}
+                <tr>
+                    {% for item in row %}
+                        {% if forloop.last and not disable_actions_column %}
+                            <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">
+                                {# item is a list of button tuples #}
+                                {% for t in item %}
+                                    {% if t.5 %}
+                                    {% include 'toolkit_templates/components/_button_condensed.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
+                                    {% else %}
+                                    {% include 'toolkit_templates/components/_button.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% else %}
+                            <td>{{ item|render_detail:None|safe|default:"--" }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% if forloop.last %}
+                    </tbody>
+                </table>
+                </div>
+            {% endif %}
+            {% empty %}
+                {% include 'toolkit_templates/components/alert.html' with type='warning' message=empty_list_message %}
+    {% endfor %}
+
+    {% for labels, data in quicklook.items %}
+        {% for data_row in data %}
+            <div class="quickLook" id="popover_{{ forloop.counter }}">
+                <div data-toggle="popover" data-placement="left" data-html="true" title='Quick Look' data-content='
+                    <div class="media">
+                        <div class="media-body">
+                            {% for label in labels %}
+                                {% for data_item in data_row %}
+                                    {% if forloop.counter == forloop.parentloop.counter %}
+                                        {% include 'toolkit_templates/components/detail_row.html' with label=label value=data_item %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    '>
+                </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock table %}
+
+{% block extra_header %}
+    {{ block.super }}
+    <style>
+        .quickLook {
+            position: absolute;
+            display: none;
+        }
+
+        .popover {
+            width: 500px;
+            max-width: 500px;
+        }
+
+        .popover > .arrow {
+            display: none;
+        }
+    </style>
+{% endblock extra_header %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            quickLook(".action-buttons", -450, 5);
+        });
+    </script>
+{% endblock extra_footer %}

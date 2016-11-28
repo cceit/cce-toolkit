@@ -51,7 +51,7 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,
                     )
                     return items
     """
-    template_name = 'form.html'
+    template_name = 'toolkit_templates/views/form.html'
     permissions = {'get': ['can_create'],
                    'post': ['can_create'], }
 
@@ -177,7 +177,7 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
                     )
                     return items
     """
-    template_name = 'form.html'
+    template_name = 'toolkit_templates/views/form.html'
     permissions = {'get': ['can_update'],
                    'post': ['can_update'], }
 

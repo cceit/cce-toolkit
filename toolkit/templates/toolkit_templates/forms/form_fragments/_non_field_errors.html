@@ -1,0 +1,9 @@
+{% extends "toolkit_templates/forms/form_fragments/_field_errors.html" %}
+{% block errors %}
+    {% block non_field_errors %}
+        {% block field_errors %}
+            {{ block.super }}
+        {% endblock field_errors %}
+    {% endblock non_field_errors %}
+{% endblock errors %}
+{% block error_classes %}popover top nonfielderrors{% endblock error_classes %}

@@ -163,6 +163,19 @@ a.navbar-brand {
 .navbar .navbar-nav li a:focus {
   color: #fff;
 }
+/* Breadcrumb */
+/* ------------------------------------------------------ */
+.breadcrumb {
+  background-color: transparent;
+  margin: 0;
+}
+.breadcrumb a {
+  color: #630d0d;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus {
+  color: #1c6089;
+}
 /* Sidebar */
 /* ------------------------------------------------------ */
 .sidebar a.navbar-brand {
@@ -217,7 +230,7 @@ a.navbar-brand {
 .side-nav li ul li a,
 .sidebar li ul li a {
   display: block;
-  padding: 10px 15px 10px 38px;
+  padding: 10px 15px 10px 38px !important;
   text-decoration: none;
 }
 .side-nav li ul li ul li a,
