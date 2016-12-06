@@ -1,0 +1,50 @@
+{% block form_fragment %}
+    {% block non_field_errors %}
+        {% include "form_fragments/_non_field_errors.html" with errors=form.non_field_errors popover_title="Form Errors:" %}
+    {% endblock non_field_errors %}
+
+    {# Include the hidden fields #}
+    {% for field in form.hidden_fields %}
+        {% include "form_fragments/_form_field_hidden.html" %}
+    {% endfor %}
+    {# Include the visible fields #}
+    {% for field in form.visible_fields %}
+        {% if forloop.first %}
+            <div class="row">
+        {% endif %}
+            {% if field.name == 'DELETE' %}
+                {% block form_field %}
+                    <div class="form-group">
+                        <div style="display: none">
+                            {% include "form_fragments/_form_field_hidden.html" %}
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="{{ field.id_for_label }}" class="control-label">
+                                Remove
+                            </label><br>
+                            <a href="javascript:void(0)" class="remove-btn">
+                                <span class="remove fa fa-times" style="color: darkred"></span>
+                            </a>
+                        </div>
+                    </div>
+                {% endblock form_field %}
+            {% else %}
+                <div class="col-xs-3">
+                    {% include "form_fragments/_packed_form_field.html" %}
+                </div>
+            {% endif %}
+
+        {% if forloop.counter|divisibleby:4 %}
+            </div>
+            <div class="row">
+        {% endif %}
+        {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+
+    <style>
+        .remove {
+            font-size: 25px;
+        }
+    </style>
+{% endblock form_fragment %}
+
