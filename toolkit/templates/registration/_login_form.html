@@ -2,7 +2,7 @@
     <div class="col-md-4 col-md-offset-4 well">
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
-            {% include "form_fragments/_non_field_errors.html" with errors=form.non_field_errors %}
+            {% include "toolkit_templates/forms/form_fragments/_non_field_errors.html" with errors=form.non_field_errors %}
             <div class="form-group row">
                 <label for="username" class="col-sm-12 control-label">Username</label>
 
