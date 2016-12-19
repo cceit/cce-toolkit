@@ -417,7 +417,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     return response
 
 
-def xls_multiple_worksheets_response(filename, data):
+def xls_multiple_worksheets_response(filename, data, padding=0):
     """
     Take a filename and a dictionary (data) and return a .xls response that
     can have multiple sheets.
@@ -486,6 +486,7 @@ def xls_multiple_worksheets_response(filename, data):
             for r, row in enumerate(header):
                 for c, cell in enumerate(row):
                     width, height = write_to_worksheet(ws, r, c, cell)
+                    width += padding
 
                     if height > heights.get(r, 0):
                         heights[r] = height
@@ -506,6 +507,7 @@ def xls_multiple_worksheets_response(filename, data):
             r += row_offset
             for c, cell in enumerate(row):
                 width, height = write_to_worksheet(ws, r, c, cell)
+                width += padding
 
                 if height > heights.get(r, 0):
                     heights[r] = height
