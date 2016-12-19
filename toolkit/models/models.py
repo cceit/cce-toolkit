@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.timezone import localtime
 
 from .mixins import ModelPermissionsMixin
 
@@ -35,8 +34,10 @@ class CCEAuditModel(CCEModel):
 
     @property
     def tz_last_updated_at(self):
+        from django.utils.timezone import localtime
         return localtime(self.last_updated_at)
 
     @property
     def tz_created_at(self):
+        from django.utils.timezone import localtime
         return localtime(self.created_at)
