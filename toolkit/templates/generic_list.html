@@ -15,6 +15,14 @@
 
 {% block table %}
 
+    {% if page_details_top %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_top %}
+            </div>
+        </div>
+    {% endif %}
+
     {% block details %}
     {% endblock details %}
 
@@ -25,16 +33,13 @@
             </div>
         </div>
     {% endif %}
-    {% for row in table %}
-        {% if forloop.first and forloop.last %} {# there's only a header row in the table #}
-            {% include 'alert.html' with type='warning' message=empty_list_message %}
-        {% else %}
+    {% for row in table|slice:"1:" %}
             {% if forloop.first %}
                 <div class="table-responsive">
-                <table class="table table-striped table-condensed table-hover">
+                <table class="table table-striped table-condensed tabled-bordered">
                     <thead>
                         <tr>
-                            {% for title_tuple in row %}
+                            {% for title_tuple in table.0 %}
                                 <th class="col-sm-{{ title_tuple.1 }}">
                                     {% generate_ordering_links request title_tuple.0 title_tuple.2 %}
                                 </th>
@@ -42,54 +47,63 @@
                         </tr>
                     </thead>
                     <tbody>
-            {% else %}
-                        <tr>
-                            {% for item in row %}
-                                {% if forloop.last and not disable_actions_column %}
-                                    <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">
-                                        {# item is a list of button tuples #}
-                                        {% for t in item %}
-                                            {% if t.5 %}
-                                            {% include '_button_condensed.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
-                                            {% else %}
-                                            {% include '_button.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </td>
-                                {% else %}
-                                    <td>{{ item|render_detail:None|safe|default:"--" }}</td>
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
-                {% if forloop.last %}
+            {% endif %}
+                <tr>
+                    {% for item in row %}
+                        {% if forloop.last and not disable_actions_column %}
+                            <td class="action-buttons" data-popover="popover_{{ forloop.parentloop.counter0 }}">
+                                {# item is a list of button tuples #}
+                                {% for t in item %}
+                                    {% if t.5 %}
+                                    {% include '_button_condensed.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
+                                    {% else %}
+                                    {% include '_button.html' with btn_class=t.0  btn_url=t.1  icon=t.3  label=t.2 %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% else %}
+                            <td>{{ item|render_detail:None|safe|default:"--" }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% if forloop.last %}
                     </tbody>
                 </table>
                 </div>
-                {% endif %}
             {% endif %}
-        {% endif %}
+            {% empty %}
+                {% include 'alert.html' with type='warning' message=empty_list_message %}
     {% endfor %}
 
     {% for labels, data in quicklook.items %}
         {% for data_row in data %}
-        <div class="quickLook" id="popover_{{ forloop.counter }}">
-            <div data-toggle="popover" data-placement="left" data-html="true" title='Quick Look' data-content='
-                <div class="media">
-                    <div class="media-body">
-                        {% for label in labels %}
-                            {% for data_item in data_row %}
-                                {% if forloop.counter == forloop.parentloop.counter %}
-                                    {% include 'detail_row.html' with label=label value=data_item %}
-                                {% endif %}
+            <div class="quickLook" id="popover_{{ forloop.counter }}">
+                <div data-toggle="popover" data-placement="left" data-html="true" title='Quick Look' data-content='
+                    <div class="media">
+                        <div class="media-body">
+                            {% for label in labels %}
+                                {% for data_item in data_row %}
+                                    {% if forloop.counter == forloop.parentloop.counter %}
+                                        {% include 'detail_row.html' with label=label value=data_item %}
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
+                        </div>
                     </div>
+                    '>
                 </div>
-                '>
-            </div>
         </div>
         {% endfor %}
     {% endfor %}
+
+    {% if page_details_bottom %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_bottom %}
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock table %}
 
 {% block extra_header %}

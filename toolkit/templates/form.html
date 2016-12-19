@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
-{% block page_headline %}
-    <div class="col-sm-12 col-md-12">
-        <h1>{{ page_icon }} <span class="nav-label">{{ page_headline }}</span></h1>
-    </div>
-{% endblock page_headline %}
-
 {% block content %}
+
     {% block details %}
     {% endblock details %}
 
@@ -19,32 +14,44 @@
     {% endif %}
 
     {% block form %}
-        <div class="row">
-            <form action="" method="{{ form_method|default:'POST' }}" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
-                <span class="required-warning">*</span> - indicates a required field.
-                <div class="form-content">
-                    {% block render_form %}
-                        {% include 'render_form.html' %}
-                    {% endblock render_form %}
+        <form class=" full" action="" method="{{ form_method|default:'POST' }}" enctype="multipart/form-data">
 
-                    {% block extras %}
-                    {% endblock extras %}
+        <div class="row">
+            <div class="col-md-12">
+        {% csrf_token %}
+            <div class="row">
+				<div class="col-lg-6 col-lg-offset-3">
+
+                    {% include 'alert.html' with type='danger' message='<span class="required-warning">*</span> - indicates a required field.<br><span class="glyphicon glyphicon-question-sign field-help-icon" style="font-size: 12pt"></span>  - indicates additional information.' %}
                 </div>
-                <div class="row submit-content">
-                   <div class="col-sm-12" style="text-align: center">
-                       <button type="submit" name="submit" class="btn btn-default action">
-                           <i class="{{ form.submit_icon|default:'glyphicon glyphicon-floppy-disk' }}"></i> {{ form.submit_text|default:'Save' }}
-                       </button>
-                       {% block additional_submit_buttons %}
-                       {% endblock additional_submit_buttons %}
-                   </div>
+			</div>
+
+        <br>
+
+            <hr />
+            {% block render_form %}
+                        {% include 'render_form.html' %}
+            {% endblock render_form %}
                 </div>
-            </form>
+			</div>
+
+        <div class="row responsive-sticky-button"  data-spy="affix" data-offset-bottom="290">
+            <button type="submit" class="btn btn-info">
+                 <i class="{{ form.submit_icon|default:'glyphicon glyphicon-floppy-disk' }}"></i> {{ form.submit_text|default:'Save' }}
+            </button>
+            <button value="reset" type="reset" class="btn btn-warning">Reset</button>
         </div>
+
+        <div class="row sticky-button"  data-spy="affix" data-offset-bottom="150">
+            <button type="submit" class="btn btn-info">
+                 <i class="{{ form.submit_icon|default:'glyphicon glyphicon-floppy-disk' }}"></i> {{ form.submit_text|default:'Save' }}
+            </button>
+            <button value="reset" type="reset" class="btn btn-warning">Reset</button>
+        </div>
+        </form>
+        <div class="push"></div>
     {% endblock form %}
 {% endblock content %}
-    {% block extra_details %}
-    {% endblock extra_details %}
 
 {% block mobile_context_nav %}
     {% block context_nav %}

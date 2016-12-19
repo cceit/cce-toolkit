@@ -159,6 +159,11 @@ class CCEModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CCEModelForm, self).__init__(*args, **kwargs)
+
         required_fields = self.Meta.required_fields if hasattr(self.Meta, 'required_fields') else tuple()
         for field in required_fields:
             self.fields[field].required = True
+
+        hidden_fields = self.Meta.hidden_fields if hasattr(self.Meta, 'hidden_fields') else tuple()
+        for field in hidden_fields:
+            self.fields[field].widget = forms.HiddenInput()

@@ -1,4 +1,6 @@
 function initialize_plugins(advanced_search_form_bound) {
+
+    $("#popover").popover({ trigger: "hover focus" });
     $('.datefield').each(function (index, value) {
         $(this).datepicker({
             format: "mm/dd/yyyy",
@@ -11,18 +13,17 @@ function initialize_plugins(advanced_search_form_bound) {
     $('.tinymce').each(function (index, value) {
         initTinyMCE($(this));
     });
-    $("select").select2();
+    // $("select").select2();
 
     // fix for report selector. We disable select2
-    $(".report_selector select").select2("destroy");
+    // $(".report_selector select").select2("destroy");
 
     $('.timefield').datetimepicker({
         format: 'LT'
     });
-
+    
     $('.datetimefield').datetimepicker({
-        format: 'MM/DD/YYYY hh:mm A'
-    });
+        format: 'YYYY-MM-DD hh:mm:ss'});
 
     var $advance_search_toggle = $('#advance_search_toggle');
     var $advanced_search_form = $('#advanced_search_form');
@@ -51,13 +52,9 @@ function initialize_plugins(advanced_search_form_bound) {
         $advanced_search_form.toggle();
     }
 
+    $('[data-toggle="popover"]').popover('show');
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
-    });
-
-    //Help Text Popovers
-    $('a[id$="_popover"] i').on("click", function(){
-        $(this).parents("a").popover('toggle');
     });
 
     //This is needed for accessibility on the modals
@@ -89,7 +86,7 @@ function disable_plugins(){
         tinyMCE.EditorManager.execCommand('mceRemoveEditor',true, $(this).attr('id'));
     });
     // disable select2
-    $("select").select2('destroy');
+    // $("select").select2('destroy');
 }
 
 function addForm(btn, prefix) {

@@ -1,0 +1,335 @@
+@import url("theme.less");
+
+/* Colors */
+.navbar .navbar-nav.side-nav > .active.context-aware-nav, .active.context-aware-nav {
+  background: @light;
+}
+
+.active.context-aware-nav a, .active.context-aware-nav ul li a {
+  color: @tertiary;
+}
+
+.active.context-aware-nav ul li a.active {
+  color: @tertiary;
+  background: #eee;
+  box-shadow: 0 0 5px @light;
+}
+
+/* Navbar */
+/* ------------------------------------------------------ */
+
+.navbar {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  .navbar-nav li a {
+    z-index: 2;
+  }
+}
+
+.navbar-right {
+  padding: 0 15px;
+}
+
+@media (max-width: 767px) {
+  .navbar-collapse,
+  .navbar-collapse {
+    height: auto;
+    max-height: none;
+  }
+}
+
+a.navbar-brand {
+  float: none;
+}
+
+.nav {
+  padding-top: 15px;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+  background: @light;
+  color: @primary;
+}
+
+/* OU Logo */
+h3.navbar-title img {
+  height: 30px;
+  width: auto;
+  margin-right: 10px;
+  margin-top: -5px;
+}
+
+a.navbar-brand img {
+  display: inline-block;
+  height: 32px;
+  width: auto;
+  margin-right: 0px;
+  margin-top: -5px;
+}
+
+.navbar {
+  height: 0px;
+  min-height: 0px;
+  z-index: 1;
+  .navbar-brand {
+    color: @light;
+  }
+  .nav-sidebar {
+    li ul {
+      background: transparent;
+    }
+    li ul li:hover {
+      background: @light;
+      color: @primary;
+    }
+    li.context-aware-nav {
+      ul li:hover {
+        background: @primary;
+        a {
+          color: @primary;
+        }
+        a.active {
+          color: @secondary;
+        }
+      }
+      .caret {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .nav-sidebar > .active > a.context-top:hover {
+    color: @tertiary;
+  }
+  .nav > li > a:focus, .nav > li > a:hover {
+    background: @light;
+    color: @primary;
+  }
+  .navbar-title {
+    padding-left: 15px;
+    color: #eee;
+  }
+  .sidebar {
+    margin-bottom: 130px;
+    background: #1b1b1b;
+    width: 180px;
+    margin-left: -180px;
+    left: 180px;
+    top: 30px;
+    z-index: 1;
+    a {
+      font-size: 13px;
+    }
+    a.navbar-brand {
+      font-size: 22px;
+    }
+    #context-menu {
+      .active {
+        background: @primary;
+        color: @light;
+      }
+    }
+  }
+}
+
+/* OU Branding */
+.navbar .navbar-title {
+  font-family: 'EB Garamond', serif;
+}
+
+a.navbar-brand {
+  color: @light;
+}
+
+.navbar .navbar-nav.side-nav > .active.context-aware-nav, .active.context-aware-nav {
+  color: @light;
+  a {
+    background-color: @contrast;
+    color: @light;
+  }
+  ul {
+    li {
+      a {
+        background-color: @light;
+        color: @tertiary;
+      }
+      a.active {
+        background-color: @light;
+        color: @tertiary;
+        font-weight: bolder;
+      }
+    }
+  }
+}
+
+.navbar {
+  background: @primary;
+  .navbar-nav {
+    li.active {
+      a {
+        background: @primary;
+        color: @light;
+      }
+      a:hover, a:focus {
+        background: @primary;
+      }
+      ul li a {
+        background: @tertiary;
+      }
+    }
+    li {
+      a {
+        color: @light;
+      }
+      a:hover, a:focus {
+        color: @light;
+      }
+    }
+  }
+}
+
+/* Sidebar */
+/* ------------------------------------------------------ */
+
+.sidebar a.navbar-brand {
+  font-family: 'EB Garamond', serif;
+  font-size: 22px;
+  line-height: 24px;
+  display: block;
+  height: auto;
+  text-align: center;
+}
+
+.sidebar {
+  background: @tertiary;
+  border-bottom: solid 1px @light;
+}
+
+.sidebar {
+  background: @tertiary;
+}
+
+.sidebar {
+  margin-bottom: 331px;
+}
+
+.sidebar {
+  background: @tertiary;
+}
+
+.sidebar-items > li > a.active {
+  font-weight: bolder;
+}
+
+@media (min-width: 768px) {
+  .side-nav, .sidebar {
+    position: fixed;
+    top: 86px;
+    left: 225px;
+    width: 225px;
+    margin-left: -225px;
+    border: none;
+    border-radius: 0;
+    overflow-y: auto;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    padding-top: 15px;
+  }
+
+  .side-nav > li > a, .sidebar > li > a {
+    width: 225px;
+  }
+}
+
+.side-nav, .sidebar {
+  li {
+    ul {
+      padding: 0;
+      li {
+        a {
+          display: block;
+          padding: 10px 15px 10px 38px;
+          text-decoration: none;
+        }
+        ul li a {
+          padding: 10px 15px 10px 60px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .side-nav {
+    background-color: @tertiary;
+  }
+}
+
+.side-nav {
+  background-color: @tertiary;
+  border-top: solid 1px @tertiary;
+  li ul li {
+    a {
+      color: @light;
+    }
+    a:hover {
+      color: @tertiary;
+      background: @light;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav-sidebar {
+    background-color: @tertiary;
+    border-top: solid 3px @primary;
+    border-bottom: solid 3px @primary;
+  }
+
+  hr {
+    border-color: @primary;
+  }
+}
+
+.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus, .nav-sidebar .active .active a {
+  background: @primary;
+  color: @light;
+}
+
+.nav-sidebar li a {
+  color: @light;
+}
+
+.nav-sidebar li ul {
+  background: @light;
+  list-style: none;
+  li {
+    position: relative;
+    display: block;
+    a {
+      display: block;
+      padding: 10px 20px;
+      color: @light;
+      text-decoration: none;
+    }
+    a:hover, a:active {
+      text-decoration: none;
+      color: @primary;
+    }
+  }
+  li:hover {
+    background: @primary;
+  }
+  ul {
+    background: @primary;
+  }
+}
+
+.sidebar-items > li > a.active {
+  background-color: @light;
+  color: @tertiary;
+}
+
+
+
