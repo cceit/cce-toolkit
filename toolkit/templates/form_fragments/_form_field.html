@@ -27,7 +27,7 @@
                 {% else %}
                     {{ field.label|title }}
                 {% endif %}
-                {{ field.field.label_suffix|default_if_none:":" }}
+                {{ field.field.label_suffix|default_if_none:"" }}
             </label>
         {% endblock field_label %}
         <div class="col-sm-9">
