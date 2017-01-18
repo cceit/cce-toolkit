@@ -118,6 +118,7 @@ def get_file_content_type(extension):
             'xlsx': 'application/vnd.openxmlformats-officedocument'
                     '.spreadsheetml.sheet',
             'pdf': 'application/pdf',
+            'csv': 'text/csv',
         }
     except KeyError:
         return NotImplementedError

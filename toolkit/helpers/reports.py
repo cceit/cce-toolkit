@@ -337,7 +337,17 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
             label = str(cell)
             height = get_height(label)
             width = get_width(label)
-            ws.write(r, c, label)
+            date_style = xlwt.easyxf(num_format_str="YYYY-MM-DD")
+            try:
+                if is_datetime(cell):
+                    try:
+                        ws.write(r, c, cell, style=date_style)
+                    except:
+                        ws.write(r, c, label, style=date_style)
+                else:
+                        ws.write(r, c, cell)
+            except:
+                ws.write(r, c, label)
 
             if height > heights.get(r, 0):
                 heights[r] = height
@@ -417,7 +427,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     return response
 
 
-def xls_multiple_worksheets_response(filename, data):
+def xls_multiple_worksheets_response(filename, data, padding=0):
     """
     Take a filename and a dictionary (data) and return a .xls response that
     can have multiple sheets.
@@ -486,6 +496,7 @@ def xls_multiple_worksheets_response(filename, data):
             for r, row in enumerate(header):
                 for c, cell in enumerate(row):
                     width, height = write_to_worksheet(ws, r, c, cell)
+                    width += padding
 
                     if height > heights.get(r, 0):
                         heights[r] = height
@@ -506,6 +517,7 @@ def xls_multiple_worksheets_response(filename, data):
             r += row_offset
             for c, cell in enumerate(row):
                 width, height = write_to_worksheet(ws, r, c, cell)
+                width += padding
 
                 if height > heights.get(r, 0):
                     heights[r] = height

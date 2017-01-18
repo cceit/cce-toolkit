@@ -155,10 +155,16 @@ class CCEModelForm(forms.ModelForm):
     """
     override_help_text_display = tuple()
     override_labels = False
+    REQUIRED_FIELD_ERROR = 'This field is required'
     __metaclass__ = CCEModelFormMetaclass
 
     def __init__(self, *args, **kwargs):
         super(CCEModelForm, self).__init__(*args, **kwargs)
+
         required_fields = self.Meta.required_fields if hasattr(self.Meta, 'required_fields') else tuple()
         for field in required_fields:
             self.fields[field].required = True
+
+        hidden_fields = self.Meta.hidden_fields if hasattr(self.Meta, 'hidden_fields') else tuple()
+        for field in hidden_fields:
+            self.fields[field].widget = forms.HiddenInput()

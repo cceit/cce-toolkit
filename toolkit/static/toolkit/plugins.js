@@ -63,7 +63,15 @@ function initialize_plugins(advanced_search_form_bound) {
     //This is needed for accessibility on the modals
     $('.modal').on('shown.bs.modal', function () {
         $('.modal .close').focus()
-    })
+    });
+
+    //Formset Remove Button
+    $('.remove-btn').on('click', function (e) {
+        var $parent_div = $(this).closest("div[id$='-row']");
+        var $delete_input = $parent_div.find("input[id$='-DELETE']");
+        $delete_input.attr('checked', 'checked');
+        $parent_div.hide()
+    });
 }
 
 // function enables tinymce with settings loaded from widget, taken from django-tinymce
@@ -136,6 +144,57 @@ function addForm(btn, prefix) {
     total_forms.val(total);
     // Put the new form on the page
     forms_container.children('.dynamic-form:last').after(newElement);
+
+    // re-enable plugins
+    initialize_plugins(false);
+    return newElement;
+}
+
+function addFormV2(btn, prefix) {
+    // disable js plugin that are not compatible with .clone
+    disable_plugins();
+
+    // Get the div surrounding the formset
+    var forms_container = $('#' + prefix);
+    // Get the hidden input saying how many forms there are
+    var total_forms = $('#id_' + prefix + '-TOTAL_FORMS');
+    // Clone the form seed to make a new form
+    var newElement = forms_container.find("div[id$='-seed']").clone(false);
+    // Configure the attributes of the new form as appropriate
+    var total = total_forms.val();
+    // Format the id of the form
+    newElement.attr('id', newElement.attr('id').replace('-0-', '-' + total + '-'));
+    newElement.attr('id', newElement.attr('id').replace('seed', 'row'));
+    // The attributes of each form element (":input" is a jQuery selector)
+    newElement.find(':input').each(function () {
+        var attr = $(this).attr('name');
+
+        // For some browsers, `attr` is undefined; for others,
+        // `attr` is false.  Check for both.
+        if (typeof attr !== typeof undefined && attr !== false) {
+            var name = $(this).attr('name').replace('-0-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
+    });
+
+    newElement.find(':checkbox').each(function () {
+        $(this).removeAttr('value');
+    });
+    // The "for" attribute on each label, since ids changed
+    newElement.find('label').each(function () {
+        var newFor = $(this).attr('for').replace('-0-', '-' + total + '-');
+        $(this).attr('for', newFor);
+        // Remove datepicker... from the label? This line might not be doing anything.
+        $(this).datepicker("remove");
+    });
+
+    // Update the number of forms there are
+    total++;
+    total_forms.val(total);
+    // Put the new form on the page
+    forms_container.children('.dynamic-form:last').after(newElement);
+    newElement.show();
 
     // re-enable plugins
     initialize_plugins(false);
