@@ -337,7 +337,17 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
             label = str(cell)
             height = get_height(label)
             width = get_width(label)
-            ws.write(r, c, label)
+            date_style = xlwt.easyxf(num_format_str="YYYY-MM-DD")
+            try:
+                if is_datetime(cell):
+                    try:
+                        ws.write(r, c, cell, style=date_style)
+                    except:
+                        ws.write(r, c, label, style=date_style)
+                else:
+                        ws.write(r, c, cell)
+            except:
+                ws.write(r, c, label)
 
             if height > heights.get(r, 0):
                 heights[r] = height
