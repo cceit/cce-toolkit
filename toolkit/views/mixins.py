@@ -807,6 +807,12 @@ class AbstractedDetailMixin(object):
         return context
 
 
+def deletion_formatting_callback(obj):
+    if hasattr(obj, 'deletion_repr'):
+        return obj.deletion_repr()
+    return obj.__unicode__()
+
+
 class AbstractedDeleteMixin(object):
     template_name = "generic_delete.html"
     no_url_path = None
@@ -827,7 +833,7 @@ class AbstractedDeleteMixin(object):
         collector = NestedObjects(using=using)
         collector.collect(objs)
         # nested() can take a formatting callback if we want it later
-        to_delete = collector.nested()
+        to_delete = collector.nested(format_callback=deletion_formatting_callback)
         return to_delete
 
     def get_context_data(self, **kwargs):
