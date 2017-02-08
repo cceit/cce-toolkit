@@ -810,7 +810,9 @@ class AbstractedDetailMixin(object):
 def deletion_formatting_callback(obj):
     if hasattr(obj, 'deletion_repr'):
         return obj.deletion_repr()
-    return obj.__unicode__()
+    if hasattr(obj, '__unicode__'):
+        return obj.__unicode__()
+    return str(obj)
 
 
 class AbstractedDeleteMixin(object):
