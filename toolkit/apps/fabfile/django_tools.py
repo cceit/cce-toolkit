@@ -10,7 +10,7 @@ from .git_tools import git_pull
 
 def manage(cmd):
     """
-    run manage.py commands on specified role
+    run manage.py commands on the specified role
     """
     __exec_cmd('%s/bin/python %s/manage.py %s --settings %s' % (env.role['virtualenv'],
                                                                 env.role['django_root'],
@@ -20,9 +20,9 @@ def manage(cmd):
 
 def collectstatic():
     """
-    runs collect static on the selected role
+    runs collectstatic on the specified role
     """
-    manage('collectstatic --noinput')
+    manage('collectstatic --noinput --ignore "node_modules"')
 
 
 def clear_compiled_python_files():
@@ -40,9 +40,18 @@ def run_migrations():
         manage('migrate')
 
 
+def build_react():
+    __exec_cmd('npm --prefix %s/assets/react install %s/assets/react' % (env.role['django_root'],
+                                                                         env.role['django_root']))
+    __exec_cmd('npm --prefix %s/assets/react run build %s/assets/react' % (env.role['django_root'],
+                                                                           env.role['django_root']))
+
+
 def deploy():
     """
-    deploys code to selected role  migrates db, loads initial data, installs requirements & restarts, CANNOT RUN LOCALLY
+    deploys code to the specified role
+    migrates db, loads initial data, installs requirements & restarts
+    CANNOT RUN LOCALLY
     """
     clear_compiled_python_files()
     git_pull()
@@ -58,6 +67,19 @@ def soft_deploy():
     """
     clear_compiled_python_files()
     git_pull()
+    collectstatic()
+    reload_http()
+
+
+def react_deploy():
+    """
+    does the deploy() things but also builds react
+    """
+    clear_compiled_python_files()
+    git_pull()
+    update_requirements()
+    run_migrations()
+    build_react()
     collectstatic()
     reload_http()
 
