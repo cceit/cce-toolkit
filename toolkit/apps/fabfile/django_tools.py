@@ -49,9 +49,7 @@ def build_react():
 
 def deploy():
     """
-    deploys code to the specified role
-    migrates db, loads initial data, installs requirements & restarts
-    CANNOT RUN LOCALLY
+    deploys code to the given role; migrates, loads initial data, installs requirements & restarts, CANNOT RUN LOCALLY
     """
     clear_compiled_python_files()
     git_pull()
