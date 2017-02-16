@@ -46,6 +46,9 @@ class ToolkitActivityLog(CCEAuditModel):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     absolute_url_name = models.CharField(max_length=64, blank=True)
+    user_agent = models.CharField(blank=True, max_length=512)
+    ip_address = models.CharField(blank=True, max_length=40)
+
     objects = ActivitiesPermissionManager.as_manager()
 
     class Meta:
