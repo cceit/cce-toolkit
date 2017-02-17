@@ -13,7 +13,7 @@ class UserModelChoiceField(ModelChoiceField):
 
 
 class ActivityLogSearchForm(CCESimpleSearchForm):
-    search_placeholder = 'Search by Type, Activity, or Description'
+    search_placeholder = 'Search by Type/Activity/Description/IP'
 
     class Meta(CCESimpleSearchForm.Meta):
         model = ToolkitActivityLog
@@ -22,6 +22,7 @@ class ActivityLogSearchForm(CCESimpleSearchForm):
                 'activity_type__icontains',
                 'summary__icontains',
                 'description__icontains',
+                'ip_address_icontains',
             )
         }
 
@@ -38,6 +39,8 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
             'activity_type': 'activity_type',
             'activity': 'summary__icontains',
             'description': 'description__icontains',
+            'ip_address': 'ip_address__icontains',
+            'user_agent': 'user_agent__icontains',
             'user': 'created_by',
             'group': 'activity_type__groups'
         }
@@ -45,6 +48,14 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
             'activity_type',
             'activity',
             'description',
+            'ip_address',
+            'user_agent',
             'user',
             'group',
         )
+
+        labels = {
+            'activity_type': 'Activity Type',
+            'ip_address': 'IP Address',
+            'user_agent': 'User Agent',
+        }

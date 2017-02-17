@@ -19,7 +19,9 @@ class ToolkitActivityLogListView(CCESearchView):
         ('Type', lambda a: mark_safe('<i class="%s"></i> %s' % (a.activity_type.logo, title(a.activity_type))),
          '', 'activity_type.activity_type'),
         ('Activity', 'summary', '2'),
-        ('Description', 'description', '5'),
+        ('Description', 'description'),
+        ('User Agent', lambda a: str(parse(a.user_agent)) if a.user_agent else '--', '2', 'user_agent'),
+        ('IP Address', lambda a: a.ip_address if a.ip_address else '--', '1', 'ip_address'),
         ('User', lambda a: a.created_by.get_full_name() if a.created_by else '--', '2', 'created_by.first_name'),
         (
             'Date/Time',
