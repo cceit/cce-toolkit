@@ -13,6 +13,8 @@ setup(
     install_requires=[
         "django-cuser",
         "arrow"
+        "django-request-provider"
+        "user-agents"
     ],
     classifiers=[
         'Development Status :: 1.0.0-b0',

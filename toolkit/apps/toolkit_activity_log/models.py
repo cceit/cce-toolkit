@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
+from request_provider.signals import get_request
 from toolkit.models import CCEAuditModel, CCEModel
 
 from .managers import ActivityTypePermissionManager, ActivitiesPermissionManager
@@ -57,6 +58,14 @@ class ToolkitActivityLog(CCEAuditModel):
 
     def __unicode__(self):
         return "%s, %s - %s" % (self.created_at.strftime("%m/%d/%Y %I:%M"), self.activity_type, self.summary)
+
+    def save(self, *args, **kwargs):
+        http_request = get_request()
+        if self.ip_address is None:
+            self.ip_address = http_request.META['REMOTE_ADDR']
+        if self.user_agent is None:
+            self.user_agent = http_request.META['HTTP_USER_AGENT']
+        return super(ToolkitActivityLog, self).save(*args, **kwargs)
 
     @property
     def icon_class(self):
