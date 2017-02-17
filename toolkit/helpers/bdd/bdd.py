@@ -1,6 +1,7 @@
 import datetime
 
 import requests
+from requests.exceptions import MissingSchema
 from splinter.exceptions import ElementDoesNotExist
 
 
@@ -145,7 +146,7 @@ def compare_content_types(browser, context, file_type):
         try:
             file_url = browser.find_by_name('download').first['href']
             result = requests.get(file_url, cookies=browser.cookies.all())
-        except ElementDoesNotExist:
+        except (ElementDoesNotExist, MissingSchema):
             try:
                 result = context.result
             except AttributeError:
