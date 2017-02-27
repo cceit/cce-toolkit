@@ -5,7 +5,7 @@ from toolkit.helpers.reports import generate_table, xlsx_response
 
 class ActivityReports(object):
     ACTIVITY_COLUMNS = [
-        ('Type', 'activity_type'),
+        ('Type', 'activity_type__activity_type'),
         ('Activity', 'summary'),
         ('Description', 'description'),
         ('User Agent', lambda obj: str(parse(obj.user_agent)) if obj.user_agent else ''),
