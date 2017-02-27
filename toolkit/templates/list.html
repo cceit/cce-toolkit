@@ -63,3 +63,14 @@
         }
     </style>
 {% endblock extra_header %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $("#download_report").on('click', function () {
+            if (!$("#id_get_reports").val()){
+                return false;
+            }
+        })
+    </script>
+{% endblock extra_footer %}

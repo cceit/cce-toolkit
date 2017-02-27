@@ -5,8 +5,9 @@
             {{ field|add_class:'form-control input-sm' }}
             <div class="btn-group" role="group">
                 <button type="submit" class="btn btn-sm btn-warning" role="button" aria-pressed="false"
-                        name="download" aria-label="Download Report" title="Download Report"><span
-                        class="glyphicon glyphicon-download" aria-hidden="true"></span></button>
+                        name="download" id="download_report" aria-label="Download Report" title="Download Report">
+                    <i class="glyphicon glyphicon-download" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     {% endfor %}
