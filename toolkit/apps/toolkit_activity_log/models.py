@@ -4,6 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from request_provider.signals import get_request
+
+from toolkit.apps.toolkit_activity_log.reports import ActivityReports
 from toolkit.models import CCEAuditModel, CCEModel
 
 from .managers import ActivityTypePermissionManager, ActivitiesPermissionManager
@@ -51,6 +53,7 @@ class ToolkitActivityLog(CCEAuditModel):
     ip_address = models.CharField(blank=True, max_length=40)
 
     objects = ActivitiesPermissionManager.as_manager()
+    reports = ActivityReports()
 
     class Meta:
         db_table = 'cce_toolkit_activity_log'

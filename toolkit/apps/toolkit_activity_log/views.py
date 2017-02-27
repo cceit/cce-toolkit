@@ -1,13 +1,14 @@
+from collections import OrderedDict
+
 from django.template.defaultfilters import title
 from user_agents import parse
 
-from toolkit.views import CCESearchView, mark_safe
-
-from .forms import ActivityLogSearchForm, ActivityLogAdvancedSearchForm
+from toolkit.views import ReportDownloadSearchView, mark_safe
+from .forms import ActivityLogAdvancedSearchForm, ActivityLogSearchForm
 from .models import ToolkitActivityLog
 
 
-class ToolkitActivityLogListView(CCESearchView):
+class ToolkitActivityLogListView(ReportDownloadSearchView):
     template_name = "toolkit_activity_log/browse_activities.html"
     page_title = "Browse Activities"
     sidebar_group = ['dashboard']
@@ -33,10 +34,21 @@ class ToolkitActivityLogListView(CCESearchView):
     ]
 
     def render_buttons(self, user, obj, *args, **kwargs):
-        return [self.render_button(btn_class='btn-info',
-                                   label='View',
-                                   icon_classes='glyphicon glyphicon-info-sign',
-                                   url=obj.resolved_url)]
+        return [
+            self.render_button(
+                btn_class='btn-info',
+                label='View',
+                icon_classes='glyphicon glyphicon-info-sign',
+                url=obj.resolved_url
+            ),
+        ]
+
+    def get_reports(self):
+        reports = OrderedDict()
+        reports.update({
+            'activity_xlsx_report': {'name': 'Activity Report (XLSX)', 'method': 'activity_xlsx_report'},
+        })
+        return reports
 
     def get_queryset(self):
         # This repeats the functionality of ActivitiesPermissionManager.scoped_by_user().
