@@ -15,7 +15,7 @@ class ActivityReports(object):
     ]
 
     @classmethod
-    def account_list_xlsx_report(cls, qs, form):
+    def activity_xlsx_report(cls, qs, form):
         data = generate_table(
             columns=cls.ACTIVITY_COLUMNS,
             data=qs,
