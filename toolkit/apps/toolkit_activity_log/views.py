@@ -1,5 +1,6 @@
 from django.template.defaultfilters import title
-from django.db.models import Q
+from user_agents import parse
+
 from toolkit.views import CCESearchView, mark_safe
 
 from .forms import ActivityLogSearchForm, ActivityLogAdvancedSearchForm
