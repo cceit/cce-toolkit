@@ -10,4 +10,4 @@ class ActivityTypePermissionManager(models.QuerySet):
 class ActivitiesPermissionManager(models.QuerySet):
     def for_user(self, user_obj):
         return self.filter(Q(activity_type__groups__user=user_obj) | Q(activity_type__include_creator=True,
-                                                                       created_by=user_obj))
+                                                                       created_by=user_obj)).distinct()
