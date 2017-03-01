@@ -64,10 +64,11 @@ class ToolkitActivityLog(CCEAuditModel):
 
     def save(self, *args, **kwargs):
         http_request = get_request()
-        if not self.ip_address:
-            self.ip_address = http_request.META['REMOTE_ADDR']
-        if not self.user_agent:
-            self.user_agent = http_request.META['HTTP_USER_AGENT']
+        if http_request is not None:
+            if not self.ip_address:
+                self.ip_address = http_request.META['REMOTE_ADDR']
+            if not self.user_agent:
+                self.user_agent = http_request.META['HTTP_USER_AGENT']
         return super(ToolkitActivityLog, self).save(*args, **kwargs)
 
     @property
