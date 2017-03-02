@@ -10,6 +10,7 @@ class ActivityReports(object):
         ('Description', 'description'),
         ('User Agent', lambda obj: str(parse(obj.user_agent)) if obj.user_agent else ''),
         ('IP Address', 'ip_address'),
+        ('Hostname', 'hostname'),
         ('User', 'created_by__username'),
         ('Date/Time', 'created_at'),
     ]

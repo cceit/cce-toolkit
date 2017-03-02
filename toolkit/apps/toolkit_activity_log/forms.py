@@ -32,6 +32,8 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
     description = forms.CharField(required=False)
     user = UserModelChoiceField(queryset=get_user_model().objects.all())
     group = forms.ModelChoiceField(queryset=Group.objects.all())
+    date_start = forms.DateField(required=False)
+    date_end = forms.DateField(required=False)
 
     class Meta:
         model = ToolkitActivityLog
@@ -42,7 +44,9 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
             'ip_address': 'ip_address__icontains',
             'user_agent': 'user_agent__icontains',
             'user': 'created_by',
-            'group': 'activity_type__groups'
+            'group': 'activity_type__groups',
+            'date_start': 'created_at__gte',
+            'date_end': 'created_at__lte',
         }
         fields = (
             'activity_type',
@@ -52,6 +56,8 @@ class ActivityLogAdvancedSearchForm(CCEModelSearchForm):
             'user_agent',
             'user',
             'group',
+            'date_start',
+            'date_end',
         )
 
         labels = {

@@ -24,7 +24,7 @@ class ToolkitActivityLogListView(ReportDownloadSearchView):
         ('Description', 'description'),
         ('User Agent', lambda a: str(parse(a.user_agent)) if a.user_agent else '--', '2', 'user_agent'),
         ('IP Address', lambda a: a.ip_address if a.ip_address else '--', '1', 'ip_address'),
-        ('User', lambda a: a.created_by.get_full_name() if a.created_by else '--', '2', 'created_by.first_name'),
+        ('User', lambda a: a.created_by if a.created_by else '--', '2', 'created_by'),
         (
             'Date/Time',
             lambda a: mark_safe(
