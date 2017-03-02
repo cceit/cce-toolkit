@@ -1,3 +1,5 @@
+import socket
+
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -51,6 +53,7 @@ class ToolkitActivityLog(CCEAuditModel):
     absolute_url_name = models.CharField(max_length=64, blank=True)
     user_agent = models.CharField(blank=True, max_length=512)
     ip_address = models.CharField(blank=True, max_length=40)
+    hostname = models.CharField(blank=True, max_length=256)
 
     objects = ActivitiesPermissionManager.as_manager()
     reports = ActivityReports()
@@ -68,6 +71,11 @@ class ToolkitActivityLog(CCEAuditModel):
             self.ip_address = http_request.META['REMOTE_ADDR']
         if not self.user_agent:
             self.user_agent = http_request.META['HTTP_USER_AGENT']
+        if not self.hostname:
+            if self.ip_address:
+                self.hostname = socket.getfqdn(self.ip_address)
+            else:
+                self.hostname = socket.getfqdn(http_request.META['REMOTE_ADDR'])
         return super(ToolkitActivityLog, self).save(*args, **kwargs)
 
     @property
