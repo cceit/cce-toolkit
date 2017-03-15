@@ -46,6 +46,7 @@ setup(
             'management/commands/*.py',
             'apps/fabfile/*.py',
             'forms/*.py',
+            'forms/widgets/*.py',
             'helpers/*.py',
             'helpers/bdd/*.py',
             'models/*.py',
