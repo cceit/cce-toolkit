@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.core.management import call_command
 from pyvirtualdisplay import Display
@@ -9,24 +11,42 @@ from toolkit.helpers.utils import snakify
 def setup_test_environment(context, scenario, visible=0, use_xvfb=True):
     """
     Method used to setup the BDD test environment
-     - Sets up Virtual Display
-     - Sets up Browser
+     - Sets up virtual display
+     - Sets up webdriver instance
      - Sets window size
-     - flushes cookies
-     - Turn on debug(useful when capturing screenshots of the errors)
-     - Sets Scenario
+     - Flushes cookies
+     - Enables debug (Allows for more verbose error screens)
+     - Sets scenario
      - Truncates database tables
 
     Options:
      - visible (0 or 1) - Toggle Xephyr to view the Xvfb instance for limited debugging. 0: Off, 1: On.
      - use_xvfb (True/False) - Toggle Xvfb to run the tests on your desktop for in-depth debugging.
     """
-    if use_xvfb:
-        # Our virtual display to run firefox
-        context.display = Display(visible=visible, size=(1920, 1080))
-        context.display.start()
-    # This is our base webdriver instance. It uses Firefox by default.
-    context.browser = Browser()
+
+    driver = os.environ.get('WEBDRIVER_TYPE', None)
+    if driver == 'ie':
+
+        webdriver_url = os.environ.get('WEBDRIVER_URL', None)
+        if webdriver_url is None:
+            raise EnvironmentError('WEBDRIVER_URL not set!')
+
+        context.browser = Browser(
+            driver_name="remote",
+            url=webdriver_url,
+            browser='internet explorer',
+            platform="Windows 7",
+            version="11",
+            name="Remote IE Test"
+        )
+
+    else:  # Default Case
+        if use_xvfb:
+            context.display = Display(visible=visible, size=(1920, 1080))
+            context.display.start()
+
+        context.browser = Browser()
+
     context.browser.driver.set_window_size(1920, 1080)
     context.server_url = context.config.server_url
     # Flushes all cookies.
