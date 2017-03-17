@@ -147,10 +147,10 @@ def compare_content_types(browser, context, file_type):
             file_url = browser.find_by_name('download').first['href']
             result = requests.get(file_url, cookies=browser.cookies.all())
         except (ElementDoesNotExist, MissingSchema):
-            try:
-                result = context.result
-            except AttributeError:
-                result = requests.get(context.url, cookies=browser.cookies.all())
+            # try:
+            #     result = context.result
+            # except AttributeError:
+            result = requests.get(context.url, cookies=browser.cookies.all())
 
     target_type = get_file_content_type(file_type)
     received_type = result.headers['content-type']
