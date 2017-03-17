@@ -43,7 +43,7 @@ def run_migrations():
 def build_react():
     __exec_cmd('npm --prefix %s/assets/react install %s/assets/react' % (env.role['django_root'],
                                                                          env.role['django_root']))
-    __exec_cmd('npm --prefix %s/assets/react run build' % env.role['django_root'])
+    __exec_cmd('NODE_ENV="production" npm --prefix %s/assets/react run build' % env.role['django_root'])
 
 
 def deploy():
