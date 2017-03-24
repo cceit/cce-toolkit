@@ -4,7 +4,7 @@ import math
 from functools import partial
 
 import openpyxl
-from openpyxl.cell import get_column_letter
+from openpyxl.utils import get_column_letter
 import xlwt
 from django.conf import settings
 from django.core.files import temp as tempfile
