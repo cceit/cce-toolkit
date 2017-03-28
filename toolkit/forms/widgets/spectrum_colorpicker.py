@@ -17,6 +17,7 @@ class SpectrumColorPickerWidget(forms.TextInput):
                         $(function() {
                             $('#id_%s').spectrum({
                                 showInput: true,
+                                showAlpha: true,
                                 className: "full-spectrum",
                                 showInitial: true,
                                 preferredFormat: "hex",
