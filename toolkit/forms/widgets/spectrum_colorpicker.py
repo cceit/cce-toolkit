@@ -9,7 +9,8 @@ http://bgrins.github.io/spectrum/
 
 class SpectrumColorPickerWidget(forms.TextInput):
     class Media:
-        js = ['//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js']
+        css = {'all': ('//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css',)}
+        js = ('//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js',)
 
     def render(self, name, value, attrs=None):
         rendered = super(SpectrumColorPickerWidget, self).render(name, value, attrs)
