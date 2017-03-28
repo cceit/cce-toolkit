@@ -79,7 +79,10 @@ def visit_page(context, url_name):
         except AttributeError:
             raise Exception("%s not found. Check the url config." % url_name)
 
-    # context.result = requests.get(url, cookies=b.cookies.all())
+    try:
+        context.result = requests.get(url, cookies=b.cookies.all())
+    except KeyError:
+        pass
     b.visit(url)
 
 
