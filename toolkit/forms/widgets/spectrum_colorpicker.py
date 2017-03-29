@@ -29,7 +29,7 @@ class SpectrumColorPickerWidget(forms.TextInput):
 class SpectrumColorPickerField(models.CharField):
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 10
+        kwargs['max_length'] = 100
         super(SpectrumColorPickerField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
