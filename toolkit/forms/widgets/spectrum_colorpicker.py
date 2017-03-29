@@ -19,7 +19,7 @@ class SpectrumColorPickerWidget(forms.TextInput):
                             $('#id_%s').spectrum({
                                 showInput: true,
                                 showAlpha: true,
-                                preferredFormat: "hex",
+                                preferredFormat: "rgb",
                                 allowEmpty:true,
                             });
                         });
