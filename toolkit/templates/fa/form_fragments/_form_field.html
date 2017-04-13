@@ -1,0 +1,76 @@
+{% load widget_tweaks template_helpers %}
+{% block form_field %}
+    <div id="{{ field.id_for_label }}_row" class="form-group row">
+        {% block field_label %}
+            <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">
+                {% if field.field.required %}<span class="required-warning"> *</span>{% endif %}
+                {% if form.override_labels %}
+                    {{ field.label }}
+                {% else %}
+                    {{ field.label|title }}
+                {% endif %}
+                {{ field.field.label_suffix|default_if_none:"" }}
+                {% if field.name not in form.override_help_text_display %}
+                    {% if field.help_text|length > 55  %}
+                    <span>
+                    <a href="javascript:void(0)" id="{{ field.id_for_label }}_modal_btn" title="{{ field.label }} Help"
+                       data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer; font-size: 12pt;">
+                        <i class="fa fa-fw fa-question-circle" aria-hidden="true"></i>
+                    </a>
+                    </span>
+{#                    {% elif field.help_text|length > 55  %}#}
+{#                        <span>#}
+{#                        <a href="javascript:void(0)" id="{{ field.id_for_label }}_popover" title="{{ field.label }} Help"#}
+{#                           data-trigger='click' data-toggle="popover" style="cursor:pointer"#}
+{#                           data-placement="top" data-content="{{ field.help_text|safe }}">#}
+{#                            <i class="glyphicon glyphicon-question-sign"></i>#}
+{#                        </a>#}
+{#                        </span>#}
+                    {% endif %}
+                {% endif %}
+            </label>
+        {% endblock field_label %}
+        <div class="col-sm-9">
+            {% block field %}
+                {% if field|is_date_field %}
+                    {{ field|add_class:'form-control input-sm datefield' }}
+                {% elif field|is_datetime_field %}
+                    {{ field|add_class:'form-control input-sm datetimefield' }}
+                {% elif field|is_time_field %}
+                    {{ field|add_class:'form-control input-sm timefield' }}
+                {% elif field|is_bootstrap_styled_field %}
+                    {{ field|add_class:'form-control input-sm' }}
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% include "form_fragments/_field_errors.html" with errors=field.errors %}
+                {% block field_help %}
+                    {% if field.help_text %}
+                        {% if field.name not in form.override_help_text_display and field.help_text|length > 55 %}
+                            <div id="{{ field.id_for_label }}_modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">{{ field.label }} Help</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ field.help_text|safe }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <span>{{ field.help_text|safe }}</span>
+                        {% endif %}
+                    {% endif %}
+                {% endblock field_help %}
+            {% endblock field %}
+        </div>
+    </div>
+{% endblock form_field %}

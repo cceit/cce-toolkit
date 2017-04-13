@@ -1,0 +1,25 @@
+{% load widget_tweaks template_helpers %}
+{% block form_field %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}" class="control-label">
+            {% if field.field.required %}<span class="required-warning"> *</span>{% endif %} {{ field.label|capfirst }}
+        </label>
+        <br>
+        {% if field|is_date_field %}
+            {{ field|add_class:'form-control input-sm datefield' }}
+        {% elif field|is_datetime_field %}
+            {{ field|add_class:'form-control input-sm datetimefield' }}
+        {% elif field|is_time_field %}
+            {{ field|add_class:'form-control input-sm timefield' }}
+        {% elif field|is_bootstrap_styled_field %}
+            {{ field|add_class:'form-control input-sm' }}
+        {% else %}
+            {{ field }}
+        {% endif %}
+        {% if field.help_text %}
+            <span>{{ field.help_text }}</span>
+        {% endif %}
+
+        {% include "form_fragments/_field_errors.html" with errors=field.errors %}
+    </div>
+{% endblock form_field %}

@@ -1,0 +1,25 @@
+{% load widget_tweaks %}
+{#<div class="col-sm-12">#}
+    <form class="input-group" action="" method="GET" enctype="multipart/form-data">
+        {% for field in form %}
+            <div class="input-group-btn">
+                <label for="{{ field.id_for_label }}" class="sr-only">{{ field.name }}</label>
+                {{ field|add_class:'form-control input-sm' }}
+                <div class="btn-group" role="group">
+                    <button id="search_btn" type="submit" class="btn btn-sm btn-primary" role="button"
+                            aria-pressed="false" name="submit_search" aria-label="Search" title="Search">
+                        <i class="fa fa-fw fa-search" aria-hidden="true"></i>
+                    </button>
+                    {% if advanced_search_form %}
+                    <button id="advance_search_toggle" type="button" class="btn btn-sm btn-success"
+                            name="advanced_search_toggle" role="button" aria-pressed="false"
+                            aria-label="Advanced Search" title="Advanced Search">
+                        <i class="fa fa-fw fa-plus" aria-hidden="true" id="reveal_advanced_form"></i>
+                        &nbsp;Advanced Search
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </form>
+{#</div>#}

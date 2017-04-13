@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block page_headline %}
+    <div class="col-sm-12 col-md-12">
+        <h1>{{ page_icon }} <span class="nav-label">{{ page_headline }}</span></h1>
+    </div>
+{% endblock page_headline %}
+
+{% block content %}
+
+    {% if page_details_top %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_top %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% block details %}
+    {% endblock details %}
+
+    {% if page_details %}
+        <div class="row">
+            <div class="col-sm-12">
+                {{ page_details|safe }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% block form %}
+        <div class="row">
+            <form action="" method="{{ form_method|default:'POST' }}" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
+                <span class="required-warning">*</span> - indicates a required field.<br>
+                {% include 'fa/_label.html' with icon='fa-question-circle'%}- indicates additional information.
+                <div class="form-content">
+                    {% block render_form %}
+                        {% include 'render_form.html' %}
+                    {% endblock render_form %}
+
+                    {% block extras %}
+                    {% endblock extras %}
+                </div>
+                <div class="row submit-content">
+                   <div class="col-sm-12" style="text-align: center">
+                       <button type="submit" name="submit" class="btn btn-default action">
+                           <i class="{{ form.submit_icon|default:'glyphicon glyphicon-floppy-disk' }}"></i> {{ form.submit_text|default:'Save' }}
+                       </button>
+                       {% block additional_submit_buttons %}
+                       {% endblock additional_submit_buttons %}
+                   </div>
+                </div>
+            </form>
+        </div>
+    {% endblock form %}
+
+    {% if page_details_bottom %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% include page_details_bottom %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock content %}
+    {% block extra_details %}
+    {% endblock extra_details %}
+
+{% block mobile_context_nav %}
+    {% block context_nav %}
+        {% include "generic_context_menu.html" %}
+    {% endblock context_nav %}
+{% endblock mobile_context_nav %}

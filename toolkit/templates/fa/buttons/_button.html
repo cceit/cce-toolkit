@@ -1,0 +1,3 @@
+<a class="btn btn-sm {{ btn_class }}" href="{% if btn_url %}{{ btn_url }}{% elif url %}{% url url object.pk %}{% endif %}">
+    {% include 'fa/_label.html' %}
+</a>

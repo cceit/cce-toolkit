@@ -1,0 +1,15 @@
+{% load widget_tweaks pagination %}
+<form class="input-group" action="" method="GET" enctype="multipart/form-data">
+    {% for field in form %}
+        <div class="input-group-btn">
+            {{ field|add_class:'form-control input-sm' }}
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-sm btn-warning" role="button" aria-pressed="false"
+                        name="download" id="download_report" aria-label="Download Report" title="Download Report">
+                    <i class="fa fa-fw fa-download" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+    {% append_querystrings_as_hidden_fields request %}
+</form>
