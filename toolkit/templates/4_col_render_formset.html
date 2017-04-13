@@ -3,21 +3,23 @@
         {% include "form_fragments/_non_field_errors.html" with errors=form.non_field_errors popover_title="Form Errors:" %}
     {% endblock non_field_errors %}
 
-    {% for field in form %}
+    {% for field in form.hidden_fields %}
+        {% include "form_fragments/_form_field_hidden.html" %}
+    {% endfor %}
+    {% for field in form.visible_fields %}
         {% if forloop.first %}
             <div class="row">
         {% endif %}
 
-        {% if field.field.widget.is_hidden %}
-            {% include "form_fragments/_form_field_hidden.html" %}
-        {% else %}
-                <div class="col-xs-3">
+        <div class="col-xs-3">
+            {% include "form_fragments/_packed_form_field.html" %}
+        </div>
 
-                    {% include "form_fragments/_packed_form_field.html" %}
-                </div>
+        {% if forloop.counter|divisibleby:6 %}
+            <div class="row">
         {% endif %}
-    {% if forloop.counter|divisibleby:6 %}</div>
-        <div class="row">{% endif %}
-    {% if forloop.last %}</div>{% endif %}
+        {% if forloop.last %}
+            </div>
+        {% endif %}
     {% endfor %}
 {% endblock form_fragment %}
