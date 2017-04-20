@@ -141,6 +141,10 @@ def is_datetime(obj):
     return False
 
 
+def to_ascii(text):
+    return text.encode('ascii', 'replace')
+
+
 def write_to_worksheet(ws, row, column, cell):
     """
     Write a single cell to a worksheet with xlwt.
@@ -198,7 +202,7 @@ def write_to_worksheet(ws, row, column, cell):
                 except:
                     ws.write(row, column, str(label))
 
-    elif type(cell) == type(()):
+    elif isinstance(cell, tuple):
         label = cell[0]
         style = cell[1]
         width = get_width(str(label))
@@ -234,8 +238,6 @@ def write_to_worksheet(ws, row, column, cell):
                 label = str(label)
                 ws.write(row, column, label)
     return width, height
-
-
 
 
 def csv_response(filename, table):
@@ -334,7 +336,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     for r, row in enumerate(data_table):
         r += row_offset
         for c, cell in enumerate(row):
-            label = str(cell)
+            label = unicode(cell)
             height = get_height(label)
             width = get_width(label)
             date_style = xlwt.easyxf(num_format_str="YYYY-MM-DD")
