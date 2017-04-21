@@ -1,4 +1,5 @@
 {% extends "form_fragments/_form_field.html" %}
+{% load i18n %}
 {% block form_field %}
     {% block field %}
         {{ block.super }}
@@ -6,7 +7,8 @@
 {% endblock form_field %}
 
 {% block field_errors %}
-    {% include "form_fragments/_non_field_errors.html" with errors=field.errors popover_title="Field Errors:" %}
+    {% trans "Field Errors:" as field_error_text %}
+    {% include "form_fragments/_non_field_errors.html" with errors=field.errors popover_title=field_error_text %}
 {% endblock field_errors %}
 
 {% block field_help %}{% endblock field_help %}

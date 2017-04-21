@@ -1,7 +1,7 @@
 <div style="margin-top: 10px;"></div>
 <div class="alert alert-{{ type }} alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}"><span aria-hidden="true">×</span>
     </button>
-    <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Alert</strong>
+    <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {% trans "Alert" %}</strong>
     {{ message|linebreaks }}
 </div>
