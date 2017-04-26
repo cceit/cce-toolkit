@@ -15,9 +15,6 @@
             {% include "form_fragments/_packed_form_field.html" %}
         </div>
 
-        {% if forloop.counter|divisibleby:6 %}
-            <div class="row">
-        {% endif %}
         {% if forloop.last %}
             </div>
         {% endif %}
