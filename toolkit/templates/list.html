@@ -24,13 +24,13 @@
                     </div>
                 {% endif %}
             {% endblock page_options_1 %}
-            <div class="col-md-4 col-sm-12 page-options">
-                {% block page_options_2 %}
-                        {% if search_form %}
-                                {% include 'simple_search_form.html' with form=search_form %}
-                        {% endif %}
-                {% endblock page_options_2 %}
-            </div>
+            {% block page_options_2 %}
+                {% if search_form %}
+                    <div class="col-md-4 col-sm-12 page-options pull-right">
+                        {% include 'simple_search_form.html' with form=search_form %}
+                    </div>
+                {% endif %}
+            {% endblock page_options_2 %}
         {% endblock page_options %}
         {% endblock page_header %}
     </div>
