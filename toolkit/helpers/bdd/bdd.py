@@ -141,18 +141,18 @@ def compare_content_types(browser, context, file_type):
     """
 
     if hasattr(context, 'result'):
-        result = context.result
+        request = context.result
     elif hasattr(context, 'file_url'):  # Should be deprecated for context.url soon
-        result = requests.get(context.file_url, cookies=browser.cookies.all())
+        request = requests.get(context.file_url, cookies=browser.cookies.all())
     else:
         try:
             file_url = browser.find_by_name('download').first['href']
-            result = requests.get(file_url, cookies=browser.cookies.all())
+            request = requests.get(file_url, cookies=browser.cookies.all())
         except (ElementDoesNotExist, MissingSchema):
-            result = requests.get(context.url, cookies=browser.cookies.all())
+            request = requests.get(context.url, cookies=browser.cookies.all())
 
     target_type = get_file_content_type(file_type)
-    received_type = result.headers['content-type']
+    received_type = request.headers['content-type']
 
     return target_type, received_type
 
