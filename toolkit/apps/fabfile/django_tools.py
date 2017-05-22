@@ -41,9 +41,10 @@ def run_migrations():
 
 
 def build_react():
-    __exec_cmd('npm --prefix %s/assets/react install %s/assets/react' % (env.role['django_root'],
-                                                                         env.role['django_root']))
-    __exec_cmd('NODE_ENV="production" npm --prefix %s/assets/react run build' % env.role['django_root'])
+    # This is now specific to the form_builder app.
+    __exec_cmd('npm --prefix %s/form_builder/static/react install %s/assets/react' % (env.role['django_root'],
+                                                                                      env.role['django_root']))
+    __exec_cmd('NODE_ENV="production" npm --prefix %s/form_builder/static/react run build' % env.role['django_root'])
 
 
 def deploy():
@@ -76,7 +77,7 @@ def react_deploy():
     git_pull()
     update_requirements()
     run_migrations()
-    build_react()
+    build_react()  # specific to the form_builder app
     collectstatic()
     reload_http()
 
