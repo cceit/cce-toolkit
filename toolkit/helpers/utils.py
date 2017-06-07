@@ -8,6 +8,9 @@ from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.functional import allow_lazy
 from django.utils.safestring import mark_safe, SafeText
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 
 
 def usernamify(username, special_chars='@.+-_'):
@@ -215,3 +218,20 @@ def get_subclass_instance(obj):
     except StopIteration:
         return None
     return getattr(obj, subclass_instance_name)
+
+
+def send_template_email(address_list, template_name, template_context=None, context=None, subject="NO SUBJECT",
+                        attachments=None, from_address=None):
+    email_context = {}
+    if template_context:
+        email_context.update(template_context)
+    msg = render_to_string(template_name, email_context, context)
+    email_msg = EmailMultiAlternatives(subject, msg, from_address or settings.DEFAULT_FROM_EMAIL, address_list)
+    email_msg.attach_alternative(msg, "text/html")
+    if attachments is not None:
+        for tupple in attachments:
+            if len(tupple) == 2:
+                email_msg.attach(tupple[0], tupple[1])
+            else:
+                email_msg.attach(tupple[0], tupple[1], tupple[2])
+    email_msg.send()
