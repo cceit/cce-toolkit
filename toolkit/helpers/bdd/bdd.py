@@ -140,10 +140,10 @@ def compare_content_types(browser, context, file_type):
     the file extension matches the expected file type
     """
 
-    if hasattr(context, 'result'):
-        request = context.result
-    elif hasattr(context, 'file_url'):  # Should be deprecated for context.url soon
+    if hasattr(context, 'file_url'):  # Should be deprecated for context.url soon
         request = requests.get(context.file_url, cookies=browser.cookies.all())
+    elif hasattr(context, 'result'):
+        request = context.result
     else:
         try:
             file_url = browser.find_by_name('download').first['href']
