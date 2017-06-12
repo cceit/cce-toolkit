@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from toolkit.helpers.utils import hasfield
 
 
@@ -705,7 +706,7 @@ class AbstractedListMixin(object):
             quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
         # Actions columns every time the page is accessed
         if not self.disable_actions_column:
-            columns += [('Actions', lambda x: self.render_buttons(
+            columns += [(_('Actions'), lambda x: self.render_buttons(
                 self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)

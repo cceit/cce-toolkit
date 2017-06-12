@@ -60,6 +60,7 @@ setup(
             'templates/registration/*.html',
             'templatetags/*.py',
             'views/*.py',
+            'locale/ja/LC_MESSAGES/*o',
         ],
     },
     zip_safe=False,
