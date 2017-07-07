@@ -11,14 +11,15 @@ register = template.Library()
 @register.filter
 def boolean_icon(value):
     """
-    :param Bool value: Boolean value
-    :returns html: i tag with bootstrap ok or remove glyphicon
+    :param Bool value: Nullable boolean value
+    :returns html: i tag with fontawesome icon representation
     """
     if value:
-        return mark_safe('<i class="true_icon glyphicon glyphicon-ok"></i>')
+        return mark_safe('<i class="true_icon fa fa-check" aria-hidden="true"></i>')
+    elif value is None:
+        return mark_safe('<i class="null_icon fa fa-question" aria-hidden="true"></i>')
     else:
-        return mark_safe('<i class="false_icon glyphicon glyphicon-remove">'
-                         '</i>')
+        return mark_safe('<i class="false_icon fa fa-times" aria-hidden="true"></i>')
 
 
 def follow_path(ob, dotted_attrs):
