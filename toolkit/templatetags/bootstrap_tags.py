@@ -17,7 +17,7 @@ def boolean_icon(value):
     if value:
         return mark_safe('<i class="true_icon fa fa-check" aria-hidden="true"></i>')
     elif value is None:
-        return mark_safe('<i class="null_icon fa fa-question" aria-hidden="true"></i>')
+        return '--'
     else:
         return mark_safe('<i class="false_icon fa fa-times" aria-hidden="true"></i>')
 
