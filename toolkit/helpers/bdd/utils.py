@@ -1,5 +1,6 @@
 import os
 
+import time
 from django.conf import settings
 from django.core.management import call_command
 from pyvirtualdisplay import Display
@@ -47,6 +48,7 @@ def setup_test_environment(context, scenario, visible=0, use_xvfb=True):
 
         context.browser = Browser()
 
+    time.sleep(3)
     context.browser.driver.maximize_window()
     context.server_url = context.config.server_url
     # Flushes all cookies.
