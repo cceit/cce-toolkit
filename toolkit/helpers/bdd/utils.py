@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.management import call_command
 from pyvirtualdisplay import Display
 from splinter import Browser
+from splinter.exceptions import DriverNotFoundError
 
 from toolkit.helpers.utils import snakify
 
@@ -40,21 +41,21 @@ def setup_test_environment(context, scenario, visible=0, use_xvfb=True):
             version="11",
             name="Remote IE Test"
         )
-
-    else:  # Default Case
+    else:
         if use_xvfb:
             context.display = Display(visible=visible, size=(1920, 1080))
             context.display.start()
 
-        context.browser = Browser()
+        try:
+            context.browser = Browser('chrome')
+        except DriverNotFoundError:
+            context.browser = Browser()  # Defaults to Firefox
 
-    time.sleep(3)
-    context.browser.driver.maximize_window()
+    context.browser.driver.set_window_size(1920, 1080)
     context.server_url = context.config.server_url
     # Flushes all cookies.
     context.browser.cookies.delete()
-    # Re-enables yellow screens on failure. (Normally disabled by
-    # LiveServerTestCase)
+    # Re-enables yellow screens on failure. (Normally disabled by LiveServerTestCase)
     settings.DEBUG = True
     context.scenario = scenario.name
     call_command('flush', verbosity=0, interactive=False)
