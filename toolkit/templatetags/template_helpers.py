@@ -1,3 +1,4 @@
+import os
 from django import template
 from django.forms import widgets
 
@@ -112,6 +113,11 @@ def make_list(parser, token):
 @register.filter
 def snake(value):
     return snakify(value)
+
+
+@register.filter
+def filename(value):
+    return os.path.basename(value.file.name)
 
 
 class MakeListNode(template.Node):

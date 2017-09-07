@@ -86,19 +86,22 @@ class ToolkitActivityLog(CCEAuditModel):
 
     @property
     def resolved_url(self):
+        if self.absolute_url_name is not None:
+            try:
+                return reverse(self.absolute_url_name)
+            except NoReverseMatch:
+                try:
+                    return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
+                except NoReverseMatch:
+                    pass
+
         if self.content_object:
             try:
                 return self.content_object.get_absolute_url()
             except NoReverseMatch:
-                pass
-
-        try:
-            return reverse(self.absolute_url_name)
-        except NoReverseMatch:
-            try:
-                return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
-            except NoReverseMatch:
                 return ''
+
+
 
     @classmethod
     def create_log(cls, summary, description, activity_type, content_type_model, object_id, absolute_url_name=None):
