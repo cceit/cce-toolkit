@@ -40,11 +40,13 @@ def run_migrations():
         manage('migrate')
 
 
-def build_react():
-    # This is now specific to the form_builder app.
-    __exec_cmd('npm --prefix %s/form_builder/static/react install %s/form_builder/static/react' % (
-        env.role['django_root'], env.role['django_root']))
-    __exec_cmd('NODE_ENV="production" npm --prefix %s/form_builder/static/react run build' % env.role['django_root'])
+def build_bcy_react():
+    __exec_cmd('npm --prefix '
+               '%s/lib/site-packages/form_builder/static/react '
+               'install '
+               '%s/lib/site-packages/form_builder/static/react' % (env.role['virtualenv'], env.role['virtualenv']))
+    __exec_cmd('NODE_ENV="production" npm --prefix '
+               '%s/lib/site-packages/form_builder/static/react run build' % env.role['virtualenv'])
 
 
 def deploy():
@@ -69,15 +71,15 @@ def soft_deploy():
     reload_http()
 
 
-def react_deploy():
+def bcy_deploy():
     """
-    does the deploy() things but also builds react
+    does the deploy() things but also builds react in bcy's form_builder app
     """
     clear_compiled_python_files()
     git_pull()
     update_requirements()
     run_migrations()
-    build_react()  # specific to the form_builder app
+    build_bcy_react()
     collectstatic()
     reload_http()
 
