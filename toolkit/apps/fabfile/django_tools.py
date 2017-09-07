@@ -42,11 +42,12 @@ def run_migrations():
 
 def build_bcy_react():
     __exec_cmd('npm --prefix '
-               '%s/lib/site-packages/form_builder/static/react '
+               '%s/lib/python2.7/site-packages/form_builder/static/react '
                'install '
-               '%s/lib/site-packages/form_builder/static/react' % (env.role['virtualenv'], env.role['virtualenv']))
+               '%s/lib/python2.7/site-packages/form_builder/static/react' % (
+        env.role['virtualenv'], env.role['virtualenv']))
     __exec_cmd('NODE_ENV="production" npm --prefix '
-               '%s/lib/site-packages/form_builder/static/react run build' % env.role['virtualenv'])
+               '%s/lib/python2.7/site-packages/form_builder/static/react run build' % env.role['virtualenv'])
 
 
 def deploy():
