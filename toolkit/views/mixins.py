@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
 from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from toolkit.helpers.utils import hasfield
 
 
@@ -705,7 +706,7 @@ class AbstractedListMixin(object):
             quicklook = self.generate_popover_media(rows=popover_rows, data=qs)
         # Actions columns every time the page is accessed
         if not self.disable_actions_column:
-            columns += [('Actions', lambda x: self.render_buttons(
+            columns += [(_('Actions'), lambda x: self.render_buttons(
                 self.request.user, x), self.actions_column_width)]
         meta = self.model._meta
         table = self.generate_list_view_table(columns=columns, data=qs)
@@ -807,6 +808,14 @@ class AbstractedDetailMixin(object):
         return context
 
 
+def deletion_formatting_callback(obj):
+    if hasattr(obj, 'deletion_repr'):
+        return obj.deletion_repr()
+    if hasattr(obj, '__unicode__'):
+        return obj.__unicode__()
+    return str(obj)
+
+
 class AbstractedDeleteMixin(object):
     template_name = "generic_delete.html"
     no_url_path = None
@@ -827,7 +836,7 @@ class AbstractedDeleteMixin(object):
         collector = NestedObjects(using=using)
         collector.collect(objs)
         # nested() can take a formatting callback if we want it later
-        to_delete = collector.nested()
+        to_delete = collector.nested(format_callback=deletion_formatting_callback)
         return to_delete
 
     def get_context_data(self, **kwargs):

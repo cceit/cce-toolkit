@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-
 {% block page_options_1 %}
     {% if search_form %}
             {% include 'simple_search_form.html' with form=search_form %}
@@ -31,10 +30,22 @@
     {% include 'pagination.html' %}
 {% endblock content %}
 
-{% block extra_footer %}
+{% block extra_header %}
+    {{ block.super }}
     <style>
         #id_search {
             margin-left: -15px;
         }
     </style>
+{% endblock extra_header %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $("#download_report").on('click', function () {
+            if (!$("#id_get_reports").val()){
+                return false;
+            }
+        })
+    </script>
 {% endblock extra_footer %}

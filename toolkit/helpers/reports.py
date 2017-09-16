@@ -4,7 +4,7 @@ import math
 from functools import partial
 
 import openpyxl
-from openpyxl.cell import get_column_letter
+from openpyxl.utils import get_column_letter
 import xlwt
 from django.conf import settings
 from django.core.files import temp as tempfile
@@ -141,6 +141,10 @@ def is_datetime(obj):
     return False
 
 
+def to_ascii(text):
+    return text.encode('ascii', 'replace')
+
+
 def write_to_worksheet(ws, row, column, cell):
     """
     Write a single cell to a worksheet with xlwt.
@@ -198,7 +202,7 @@ def write_to_worksheet(ws, row, column, cell):
                 except:
                     ws.write(row, column, str(label))
 
-    elif type(cell) == type(()):
+    elif isinstance(cell, tuple):
         label = cell[0]
         style = cell[1]
         width = get_width(str(label))
@@ -234,8 +238,6 @@ def write_to_worksheet(ws, row, column, cell):
                 label = str(label)
                 ws.write(row, column, label)
     return width, height
-
-
 
 
 def csv_response(filename, table):
@@ -334,7 +336,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     for r, row in enumerate(data_table):
         r += row_offset
         for c, cell in enumerate(row):
-            label = str(cell)
+            label = unicode(cell)
             height = get_height(label)
             width = get_width(label)
             date_style = xlwt.easyxf(num_format_str="YYYY-MM-DD")
@@ -567,6 +569,9 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
             ws_cell.value = cell
             if type(cell) in [str, unicode]:
                 cell_str = ws_cell.value.encode('utf-8')
+            elif type(cell) in [float]:
+                ws_cell.number_format = '0.00'
+                cell_str = str(ws_cell.value)
             else:
                 cell_str = str(cell)
 
@@ -650,6 +655,9 @@ def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=
                     ws_cell.value = cell
                     if type(cell) in [str, unicode]:
                         cell_str = ws_cell.value.encode('utf-8')
+                    elif type(cell) in [float]:
+                        ws_cell.number_format = '0.00'
+                        cell_str = str(ws_cell.value)
                     else:
                         cell_str = str(cell)
 

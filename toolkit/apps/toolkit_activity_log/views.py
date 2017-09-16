@@ -1,12 +1,14 @@
-from django.template.defaultfilters import title
-from django.db.models import Q
-from toolkit.views import CCESearchView, mark_safe
+from collections import OrderedDict
 
-from .forms import ActivityLogSearchForm, ActivityLogAdvancedSearchForm
+from django.template.defaultfilters import title
+from user_agents import parse
+
+from toolkit.views import ReportDownloadSearchView, mark_safe
+from .forms import ActivityLogAdvancedSearchForm, ActivityLogSearchForm
 from .models import ToolkitActivityLog
 
 
-class ToolkitActivityLogListView(CCESearchView):
+class ToolkitActivityLogListView(ReportDownloadSearchView):
     template_name = "toolkit_activity_log/browse_activities.html"
     page_title = "Browse Activities"
     sidebar_group = ['dashboard']
@@ -19,8 +21,10 @@ class ToolkitActivityLogListView(CCESearchView):
         ('Type', lambda a: mark_safe('<i class="%s"></i> %s' % (a.activity_type.logo, title(a.activity_type))),
          '', 'activity_type.activity_type'),
         ('Activity', 'summary', '2'),
-        ('Description', 'description', '5'),
-        ('User', lambda a: a.created_by.get_full_name() if a.created_by else '--', '2', 'created_by.first_name'),
+        ('Description', 'description'),
+        ('User Agent', lambda a: str(parse(a.user_agent)) if a.user_agent else '--', '2', 'user_agent'),
+        ('IP Address', lambda a: a.ip_address if a.ip_address else '--', '1', 'ip_address'),
+        ('User', lambda a: a.created_by if a.created_by else '--', '2', 'created_by'),
         (
             'Date/Time',
             lambda a: mark_safe(
@@ -30,10 +34,21 @@ class ToolkitActivityLogListView(CCESearchView):
     ]
 
     def render_buttons(self, user, obj, *args, **kwargs):
-        return [self.render_button(btn_class='btn-info',
-                                   label='View',
-                                   icon_classes='glyphicon glyphicon-info-sign',
-                                   url=obj.resolved_url)]
+        return [
+            self.render_button(
+                btn_class='btn-info',
+                label='View',
+                icon_classes='glyphicon glyphicon-info-sign',
+                url=obj.resolved_url
+            ),
+        ]
+
+    def get_reports(self):
+        reports = OrderedDict()
+        reports.update({
+            'activity_xlsx_report': {'name': 'Activity Report (XLSX)', 'method': 'activity_xlsx_report'},
+        })
+        return reports
 
     def get_queryset(self):
         # This repeats the functionality of ActivitiesPermissionManager.scoped_by_user().

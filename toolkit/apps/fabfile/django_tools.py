@@ -10,7 +10,7 @@ from .git_tools import git_pull
 
 def manage(cmd):
     """
-    run manage.py commands on specified role
+    run manage.py commands on the specified role
     """
     __exec_cmd('%s/bin/python %s/manage.py %s --settings %s' % (env.role['virtualenv'],
                                                                 env.role['django_root'],
@@ -20,9 +20,9 @@ def manage(cmd):
 
 def collectstatic():
     """
-    runs collect static on the selected role
+    runs collectstatic on the specified role
     """
-    manage('collectstatic --noinput')
+    manage('collectstatic --noinput --ignore "node_modules"')
 
 
 def clear_compiled_python_files():
@@ -40,9 +40,19 @@ def run_migrations():
         manage('migrate')
 
 
+def build_bcy_react():
+    __exec_cmd('npm --prefix '
+               '%s/lib/python2.7/site-packages/form_builder/static/react '
+               'install '
+               '%s/lib/python2.7/site-packages/form_builder/static/react' % (
+        env.role['virtualenv'], env.role['virtualenv']))
+    __exec_cmd('NODE_ENV="production" npm --prefix '
+               '%s/lib/python2.7/site-packages/form_builder/static/react run build' % env.role['virtualenv'])
+
+
 def deploy():
     """
-    deploys code to selected role  migrates db, loads initial data, installs requirements & restarts, CANNOT RUN LOCALLY
+    deploys code to the given role; migrates, loads initial data, installs requirements & restarts, CANNOT RUN LOCALLY
     """
     clear_compiled_python_files()
     git_pull()
@@ -58,6 +68,19 @@ def soft_deploy():
     """
     clear_compiled_python_files()
     git_pull()
+    collectstatic()
+    reload_http()
+
+
+def bcy_deploy():
+    """
+    does the deploy() things but also builds react in bcy's form_builder app
+    """
+    clear_compiled_python_files()
+    git_pull()
+    update_requirements()
+    run_migrations()
+    build_bcy_react()
     collectstatic()
     reload_http()
 

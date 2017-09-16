@@ -72,6 +72,12 @@ function initialize_plugins(advanced_search_form_bound) {
         $delete_input.attr('checked', 'checked');
         $parent_div.hide()
     });
+
+    //Initialize popovers
+    $(function () {
+      $('[data-toggle="popover"]').popover('show')
+    });
+
 }
 
 // function enables tinymce with settings loaded from widget, taken from django-tinymce

@@ -1,6 +1,7 @@
 import datetime
 
 import requests
+from requests.exceptions import MissingSchema
 from splinter.exceptions import ElementDoesNotExist
 
 
@@ -139,20 +140,19 @@ def compare_content_types(browser, context, file_type):
     the file extension matches the expected file type
     """
 
-    if hasattr(context, 'file_url'):
-        result = requests.get(context.file_url, cookies=browser.cookies.all())
+    if hasattr(context, 'file_url'):  # Should be deprecated for context.url soon
+        request = requests.get(context.file_url, cookies=browser.cookies.all())
+    elif hasattr(context, 'result'):
+        request = context.result
     else:
         try:
             file_url = browser.find_by_name('download').first['href']
-            result = requests.get(file_url, cookies=browser.cookies.all())
-        except ElementDoesNotExist:
-            try:
-                result = context.result
-            except AttributeError:
-                result = requests.get(context.url, cookies=browser.cookies.all())
+            request = requests.get(file_url, cookies=browser.cookies.all())
+        except (ElementDoesNotExist, MissingSchema):
+            request = requests.get(context.url, cookies=browser.cookies.all())
 
     target_type = get_file_content_type(file_type)
-    received_type = result.headers['content-type']
+    received_type = request.headers['content-type']
 
     return target_type, received_type
 

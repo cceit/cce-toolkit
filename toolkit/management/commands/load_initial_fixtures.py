@@ -33,10 +33,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            env = options['env'] if 'env' in options else settings.ENV
-        except AttributeError:
+            initial_fixtures = settings.INITIAL_FIXTURES['common'] + \
+                               settings.INITIAL_FIXTURES[options['env'] if options['env'] else settings.ENV]
+        except NameError:
             raise NotImplementedError('Did not find the environmental variable. Specify variable in settings.ENV or '
                                       'provide a parameter')
-        initial_fixtures = settings.INITIAL_FIXTURES['common'] + settings.INITIAL_FIXTURES[env]
         for fixture in initial_fixtures:
             call_command('loaddata', fixture)

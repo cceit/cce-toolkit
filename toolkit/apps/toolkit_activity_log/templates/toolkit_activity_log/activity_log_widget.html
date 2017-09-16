@@ -1,3 +1,4 @@
+{% load user_agent_tags %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><i class="glyphicon glyphicon-time"></i> Activity Log</h3>
@@ -18,7 +19,9 @@
                 <abbr class="timeago" title="{{ activity.created_at|date:'c' }}"></abbr>
             </span>
             <i class="{{ activity.activity_type.logo }}"></i>
-            {{ activity.activity_type }} - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
+            <b>{{ activity.activity_type }}</b> - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
+            {% if activity.user_agent %}<br><b>User Agent:</b> {{ activity.user_agent|simple_user_agent }}{% endif %}
+            {% if activity.ip_address %}<br><b>IP Address:</b> {{ activity.ip_address }}{% endif %}
             </a>
             {% empty %}
                 {% include 'alert.html' with type='warning' message='No activities logged yet.' %}

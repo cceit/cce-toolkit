@@ -1,6 +1,7 @@
 {% extends 'generic_list.html' %}
 
 {% block extra_js %}
+    {{ block.super }}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.5.2/jquery.timeago.min.js"></script>
     <script>
         $(function () {

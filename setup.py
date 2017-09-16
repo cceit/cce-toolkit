@@ -12,7 +12,9 @@ setup(
 
     install_requires=[
         "django-cuser",
-        "arrow"
+        "arrow",
+        "django-request-provider",
+        "user-agents",
     ],
     classifiers=[
         'Development Status :: 1.0.0-b0',
@@ -44,6 +46,7 @@ setup(
             'management/commands/*.py',
             'apps/fabfile/*.py',
             'forms/*.py',
+            'forms/widgets/*.py',
             'helpers/*.py',
             'helpers/bdd/*.py',
             'models/*.py',
@@ -57,6 +60,7 @@ setup(
             'templates/registration/*.html',
             'templatetags/*.py',
             'views/*.py',
+            'locale/ja/LC_MESSAGES/*o',
         ],
     },
     zip_safe=False,

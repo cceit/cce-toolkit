@@ -17,19 +17,19 @@
             </div>
         {% endblock page_headline %}
         {% block page_options %}
+            <div class="col-md-3 col-sm-12 page-options report_selector">
             {% block page_options_1 %}
                 {% if report_selector_form %}
-                    <div class="col-md-3 col-sm-12 page-options report_selector">
-                        {% include 'report_selector_form.html' with form=report_selector_form %}
-                    </div>
+                    {% include 'report_selector_form.html' with form=report_selector_form %}
                 {% endif %}
             {% endblock page_options_1 %}
+            </div>
             <div class="col-md-4 col-sm-12 page-options">
-                {% block page_options_2 %}
-                        {% if search_form %}
-                                {% include 'simple_search_form.html' with form=search_form %}
-                        {% endif %}
-                {% endblock page_options_2 %}
+            {% block page_options_2 %}
+                {% if search_form %}
+                        {% include 'simple_search_form.html' with form=search_form %}
+                {% endif %}
+            {% endblock page_options_2 %}
             </div>
         {% endblock page_options %}
         {% endblock page_header %}
@@ -63,3 +63,14 @@
         }
     </style>
 {% endblock extra_header %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $("#download_report").on('click', function () {
+            if (!$("#id_get_reports").val()){
+                return false;
+            }
+        })
+    </script>
+{% endblock extra_footer %}

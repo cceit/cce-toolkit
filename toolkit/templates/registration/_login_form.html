@@ -1,30 +1,31 @@
+{% load i18n %}
 <div class="row">
     <div class="col-md-4 col-md-offset-4 well">
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             {% include "form_fragments/_non_field_errors.html" with errors=form.non_field_errors %}
             <div class="form-group row">
-                <label for="username" class="col-sm-12 control-label">Username</label>
-
+                <label for="username" class="col-sm-12 control-label">{% trans "Username" %}</label>
                 <div class="col-sm-12">
                     <input type="text" class="form-control" id="username" name="username"
-                           placeholder="Username">
+                           placeholder="{% trans "Username" %}">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-12 control-label">Password</label>
-
+                <label for="inputPassword3" class="col-sm-12 control-label">{% trans "Password" %}</label>
                 <div class="col-sm-12">
                     <input type="password" class="form-control" id="inputPassword3" name="password"
-                           placeholder="Password">
+                           placeholder="{% trans "Password" %}">
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-default action" name="sign_in">Sign in</button>
-                    <button type="submit" class="btn btn-default action" name="cancel">Cancel</button>
+                    <button type="submit" class="btn btn-default action" name="sign_in">{% trans "Sign in" %}</button>
+                    <button type="submit" class="btn btn-default action" name="cancel">{% trans "Cancel" %}</button>
                     <p>
-                            Forgot your password? Request a password reset <a href="https://selfservice.outreach.ou.edu/">here</a>.
+                        {% blocktrans trimmed %}
+                        Forgot your password? Request a password reset <a href="https://selfservice.outreach.ou.edu/">here</a>.
+                        {% endblocktrans %}
                     </p>
                 </div>
             </div>
