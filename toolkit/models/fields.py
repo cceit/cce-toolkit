@@ -15,8 +15,9 @@ class CurrencyField(DecimalField):
 
 class CleanFileField(FileField):
     def save_form_data(self, instance, data):
+        # Important: None means "no change", false value means "clear"
         if data is not None:
-            old_file = getattr(instance, self.attname)
-            if old_file != data:
-                old_file.delete(save=False)
-        super(CleanFileField, self).save_form_data(instance, data)
+            if not data:
+                data = ''
+                instance.delete()
+            setattr(instance, self.name, data)

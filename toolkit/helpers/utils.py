@@ -12,6 +12,8 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
+from toolkit.models.fields import CleanFileField
+
 
 def usernamify(username, special_chars='@.+-_'):
     """
@@ -235,3 +237,12 @@ def send_template_email(address_list, template_name, template_context=None, cont
             else:
                 email_msg.attach(tupple[0], tupple[1], tupple[2])
     email_msg.send()
+
+
+def delete_files_from_storage(instance):
+    fields = type(instance)._meta.get_fields()
+    filefield_names = [field.name for field in fields if isinstance(field, CleanFileField)]
+    for filefield in filefield_names:
+        file_obj = getattr(instance, filefield)
+        if file_obj is not None:
+            file_obj.delete(save=False)
