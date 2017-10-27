@@ -15,6 +15,8 @@ setup(
         "arrow",
         "django-request-provider",
         "user-agents",
+        "django-rest-framework==0.1.0",
+        "djangorestframework==3.7.1",
     ],
     classifiers=[
         'Development Status :: 1.0.0-b0',

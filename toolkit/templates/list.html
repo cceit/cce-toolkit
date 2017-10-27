@@ -45,6 +45,19 @@
                     {% include '3_col_render_form.html' with form=advanced_search_form %}
                     <input type="submit" id="advanced_search" name="advanced_search" value="Search"
                            class="btn btn-default btn-success">
+                    <button type="button" id="advanced_search" name="save_search" class="btn btn-primary">
+                        <i class="fa fa-save"></i>
+                        Save this search
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Saved searches <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="saved_searches_ul">
+                            <li><a href="#">Search 1</a></li>
+                            <li><a href="#">Search 2</a></li>
+                        </ul>
+                    </div>
                 </form>
                 <hr/>
             </div>
@@ -71,6 +84,16 @@
             if (!$("#id_get_reports").val()){
                 return false;
             }
-        })
+        });
+
+        var $saved_searches_ul = $("#saved_searches_ul");
+        var search_filters_list_api_url = "{% url 'search_filters_list_api' %}";
+        $.get(
+            search_filters_list_api_url,
+            '',
+            function(response_data, status, jqxhr) {
+                console.log(response_data);
+            }
+        )
     </script>
 {% endblock extra_footer %}
