@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models import Q
 from .models import SearchFilter
 from rest_framework import generics, serializers, permissions
 
@@ -42,7 +43,7 @@ class SearchFilterList(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        return SearchFilter.objects.filter(user=self.request.user)
+        return SearchFilter.objects.filter(Q(user=self.request.user) | Q(visibility=SearchFilter.PUBLIC))
 
 
 class SearchFilterDetail(generics.RetrieveUpdateDestroyAPIView):
