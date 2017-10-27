@@ -1,0 +1,208 @@
+{% load static staticfiles hijack_tags %}
+
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>{% block page_title %}{{ page_title }}{% endblock page_title %} - {{ settings.WEBSITE_NAME }}</title>
+
+        {% include 'header.html' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}?time={% now "fyhims" %}"/>
+        <link rel="shortcut icon" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.fancybox-2.1.5.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.fancybox-2.1.5-buttons.css' %}"/>
+
+        {% block extra_header %}
+            <link rel="stylesheet" type="text/css" href="{% static 'toolkit/toolkit.css' %}"/>
+        {% endblock extra_header %}
+    </head>
+{% endblock head %}
+
+
+<body>
+{% hijack_notification %}
+{% block wrapper %}
+    <div id="wrapper">
+
+        {% block navigation %}
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                {% include "base_header.html" %}
+                {% if settings.IS_LOCAL %}
+                    <div class="navbar-header" style="background-color: #630d5d;">
+                {% elif settings.IS_DEV %}
+                    <div class="navbar-header" style="background-color: #806300;">
+                {% elif settings.IS_UAT %}
+                    <div class="navbar-header" style="background-color: #0d630d;">
+                {% elif settings.IS_PROD %}
+                    <div class="navbar-header">
+                {% else %}
+                    <div class="navbar-header" style="background-color: magenta;">
+                {% endif %}
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h3 class="navbar-title">
+                    <img src="{% static "img/app_logo.png" %}"/> {{ settings.WEBSITE_NAME }}
+                    {% if settings.IS_LOCAL %}
+                        (LOCAL)
+                    {% elif settings.IS_DEV %}
+                        (DEV)
+                    {% elif settings.IS_UAT %}
+                        (UAT)
+                    {% elif settings.IS_PROD %}
+                        {# this space intentionally left blank #}
+                    {% else %}
+                        (bad configs.ini; set configs.get('default', 'env') to 'local', 'dev', 'uat' or 'prod')
+                    {% endif %}
+                </h3>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- GlobalHeader Include -->
+                    <!-- /GlobalHeader Include -->
+                    {% if request.user.pk %}
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user fa-fw"></i> Hello, {{ request.user }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        {% block context_nav %}
+                        {% endblock context_nav %}
+                        {% include 'sidebar.html' %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+        {% endblock navigation %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid" id="main">
+                {% block page-header-row %}
+                    <div class="row page-header">
+                        {% block page_header %}
+                            {% block page_headline %}
+                                <div class="col-sm-4">
+                                    <h1>
+                                        {% block page_headline_txt %}
+                                            {{ page_headline }}
+                                        {% endblock page_headline_txt %}
+                                        {% block action_buttons %}
+                                        {% endblock action_buttons %}
+                                    </h1>
+                                </div>
+                            {% endblock page_headline %}
+                            {% block page_options %}
+                                <div class="page-options col-sm-4">
+                                    {% block page_options_1 %}{% endblock page_options_1 %}
+                                </div>
+                                <div class="page-options col-sm-4">
+                                    {% block page_options_2 %}{% endblock page_options_2 %}
+                                </div>
+                            {% endblock page_options %}
+                        {% endblock page_header %}
+                    </div>
+                {% endblock page-header-row %}
+
+                {% include 'messageBox.html' %}
+                {% block content %}{% endblock content %}
+                {% block modal_content %}{% endblock modal_content %}
+                <br/>
+                {% block comments %}{% endblock comments %}
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+        <!-- Footer Include -->
+        {% block footer %}
+            {% include "base_footer.html" %}
+        {% endblock footer %}
+        <!-- /Footer Include -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock wrapper %}
+
+{# Third-party JS packages #}
+{% include 'footer.html' %}
+{% block js %}
+    {% block extra_js %}
+        <script type="application/javascript">
+            $(document).ready(initialize_plugins({% if advanced_search_form %}{{ advanced_search_form.is_bound|lower }}{% else %}false{% endif %}));
+        </script>
+        <script type="application/javascript" src="{% static 'js/base.js' %}"></script>
+        <script type="application/javascript" src="{% static 'js/jquery.fancybox-2.1.5.pack.js' %}"></script>
+        <script type="application/javascript" src="{% static 'js/jquery.fancybox-2.1.5-buttons.js' %}"></script>
+        <script src="//cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.js"></script>
+        <script type="application/javascript">
+            $(document).ready(function () {
+                $(".fancybox").fancybox();
+            });
+        </script>
+    {% endblock extra_js %}
+
+    <script>
+        // If a select field's name ends with "state", match only by prefix
+        function matchStart(term, text) {
+            if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+                return true;
+            }
+            return false;
+        }
+
+        $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+            $("select[name$='state']").select2({
+                matcher: oldMatcher(matchStart)
+            })
+        });
+    </script>
+{% endblock js %}
+
+{% block extra_footer %}
+{% endblock extra_footer %}
+
+{% if settings.IS_PROD %}
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', '{{ settings.GOOGLE_ANALYTICS_ID }}', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+{% endif %}
+
+</body>
+
+</html>
