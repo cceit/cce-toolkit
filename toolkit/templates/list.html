@@ -98,11 +98,6 @@
             function(response_data, status, jqxhr) {
                 var filterListItems = response_data.map(searchFilterListItem);
                 $savedSearchesUl.html(filterListItems);
-{#                $savedSearchesUl.find("li").on('click', function(event){#}
-{#                    event.preventDefault();#}
-{#                    // ids are "searchFilterX" where X is an integer#}
-{#                    var filterId = +($(this).attr("id").slice(12));#}
-{#                });#}
             }
         )
     </script>
