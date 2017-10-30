@@ -58,13 +58,3 @@ class SearchFilterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = SearchFilter.objects.all()
     serializer_class = SearchFilterSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrPublic)
-
-
-# class UserList(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#
-#
-# class UserDetail(generics.RetrieveAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
