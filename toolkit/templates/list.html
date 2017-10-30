@@ -54,8 +54,7 @@
                             Saved searches <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" id="saved_searches_ul">
-                            <li><a href="#">Search 1</a></li>
-                            <li><a href="#">Search 2</a></li>
+                            {# intentionally left empty #}
                         </ul>
                     </div>
                 </form>
@@ -86,13 +85,18 @@
             }
         });
 
-        var $saved_searches_ul = $("#saved_searches_ul");
-        var search_filters_list_api_url = "{% url 'search_filters_list_api' %}";
+        function searchFilterListItem(filterObj) {
+            // keys are id, name, query_string, user, view, visibility
+            return '<li id="searchFilter' + filterObj.id.toString() + '">' + filterObj.name + '</li>';
+        }
+        var $savedSearchesUl = $("#saved_searches_ul");
+        var searchFiltersListApiUrl = "{% url 'search_filters_list_api' %}";
         $.get(
-            search_filters_list_api_url,
+            searchFiltersListApiUrl,
             '',
             function(response_data, status, jqxhr) {
-                console.log(response_data);
+                var filterListItems = response_data.map(searchFilterListItem);
+                $savedSearchesUl.html(filterListItems);
             }
         )
     </script>
