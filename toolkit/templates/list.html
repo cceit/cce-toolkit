@@ -125,7 +125,7 @@
         // On page load, put saved searches in the dropdown
         $.get(
             searchFiltersListApiUrl,
-            '',
+            {'view_name': "{{ view_name }}"},
             function(response_data, status, jqxhr) {
                 var filterListItems = response_data.map(searchFilterListItem);
                 $savedSearchesUl.html(filterListItems);

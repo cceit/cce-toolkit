@@ -463,6 +463,7 @@ class CCESearchView(CCEListView):
             'view': self.__class__.__name__,
             'query_string': '?' + self.request.META['QUERY_STRING'],
         })
+        context['view_name'] = self.__class__.__name__
         return context
 
 

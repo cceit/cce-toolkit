@@ -44,7 +44,8 @@ class SearchFilterList(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        return SearchFilter.objects.filter(Q(user=self.request.user) | Q(visibility=SearchFilter.PUBLIC))
+        return SearchFilter.objects.filter(view=self.request.GET['view_name']).filter(
+            Q(user=self.request.user) | Q(visibility=SearchFilter.PUBLIC))
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
