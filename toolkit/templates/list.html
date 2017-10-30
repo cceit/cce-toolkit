@@ -72,7 +72,7 @@
                         <h4 class="modal-title">Save This Search</h4>
                     </div>
                     <div class="modal-body">
-
+                        {% csrf_token %}
                         {% include "render_form.html" with form=search_filter_form %}
 
                     </div>
