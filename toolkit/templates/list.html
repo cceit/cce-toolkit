@@ -45,7 +45,7 @@
                     {% include '3_col_render_form.html' with form=advanced_search_form %}
                     <input type="submit" id="advanced_search" name="advanced_search" value="Search"
                            class="btn btn-default btn-success">
-                    <button type="button" id="advanced_search" name="save_search" class="btn btn-primary">
+                    <button type="button" id="saveThisSearch" data-toggle="modal" data-target="#saveThisSearchModal" class="btn btn-primary">
                         <i class="fa fa-save"></i>
                         Save this search
                     </button>
@@ -62,6 +62,35 @@
             </div>
         {% endif %}
     {% endblock advanced_search_form %}
+
+    <div id="saveThisSearchModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{% url 'search_filters_list_api' %}">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Save This Search</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        {% include "render_form.html" with form=search_filter_form %}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-dismiss="modal">
+                            <i class="fa fa-save"></i>
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="fa fa-remove"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 
     {% block table %}{% endblock table %}
     {% include 'pagination.html' %}
@@ -92,6 +121,8 @@
         }
         var $savedSearchesUl = $("#saved_searches_ul");
         var searchFiltersListApiUrl = "{% url 'search_filters_list_api' %}";
+
+        // On page load, put saved searches in the dropdown
         $.get(
             searchFiltersListApiUrl,
             '',
@@ -99,6 +130,6 @@
                 var filterListItems = response_data.map(searchFilterListItem);
                 $savedSearchesUl.html(filterListItems);
             }
-        )
+        );
     </script>
 {% endblock extra_footer %}

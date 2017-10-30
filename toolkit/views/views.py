@@ -7,6 +7,7 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView, \
     ModelFormSetView
 
 from toolkit.forms import ReportSelector
+from toolkit.apps.search.forms import SearchFilterForm
 from .mixins import *
 
 
@@ -457,6 +458,11 @@ class CCESearchView(CCEListView):
         if self.advanced_search_form_class:
             context['advanced_search_form'] = \
                 self.get_advanced_search_form_class()
+        context['search_filter_form'] = SearchFilterForm(initial={
+            'user': self.request.user,
+            'view': self.__class__.__name__,
+            'query_string': '?' + self.request.META['QUERY_STRING'],
+        })
         return context
 
 
