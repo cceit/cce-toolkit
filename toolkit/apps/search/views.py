@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from .models import SearchFilter
 from rest_framework import generics, serializers, permissions
 
@@ -44,6 +45,13 @@ class SearchFilterList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return SearchFilter.objects.filter(Q(user=self.request.user) | Q(visibility=SearchFilter.PUBLIC))
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        # Instead of returning DRF's Response here, just reload the page
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class SearchFilterDetail(generics.RetrieveUpdateDestroyAPIView):
