@@ -87,7 +87,8 @@
 
         function searchFilterListItem(filterObj) {
             // keys are id, name, query_string, user, view, visibility
-            return '<li id="searchFilter' + filterObj.id.toString() + '">' + filterObj.name + '</li>';
+            return '<li><a href="' + filterObj.query_string + '" id="searchFilter' + filterObj.id.toString() + '">'
+                + filterObj.name + '</li>';
         }
         var $savedSearchesUl = $("#saved_searches_ul");
         var searchFiltersListApiUrl = "{% url 'search_filters_list_api' %}";
@@ -97,6 +98,11 @@
             function(response_data, status, jqxhr) {
                 var filterListItems = response_data.map(searchFilterListItem);
                 $savedSearchesUl.html(filterListItems);
+{#                $savedSearchesUl.find("li").on('click', function(event){#}
+{#                    event.preventDefault();#}
+{#                    // ids are "searchFilterX" where X is an integer#}
+{#                    var filterId = +($(this).attr("id").slice(12));#}
+{#                });#}
             }
         )
     </script>
