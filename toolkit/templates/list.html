@@ -45,17 +45,19 @@
                     {% include '3_col_render_form.html' with form=advanced_search_form %}
                     <input type="submit" id="advanced_search" name="advanced_search" value="Search"
                            class="btn btn-default btn-success">
-                    <button type="button" id="saveThisSearch" data-toggle="modal" data-target="#saveThisSearchModal" class="btn btn-primary">
-                        <i class="fa fa-save"></i>
-                        Save this search
-                    </button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Saved searches <span class="caret"></span>
+                    <div style="float: right;">
+                        <button type="button" id="saveThisSearch" data-toggle="modal" data-target="#saveThisSearchModal" class="btn btn-primary">
+                            <i class="fa fa-save"></i>
+                            Save this search
                         </button>
-                        <ul class="dropdown-menu" id="saved_searches_ul">
-                            {# intentionally left empty #}
-                        </ul>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Saved searches <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="saved_searches_ul">
+                                {# intentionally left empty #}
+                            </ul>
+                        </div>
                     </div>
                 </form>
                 <hr/>
