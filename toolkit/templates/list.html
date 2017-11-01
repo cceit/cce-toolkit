@@ -123,10 +123,8 @@
         $confirmSaveSearch.prop('disabled', true);
         $("#id_name, #id_visibility").on('change keyup blur', function(){
             if ($("#id_name").val() && $("#id_visibility").val()) {
-                console.log("both have values, enabling");
                 $confirmSaveSearch.prop('disabled', false);
             } else {
-                console.log("form invalid, disabling");
                 $confirmSaveSearch.prop('disabled', true);
             }
         });
