@@ -1,8 +1,14 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import SearchFilter
 from rest_framework import generics, serializers, permissions
+from rest_framework.views import exception_handler
+
+
+def drf_exception_handler_view(exc, context):
+    drf_response = exception_handler(exc, context)
+    return JsonResponse(drf_response.data)
 
 
 class IsOwnerOrPublic(permissions.BasePermission):
