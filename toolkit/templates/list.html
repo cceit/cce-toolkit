@@ -81,7 +81,7 @@
                         {% include "render_form.html" with form=search_filter_form %}
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" id="confirmSaveSearch">
                             <i class="fa fa-save"></i>
                             Save
                         </button>
@@ -119,13 +119,13 @@
         });
 
         {% if show_saved_searches %}
-        var $saveThisSearch = $("#saveThisSearch");
-        $saveThisSearch.disable();
+        var $confirmSaveSearch = $("#confirmSaveSearch");
+        $confirmSaveSearch.disable();
         $("#id_name, #id_visibility").on('change', function(){
             if ($("#id_name").val() && $("#id_visibility").val()) {
-                $saveThisSearch.enable();
+                $confirmSaveSearch.prop('disabled', true);
             } else {
-                $saveThisSearch.disable();
+                $confirmSaveSearch.prop('disabled', false);
             }
         });
 
