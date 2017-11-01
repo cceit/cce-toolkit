@@ -407,7 +407,7 @@ class CCESearchView(CCEListView):
     """
     search_form_class = None
     advanced_search_form_class = None
-    show_saved_searches = True
+    show_saved_searches = False
 
     def get_advanced_search_form_extra_kwargs(self):
         return {}
