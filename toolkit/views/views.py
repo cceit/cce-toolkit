@@ -464,6 +464,11 @@ class CCESearchView(CCEListView):
             'query_string': '?' + self.request.META['QUERY_STRING'],
         })
         context['view_name'] = self.__class__.__name__
+        show_saved_searches = True
+        if hasattr(self.model, 'can_save_searches'):
+            if not self.model.can_save_searches(self.request.user):
+                show_saved_searches = False
+        context['show_saved_searches'] = show_saved_searches
         return context
 
 

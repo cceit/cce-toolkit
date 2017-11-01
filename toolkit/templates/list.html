@@ -45,6 +45,7 @@
                     {% include '3_col_render_form.html' with form=advanced_search_form %}
                     <input type="submit" id="advanced_search" name="advanced_search" value="Search"
                            class="btn btn-default btn-success">
+                    {% if show_saved_searches %}
                     <div style="float: right;">
                         <button type="button" id="saveThisSearch" data-toggle="modal" data-target="#saveThisSearchModal" class="btn btn-primary">
                             <i class="fa fa-save"></i>
@@ -59,12 +60,14 @@
                             </ul>
                         </div>
                     </div>
+                    {% endif %}
                 </form>
                 <hr/>
             </div>
         {% endif %}
     {% endblock advanced_search_form %}
 
+    {% if show_saved_searches %}
     <div id="saveThisSearchModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -76,7 +79,6 @@
                     <div class="modal-body">
                         {% csrf_token %}
                         {% include "render_form.html" with form=search_filter_form %}
-
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
@@ -90,9 +92,9 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
+    {% endif %}
 
     {% block table %}{% endblock table %}
     {% include 'pagination.html' %}
@@ -116,6 +118,7 @@
             }
         });
 
+        {% if show_saved_searches %}
         function searchFilterListItem(filterObj) {
             // keys are id, name, query_string, user, view, visibility
             return '<li><a href="' + filterObj.query_string + '" id="searchFilter' + filterObj.id.toString() + '">'
@@ -133,5 +136,6 @@
                 $savedSearchesUl.html(filterListItems);
             }
         );
+        {% endif %}
     </script>
 {% endblock extra_footer %}
