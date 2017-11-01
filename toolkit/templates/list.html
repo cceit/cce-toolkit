@@ -120,12 +120,14 @@
 
         {% if show_saved_searches %}
         var $confirmSaveSearch = $("#confirmSaveSearch");
-        $confirmSaveSearch.disable();
-        $("#id_name, #id_visibility").on('change', function(){
+        $confirmSaveSearch.prop('disabled', true);
+        $("#id_name, #id_visibility").on('change keyup blur', function(){
             if ($("#id_name").val() && $("#id_visibility").val()) {
-                $confirmSaveSearch.prop('disabled', true);
-            } else {
+                console.log("both have values, enabling");
                 $confirmSaveSearch.prop('disabled', false);
+            } else {
+                console.log("form invalid, disabling");
+                $confirmSaveSearch.prop('disabled', true);
             }
         });
 
