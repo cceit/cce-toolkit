@@ -6,7 +6,7 @@ from rest_framework import generics, serializers, permissions
 from rest_framework.views import exception_handler
 
 
-def drf_exception_handler_view(exc, context):
+def drf_exception_handler(exc, context):
     drf_response = exception_handler(exc, context)
     return JsonResponse(drf_response.data)
 
