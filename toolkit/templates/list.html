@@ -119,6 +119,16 @@
         });
 
         {% if show_saved_searches %}
+        var $saveThisSearch = $("#saveThisSearch");
+        $saveThisSearch.disable();
+        $("#id_name, #id_visibility").on('change', function(){
+            if ($("#id_name").val() && $("#id_visibility").val()) {
+                $saveThisSearch.enable();
+            } else {
+                $saveThisSearch.disable();
+            }
+        });
+
         function searchFilterListItem(filterObj) {
             // keys are id, name, query_string, user, view, visibility
             return '<li><a href="' + filterObj.query_string + '" id="searchFilter' + filterObj.id.toString() + '">'
