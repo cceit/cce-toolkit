@@ -3,12 +3,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from .models import SearchFilter
 from rest_framework import generics, serializers, permissions
-from rest_framework.views import exception_handler
-
-
-def drf_exception_handler(exc, context):
-    drf_response = exception_handler(exc, context)
-    return JsonResponse(drf_response.data)
+from rest_framework.exceptions import ValidationError
 
 
 class IsOwnerOrPublic(permissions.BasePermission):
@@ -55,7 +50,14 @@ class SearchFilterList(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except ValidationError as exc:
+            if isinstance(exc.detail, (list, dict)):
+                data = exc.detail
+            else:
+                data = {'detail': exc.detail}
+            return JsonResponse(data)
         self.perform_create(serializer)
         # Instead of returning DRF's Response here, just reload the page
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
