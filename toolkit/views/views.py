@@ -407,6 +407,7 @@ class CCESearchView(CCEListView):
     """
     search_form_class = None
     advanced_search_form_class = None
+    show_saved_searches = True
 
     def get_advanced_search_form_extra_kwargs(self):
         return {}
@@ -464,11 +465,11 @@ class CCESearchView(CCEListView):
             'query_string': '?' + self.request.META['QUERY_STRING'],
         })
         context['view_name'] = self.__class__.__name__
-        show_saved_searches = True
+        show_saved_searches_perm = True
         if hasattr(self.model, 'can_save_searches'):
             if not self.model.can_save_searches(self.request.user):
-                show_saved_searches = False
-        context['show_saved_searches'] = show_saved_searches
+                show_saved_searches_perm = False
+        context['show_saved_searches'] = show_saved_searches_perm and self.show_saved_searches
         return context
 
 
