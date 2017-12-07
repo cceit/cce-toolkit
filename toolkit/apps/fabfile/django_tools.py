@@ -4,7 +4,7 @@ from fabric.state import env
 from fabric.api import settings
 
 from .environment import __exec_cmd
-from .server import reload_http, update_requirements
+from .server import reload_http, update_requirements, update_bcy_requirements
 from .git_tools import git_pull
 
 
@@ -78,7 +78,7 @@ def bcy_deploy():
     """
     clear_compiled_python_files()
     git_pull()
-    update_requirements()
+    update_bcy_requirements()
     run_migrations()
     build_bcy_react()
     collectstatic()
