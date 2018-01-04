@@ -134,6 +134,23 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
     permissions = {'get': ['can_view_list'],
                    'post': ['can_view_list'], }
 
+    def get_queryset(self):
+        """
+        Orders the queryset based on the order_by query param in the url
+        """
+        qs = super(CCEListView, self).get_queryset()
+        order_by = self.request.GET.get('order_by', None)
+        if qs and order_by and hasfield(self.model, order_by.replace('-', '')):
+            try:
+                qs.order_by(order_by)[0]
+                # used to force the query to be called to ensure that
+                # ordering string is valid
+            except (ProgrammingError, FieldError):
+                pass
+            else:
+                return qs.order_by(order_by)
+        return qs
+
 
 class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
                     ObjectPermissionsMixin, UpdateContextMenuMixin,
@@ -432,23 +449,12 @@ class CCESearchView(CCEListView):
         If self.search_form is invalid, returns an empty list.
         """
         qs = super(CCESearchView, self).get_queryset()
-        order_by = self.request.GET.get('order_by', None)
         search_form = self.get_search_form()
         if search_form.is_valid():
             qs = search_form.search(qs)
         advanced_search_form = self.get_advanced_search_form_class()
         if advanced_search_form and advanced_search_form.is_valid():
             qs = advanced_search_form.search(qs)
-
-        if qs and order_by and hasfield(self.model, order_by.replace('-', '')):
-            try:
-                qs.order_by(order_by)[0]
-                # used to force the query to be called to ensure that
-                # ordering string is valid
-            except (ProgrammingError, FieldError):
-                pass
-            else:
-                return qs.order_by(order_by)
         return qs
 
     def get_context_data(self, **kwargs):
