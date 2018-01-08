@@ -435,8 +435,15 @@ class CCESearchView(CCEListView):
                                       extra_kwargs=self.get_search_form_extra_kwargs())
 
     def get_advanced_search_form_class(self):
-        if self.advanced_search_form_class:
-            return self.advanced_search_form_class(self.request.GET or None,
+        querydict = self.request.GET.copy()
+        querydict.pop('order_by', None)
+        querydict.pop('page', None)
+
+        if querydict and self.advanced_search_form_class:
+            return self.advanced_search_form_class(self.request.GET,
+                                                   extra_kwargs=self.get_advanced_search_form_extra_kwargs())
+        elif self.advanced_search_form_class:
+            return self.advanced_search_form_class(None,
                                                    extra_kwargs=self.get_advanced_search_form_extra_kwargs())
         return None
 
