@@ -35,3 +35,8 @@ div.static-alert button.close {
     margin-top: -10px;
     margin-left: -10px;
 }
+
+abbr[title], time[title] {
+    border-bottom: 1px dotted #333;
+    cursor: pointer;
+}
