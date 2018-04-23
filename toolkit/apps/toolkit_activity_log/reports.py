@@ -12,7 +12,7 @@ class ActivityReports(object):
         ('IP Address', 'ip_address'),
         ('Hostname', 'hostname'),
         ('User', 'created_by__username'),
-        ('Date/Time', 'created_at'),
+        ('Created', 'created_at'),
     ]
 
     @classmethod

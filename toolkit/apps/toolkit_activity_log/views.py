@@ -26,7 +26,7 @@ class ToolkitActivityLogListView(ReportDownloadSearchView):
         ('IP Address', lambda a: a.ip_address if a.ip_address else '--', '1', 'ip_address'),
         ('User', lambda a: a.created_by if a.created_by else '--', '2', 'created_by'),
         (
-            'Date/Time',
+            'Created',
             lambda a: mark_safe(
                 '<time class="timeago pull-right" datetime="%s" title="%s">%s</time>' % (
                     a.created_at.isoformat(),
