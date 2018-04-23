@@ -15,7 +15,7 @@
                        title="{{ activity.description }}"
                        class="list-group-item">
                 {% endif %}
-            <time class="timeago"
+            <time class="timeago pull-right"
                   datetime="{{ activity.created_at|date:'c' }}"
                   title="{{ activity.created_at|date:'m/d/Y h:iA' }}">
                 {{ activity.created_at|date:'m/d/Y' }}

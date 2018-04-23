@@ -28,7 +28,7 @@ class ToolkitActivityLogListView(ReportDownloadSearchView):
         (
             'Date/Time',
             lambda a: mark_safe(
-                '<time class="timeago" datetime="%s" title="%s">%s</time>' % (
+                '<time class="timeago pull-right" datetime="%s" title="%s">%s</time>' % (
                     a.created_at.isoformat(),
                     a.created_at.strftime('%m/%d/%Y %I:%M%p'),
                     a.created_at.strftime('%m/%d/%Y')
