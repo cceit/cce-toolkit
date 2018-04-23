@@ -210,6 +210,7 @@ $.fn.dashboard.setup_global_widget_options = function () {
         });
     });
 
+    jQuery("time.timeago").timeago();
     jQuery("abbr.timeago").timeago();
     $.fn.dashboard.load_extra_plugins();
 };
