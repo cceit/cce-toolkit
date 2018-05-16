@@ -15,10 +15,8 @@
                        title="{{ activity.description }}"
                        class="list-group-item">
                 {% endif %}
-            <time class="timeago pull-right"
-                  datetime="{{ activity.created_at|date:'c' }}"
-                  title="{{ activity.created_at|date:'m/d/Y h:iA' }}">
-                {{ activity.created_at|date:'m/d/Y' }}
+            <time class="timeago pull-right" title="{{ activity.created_at|date:'m/d/Y h:iA' }}">
+                  {{ activity.created_at|date:'m/d/Y' }}
             </time>
             <i class="{{ activity.activity_type.logo }}"></i>
             <b>{{ activity.activity_type }}</b> - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
