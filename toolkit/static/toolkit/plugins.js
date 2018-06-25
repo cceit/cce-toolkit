@@ -141,8 +141,6 @@ function addForm(btn, prefix) {
     newElement.find('label').each(function () {
         var newFor = $(this).attr('for').replace('-0-', '-' + total + '-');
         $(this).attr('for', newFor);
-        // Remove datepicker... from the label? This line might not be doing anything.
-        $(this).datepicker("remove");
     });
 
     // Update the number of forms there are
