@@ -1,6 +1,7 @@
 import re
 
 import unicodedata
+from difflib import SequenceMatcher
 
 from django.db.models.fields.related import RelatedField
 from django.shortcuts import _get_queryset
@@ -235,3 +236,24 @@ def send_template_email(address_list, template_name, template_context=None, cont
             else:
                 email_msg.attach(tupple[0], tupple[1], tupple[2])
     email_msg.send()
+
+
+def find_closest_match(val, list_to_compare, similarity=0.8):
+    """
+    Takes a SequenceMatcher object, sets its seq2 object to val, compares it against items in list_to_compare
+    and returns the item which is a high probability of match (ratio > 0.8). Note that it requires val as a string
+    and the list should also be a list of strings.
+    :param val: The value to compare.
+    :param list_to_compare: The list of items to compare 'val' with.
+    :param similarity: How similar the value in list_to_compare should be to val
+    on a scale of 0 to 1 (default = 0.8)
+    :return: index of the item in list_to_compare that most closely matches with 'val'
+    """
+    seq_matcher = SequenceMatcher()
+    seq_matcher.set_seq2(val.lower())
+    for idx, list_item in enumerate(list_to_compare):
+        seq_matcher.set_seq1(list_item.lower())
+        ratio = seq_matcher.ratio()
+        if ratio >= similarity:
+            return idx
+    return None
