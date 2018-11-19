@@ -19,10 +19,10 @@ class ActivityLogSearchForm(CCESimpleSearchForm):
         model = ToolkitActivityLog
         field_lookups = {
             'search': (
-                'activity_type__icontains',
+                'activity_type__activity_type__icontains',
                 'summary__icontains',
                 'description__icontains',
-                'ip_address_icontains',
+                'ip_address__icontains',
             )
         }
 
