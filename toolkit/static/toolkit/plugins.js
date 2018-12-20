@@ -103,7 +103,7 @@ function disable_plugins(){
         tinyMCE.EditorManager.execCommand('mceRemoveEditor',true, $(this).attr('id'));
     });
     // disable select2
-    $("select").select2('destroy');
+    $('select.select2-hidden-accessible').select2('destroy')
 }
 
 function addForm(btn, prefix) {
