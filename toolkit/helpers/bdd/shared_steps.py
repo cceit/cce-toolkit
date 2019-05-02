@@ -41,7 +41,7 @@ def log_in_as(context, user):
     context.user.is_active = True
     context.user.save()
 
-    b.visit(context.server_url + reverse('login'))
+    b.visit(context.get_url(reverse('login'))
 
     fields = [
         {'function': 'fill', 'name': 'username', 'value': user},
