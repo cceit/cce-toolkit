@@ -48,13 +48,11 @@ def setup_test_environment(context, scenario, visible=0, use_xvfb=True):
         context.browser = Browser()
 
     context.browser.driver.set_window_size(1920, 1080)
-    context.server_url = context.config.server_url
     # Flushes all cookies.
     context.browser.cookies.delete()
     # Re-enables yellow screens on failure. (Normally disabled by
     # LiveServerTestCase)
     settings.DEBUG = True
-    context.scenario = scenario.name
     call_command('flush', verbosity=0, interactive=False)
 
 
