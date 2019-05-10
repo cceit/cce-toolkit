@@ -41,7 +41,7 @@ def log_in_as(context, user):
     context.user.is_active = True
     context.user.save()
 
-    b.visit(context.server_url + reverse('login'))
+    b.visit(context.get_url(reverse('login')))
 
     fields = [
         {'function': 'fill', 'name': 'username', 'value': user},
@@ -72,10 +72,10 @@ def visit_page(context, url_name):
     b = context.browser
 
     try:
-        url = context.server_url + reverse(url_name)
+        url = context.get_url(reverse(url_name))
     except NoReverseMatch:
         try:
-            url = context.server_url + reverse(url_name, kwargs={'pk': context.test_obj.pk})
+            url = context.get_url(reverse(url_name, kwargs={'pk': context.test_obj.pk}))
         except AttributeError:
             raise Exception("%s not found. Check the url config." % url_name)
 
