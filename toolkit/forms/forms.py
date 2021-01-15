@@ -46,14 +46,13 @@ class CCEModelFormMetaclass(forms.models.ModelFormMetaclass):
         return super(CCEModelFormMetaclass, mcs).__new__(mcs, name, bases, attrs)
 
 
-class CCEModelForm(forms.ModelForm):
+class CCEModelForm(forms.ModelForm, metaclass=CCEModelFormMetaclass):
     """
     Django model form using CCE ModelFormMetaClass
     """
     override_help_text_display = tuple()
     override_labels = False
     REQUIRED_FIELD_ERROR = 'This field is required'
-    __metaclass__ = CCEModelFormMetaclass
 
     def __init__(self, *args, **kwargs):
         super(CCEModelForm, self).__init__(*args, **kwargs)

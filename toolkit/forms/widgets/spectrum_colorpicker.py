@@ -10,7 +10,7 @@ http://bgrins.github.io/spectrum/
 class SpectrumColorPickerWidget(forms.TextInput):
     def render(self, name, value, attrs=None):
         rendered = super(SpectrumColorPickerWidget, self).render(name, value, attrs)
-        return rendered + mark_safe(u'''<link href="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" type="text/css" media="all" rel="stylesheet"><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script><script type="text/javascript">
+        return rendered + mark_safe('''<link href="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css" type="text/css" media="all" rel="stylesheet"><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script><script type="text/javascript">
                             $(document).ready(function()
                             {
                             $('#id_%s').spectrum({

@@ -4,7 +4,7 @@ from behave import *
 import requests
 
 from splinter.exceptions import ElementDoesNotExist
-from bdd import fill_and_submit_form, compare_content_types
+from .bdd import fill_and_submit_form, compare_content_types
 
 __all__ = [
     'log_in_as',

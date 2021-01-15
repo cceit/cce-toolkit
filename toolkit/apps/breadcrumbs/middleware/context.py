@@ -22,7 +22,7 @@ def update_breadcrumb(url, breadcrumbs):
         try:
             page = clss(kwargs=kwargs)
             breadcrumbs.append((page.get_page_title, url))
-        except (AttributeError, TypeError), e:
+        except (AttributeError, TypeError) as e:
             pass
 
 

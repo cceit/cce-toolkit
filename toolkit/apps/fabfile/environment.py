@@ -1,4 +1,3 @@
-from __future__ import with_statement
 from warnings import warn
 
 from fabric.operations import sudo
@@ -10,7 +9,7 @@ def pick():
     """
     Select which server(role) to execute the commands on
     """
-    set_role(raw_input("%s \n Choose target (enter number):" % '\n'.join('%s : %s' % (k, v)
+    set_role(input("%s \n Choose target (enter number):" % '\n'.join('%s : %s' % (k, v)
                                                                          for k, v in enumerate(env.roledefs))))
 
 
@@ -36,7 +35,7 @@ def prod():
 
 
 def __confirm(warning):
-    response = raw_input(warning + '\n are you sure you want to continue Y/N: ')
+    response = input(warning + '\n are you sure you want to continue Y/N: ')
     if response.upper() in ['Y', 'YES']:
         return True
     return False

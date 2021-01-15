@@ -134,7 +134,7 @@ class AppendURLObjectsMixin(object):
 
         for appended_object in self.append_objects:
             if isinstance(appended_object, tuple):
-                if 3 is len(appended_object):
+                if len(appended_object) == 3:
                     # brittle; try not to rely on that
                     appended_object = self.make_append_object(*appended_object)
             appended_model = appended_object[0]
@@ -283,7 +283,7 @@ class ObjectPermissionsMixin(PermissionsRequiredMixin):
         If the cce_permissions list/tuple passed in is set, check to make
         sure that it is of the type list or tuple.
         """
-        for k, v in self.permissions.iteritems():
+        for k, v in self.permissions.items():
             if not v:
                 raise ImproperlyConfigured(
                     "'PermissionsRequiredMixin' requires"
@@ -337,7 +337,7 @@ class ClassPermissionsMixin(PermissionsRequiredMixin):
         If the cce_permissions list/tuple passed in is set, check to make
         sure that it is of the type list or tuple.
         """
-        for k, v in self.permissions.iteritems():
+        for k, v in self.permissions.items():
             if not v:
                 raise ImproperlyConfigured(
                     "'PermissionsRequiredMixin' requires"
@@ -611,8 +611,8 @@ class AbstractedListMixin(object):
             Now each tuple in new_columns is (title, function, number or
             empty string)
             '''
-            titles, functions, column_widths, field_lookup = zip(*new_columns)
-            titles = zip(titles, column_widths, field_lookup)
+            titles, functions, column_widths, field_lookup = list(zip(*new_columns))
+            titles = list(zip(titles, column_widths, field_lookup))
         table = [titles]
         for obj in data:
             row = []
@@ -640,7 +640,7 @@ class AbstractedListMixin(object):
         if rows:
             new_rows = [row for row in rows]
             # Now each tuple in new_columns is (title, function)
-            row_titles, functions = zip(*new_rows)
+            row_titles, functions = list(zip(*new_rows))
         popover_dict = {}
         row_values = []
         for obj in data:

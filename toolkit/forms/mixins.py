@@ -4,6 +4,7 @@ import operator
 from django.db.models import Q
 
 from toolkit.helpers.utils import replace_key
+from functools import reduce
 
 
 class SearchFormMixin(object):
@@ -36,7 +37,7 @@ class SearchFormMixin(object):
         q_objects = []
         q_filters = []
         for field_name, custom_field_lookup \
-                in self.Meta.field_lookups.iteritems():
+                in self.Meta.field_lookups.items():
             value = self.cleaned_data[field_name]
 
             if inspect.isfunction(custom_field_lookup):

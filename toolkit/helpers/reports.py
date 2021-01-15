@@ -336,7 +336,7 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
     for r, row in enumerate(data_table):
         r += row_offset
         for c, cell in enumerate(row):
-            label = unicode(cell)
+            label = str(cell)
             height = get_height(label)
             width = get_width(label)
             date_style = xlwt.easyxf(num_format_str="YYYY-MM-DD")
@@ -567,7 +567,7 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
         for c, cell in enumerate(row, start=1):
             ws_cell = ws.cell(row=r, column=c)
             ws_cell.value = cell
-            if type(cell) in [str, unicode]:
+            if type(cell) is str:
                 cell_str = ws_cell.value.encode('utf-8')
             elif type(cell) in [float]:
                 ws_cell.number_format = '0.00'
@@ -591,7 +591,7 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
             suffix='.xlsx', dir=settings.FILE_UPLOAD_TEMP_DIR)
     else:
         my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx')
-    print my_temp_file.name
+    print(my_temp_file.name)
     wb.save(my_temp_file.name)
     my_file = my_temp_file.file
     response.write(my_file.read())
@@ -653,7 +653,7 @@ def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=
                 for c, cell in enumerate(row, start=1):
                     ws_cell = ws.cell(row=r, column=c)
                     ws_cell.value = cell
-                    if type(cell) in [str, unicode]:
+                    if type(cell) is str:
                         cell_str = ws_cell.value.encode('utf-8')
                     elif type(cell) in [float]:
                         ws_cell.number_format = '0.00'
@@ -676,7 +676,7 @@ def xlsx_multiple_worksheets_response(filename, data, max_width=118, max_height=
             suffix='.xlsx', dir=settings.FILE_UPLOAD_TEMP_DIR)
     else:
         my_temp_file = tempfile.NamedTemporaryFile(suffix='.xlsx')
-    print my_temp_file.name
+    print(my_temp_file.name)
     wb.save(my_temp_file.name)
     my_file = my_temp_file.file
     response.write(my_file.read())
@@ -811,7 +811,7 @@ def generate_basic_table(columns, data):
     titles, functions = [], []
     columns = list(columns)
     if columns:
-        titles, functions = zip(*columns)
+        titles, functions = list(zip(*columns))
     yield titles
     for obj in data:
         yield (f(obj) for f in functions)  # One row of the table.

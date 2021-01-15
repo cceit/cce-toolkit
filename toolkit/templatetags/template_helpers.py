@@ -128,7 +128,7 @@ class MakeListNode(template.Node):
     """
 
     def __init__(self, items, varname):
-        self.items = map(template.Variable, items)
+        self.items = list(map(template.Variable, items))
         self.varname = varname
 
     def render(self, context):
