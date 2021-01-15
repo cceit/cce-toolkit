@@ -5,12 +5,12 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.db import models
-from request_provider.signals import get_request
 
 from toolkit.apps.toolkit_activity_log.reports import ActivityReports
 from toolkit.models import CCEAuditModel, CCEModel
 
 from .managers import ActivityTypePermissionManager, ActivitiesPermissionManager
+from ...middlewares import GlobalRequest
 
 
 class ToolkitActivityType(CCEModel):
@@ -66,7 +66,7 @@ class ToolkitActivityLog(CCEAuditModel):
         return "%s, %s - %s" % (self.created_at.strftime("%m/%d/%Y %I:%M"), self.activity_type, self.summary)
 
     def save(self, *args, **kwargs):
-        http_request = get_request()
+        http_request = GlobalRequest.get_current_request()
         if http_request is not None:
             if not self.ip_address:
                 self.ip_address = http_request.META['REMOTE_ADDR']
@@ -80,9 +80,9 @@ class ToolkitActivityLog(CCEAuditModel):
 
         return super(ToolkitActivityLog, self).save(*args, **kwargs)
 
-    @property
-    def icon_class(self):
-        return self.ACTIVITY_ICONS[str(self.activity_type)]
+    # @property
+    # def icon_class(self):
+    #     return self.ACTIVITY_ICONS[str(self.activity_type)]
 
     @property
     def resolved_url(self):

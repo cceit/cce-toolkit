@@ -1,9 +1,10 @@
 # Custom Django model-views-forms requirements
-django
+django<2.0
 django-extra-views
 django-cuser
 python-magic
 arrow
+user-agents
 
 # Documentation requirements
 sphinx
