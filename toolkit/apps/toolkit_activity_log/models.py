@@ -24,7 +24,7 @@ class ToolkitActivityType(CCEModel):
         db_table = 'cce_toolkit_activity_types'
         ordering = ('activity_type',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.activity_type
 
     def can_view_list(self, user_obj):
@@ -62,7 +62,7 @@ class ToolkitActivityLog(CCEAuditModel):
         db_table = 'cce_toolkit_activity_log'
         ordering = ('-pk',)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s, %s - %s" % (self.created_at.strftime("%m/%d/%Y %I:%M"), self.activity_type, self.summary)
 
     def save(self, *args, **kwargs):

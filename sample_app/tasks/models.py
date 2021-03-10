@@ -28,7 +28,7 @@ class Task(CCEAuditModel):
                               default=PENDING)
     reports = TaskReports()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'/t/%s' % self.title
 
     def get_absolute_url(self):

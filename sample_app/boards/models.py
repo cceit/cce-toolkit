@@ -7,7 +7,7 @@ class Board(CCEAuditModel):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'/b/%s' % self.name
 
     def get_absolute_url(self):

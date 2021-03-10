@@ -154,9 +154,14 @@ def write_to_worksheet(ws, row, column, cell):
     is also a dict with the potential to have keys called "row_span" and
     "col_span". These parameters indicate what cells (starting at row, column)
     should be merged together.
+    Args:
+        ws: worksheet
 
-    :param cell: Simple or complex data to be written to the cell
-    :type cell: str or dict with keys label, style and merge
+        row: row index
+
+        column: column index
+
+        cell: Data to be written to the cell
     """
     if type(cell) is dict:
         label = cell.get('label')
@@ -283,6 +288,8 @@ def xls_response(filename, sheetname, table, header=None, footer=None,
         table: a 2-dimensional iterable, in row-major order.
 
         header: an optional 2-dimensional iterable, in row-major order.
+
+        footer: an optional 2-dimensional iterable, in row-major order.
 
         include_totals: an optional boolean to include total values.
 
@@ -550,6 +557,10 @@ def xlsx_response(filename, table, max_width=118, max_height=90):
 
         table: a 2-dimensional iterable, in row-major order.
 
+        max_width: Max width of a column
+
+        max_height: Max height of a row
+
     Returns:
 
         A Microsoft Excel 2007+ HttpResponse with appropriate content_type and
@@ -800,9 +811,9 @@ def generate_basic_table(columns, data):
             subsequent rows: the given column functions applied to each datum.
 
     Example usage:
-        >>> columns = [('Numbers', lambda x: x), ('Squares', lambda x: x ** 2)]
-        >>> data = [1, 2, 3, 4, 5]
-        >>> list(list(row) for row in generate_basic_table(columns, data))
+        > columns = [('Numbers', lambda x: x), ('Squares', lambda x: x ** 2)]
+        > data = [1, 2, 3, 4, 5]
+        > list(list(row) for row in generate_basic_table(columns, data))
         [['Numbers', 'Squares'], [1, 1], [2, 4], [3, 9], [4, 16], [5, 25]]
 
     Author:
