@@ -235,3 +235,176 @@ def send_template_email(address_list, template_name, template_context=None, cont
             else:
                 email_msg.attach(tupple[0], tupple[1], tupple[2])
     email_msg.send()
+
+
+def get_dict(instance, exclude_parent=False, exclude_field=None, exclude_class=None):
+    """
+    Generates a nested dictionary of field names and their values as key-value pairs. The dictionary is typically
+    nested when dealing with many_to_many fields.
+    :param instance: The object which needs to be converted to a dict.
+    :param exclude_parent: Boolean indicator. True: Parents will be excluded Useful if you don't want to include
+    fields of the model that is inherited by 'instance'.
+    :param exclude_field: list() of fields that will be excluded.
+    :param exclude_class: list() of classes that will be excluded from the dictionary. If the dictionary doesn't
+    need a particular foreign key (i.e. another model), pass that model's class here and it won't be included in the
+    final dictionary.
+    :return: dict() representation of the instance.
+    """
+    current_state = dict()
+    instance_fields = set(field for field in instance._meta.get_fields())
+    instance_class = instance.__class__
+
+    # Remove parent's fields from instance_fields.
+    if exclude_parent:
+        for parent in instance.__class__.__bases__:
+            instance_fields = instance_fields - set(field for field in parent._meta.get_fields())
+
+    # Filter instance_fields by removing classes in exclude.
+    if exclude_class:
+        instance_fields = instance_fields - set(field for field in instance_fields
+                                                if field.related_model in exclude_class)
+
+    # Filter instance field by removing fields in exclude
+    if exclude_field:
+        instance_fields = instance_fields - set(field for field in instance_fields
+                                                if field.name in exclude_field)
+
+    # Generate the dictionary by iterating through the fields.
+    for field in instance_fields:
+
+        # Many-To-Many Fields, ignore the change model associated with the current model.
+        if field.one_to_many and 'change' not in field.name:
+
+            # Check if there is a related name:
+            mgr = getattr(instance, field.get_accessor_name())
+
+            # We will save all the objects as a dictionary.
+            mgr_dict = dict()
+            for idx, obj in enumerate(mgr.all()):
+                _id = field.get_accessor_name() + '_' + str(idx)
+                mgr_dict[_id] = get_dict(obj,
+                                         exclude_parent=exclude_parent,
+                                         exclude_class=[instance_class])
+
+            current_state[field.get_accessor_name() + 's'] = mgr_dict
+
+        # Foreign keys.
+        elif field.many_to_one:  # Foreign key.
+            # get the string representation of the obj.
+            current_state[field.name] = str(getattr(instance, field.name))
+
+        # Other keys that don' have relationships
+        elif not field.auto_created and not field.many_to_many:
+            if field.choices:
+                current_state[field.name] = instance._get_FIELD_display(field)
+            else:
+                current_state[field.name] = getattr(instance, field.name)
+
+    return current_state
+
+
+def get_flat_dict(instance, exclude_parent=False, exclude_field=None, exclude_class=None):
+    """
+    Generates a flat dictionary of field names and their values as key-value pairs.
+    :param instance: The object which needs to be converted to a dict.
+    :param exclude_parent: Boolean indicator. True: Parents will be excluded Useful if you don't want to include
+    fields of the model that is inherited by 'instance'.
+    :param exclude_field: list() of fields that will be excluded.
+    :param exclude_class: list() of classes that will be excluded from the dictionary. If the dictionary doesn't
+    need a particular foreign key (i.e. another model), pass that model's class here and it won't be included in the
+    final dictionary.
+    :return: dict() representation of the instance.
+    """
+    current_state = dict()
+    instance_fields = set(field for field in instance._meta.get_fields())
+    instance_class = instance.__class__
+
+    # Remove parent's fields from instance_fields.
+    if exclude_parent:
+        for parent in instance.__class__.__bases__:
+            instance_fields = instance_fields - set(field for field in parent._meta.get_fields())
+
+    # Filter instance_fields by removing classes in exclude.
+    if exclude_class:
+        instance_fields = instance_fields - set(field for field in instance_fields
+                                                if field.related_model in exclude_class)
+
+    # Filter instance field by removing fields in exclude
+    if exclude_field:
+        instance_fields = instance_fields - set(field for field in instance_fields
+                                                if field.name in exclude_field)
+
+    # Generate the dictionary by iterating through the fields.
+    for field in instance_fields:
+
+        # Many-To-Many Fields, ignore the change model associated with the current model.
+        if field.one_to_many and 'change' not in field.name:
+
+            # Check if there is a related name:
+            mgr = getattr(instance, field.get_accessor_name())
+
+            # We will save all the objects as a dictionary.
+            mgr_dict = dict()
+            for idx, obj in enumerate(mgr.all()):
+                obj_dict = get_dict(obj, exclude_parent=exclude_parent, exclude_class=[instance_class])
+                for key in obj_dict.keys():
+                    new_key = str(key) + '_' + str(idx)
+                    current_state[new_key] = obj_dict[key]
+
+        # Foreign keys.
+        elif field.many_to_one:  # Foreign key.
+            # get the string representation of the obj.
+            current_state[field.name] = str(getattr(instance, field.name))
+
+        # Other keys that don' have relationships
+        elif not field.auto_created and not field.many_to_many:
+            if field.choices:
+                current_state[field.name] = instance._get_FIELD_display(field)
+            else:
+                current_state[field.name] = getattr(instance, field.name)
+
+    return current_state
+
+
+def get_state_diff(old_state, new_state):
+    """
+    Calculates the change between two object states.
+    :param old_state: The old state of the object.
+    :param new_state: The new state of the object.
+    :return: Dictionary of the fields changed as keys and corresponding "previous" and "current" state as value of key.
+    """
+    change = dict()
+    old_keys = set(old_state.keys())
+    new_keys = set(new_state.keys())
+    removed_keys = old_keys - new_keys
+    added_keys = new_keys - old_keys
+    intersect_keys = new_keys & old_keys
+    for key in removed_keys:
+        if isinstance(old_state[key], dict) and old_state[key]:
+            change[key] = get_state_diff(old_state[key], dict())
+        else:
+            change[key] = {'previous': old_state[key], 'current': 'NA'}
+    for key in added_keys:
+        if isinstance(new_state[key], dict) and new_state[key]:
+            change[key] = get_state_diff(dict(), new_state[key])
+        elif new_state[key]:
+            if str(new_state[key]).lower() != "none":
+                change[key] = {'previous': 'NA', 'current': new_state[key]}
+    for key in intersect_keys:
+        if (isinstance(old_state[key], dict) and old_state[key]) \
+                or (isinstance(new_state[key], dict) and new_state[key]):
+            _change = get_state_diff(old_state[key], new_state[key])
+            if _change:
+                change[key] = _change
+        else:
+            if new_state[key] != old_state[key]:
+                if new_state[key]:
+                    current = 'NA' if str(new_state[key]).lower() == 'none' else new_state[key]
+                else:
+                    current = 'NA'
+                if not old_state[key]:
+                    previous = 'NA'
+                else:
+                    previous = 'NA' if str(old_state[key]).lower() == 'none' else old_state[key]
+                change[key] = {'previous': previous, 'current': current}
+    return change
