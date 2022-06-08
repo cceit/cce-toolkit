@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
-import cuser.fields
+from django_currentuser.db.models import CurrentUserField
 import toolkit.models.mixins
 
 
@@ -28,8 +28,8 @@ class Migration(migrations.Migration):
                 ('completed_at', models.DateTimeField(null=True, blank=True)),
                 ('status', models.CharField(default=b'pending', max_length=128, blank=True, choices=[(b'pending', b'Pending'), (b'started', b'Started'), (b'complete', b'Complete')])),
                 ('board', models.ForeignKey(related_name='tasks', to='boards.Board')),
-                ('created_by', cuser.fields.CurrentUserField(related_name='tasks_task_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('last_updated_by', cuser.fields.CurrentUserField(related_name='tasks_task_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', CurrentUserField(related_name='tasks_task_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('last_updated_by', CurrentUserField(related_name='tasks_task_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'abstract': False,

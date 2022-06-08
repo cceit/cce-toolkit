@@ -2,7 +2,7 @@
 from django.db import migrations, models
 from django.conf import settings
 import toolkit.models.mixins
-import cuser.fields
+from django_currentuser.db.models import CurrentUserField
 
 
 class Migration(migrations.Migration):
@@ -59,11 +59,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='toolkitactivitylog',
             name='created_by',
-            field=cuser.fields.CurrentUserField(related_name='toolkit_activity_log_toolkitactivitylog_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True),
+            field=CurrentUserField(related_name='toolkit_activity_log_toolkitactivitylog_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='toolkitactivitylog',
             name='last_updated_by',
-            field=cuser.fields.CurrentUserField(related_name='toolkit_activity_log_toolkitactivitylog_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True),
+            field=CurrentUserField(related_name='toolkit_activity_log_toolkitactivitylog_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True),
         ),
     ]

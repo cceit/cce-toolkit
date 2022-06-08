@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
-import cuser.fields
+from django_currentuser.db.models import CurrentUserField
 import toolkit.models.mixins
 
 
@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('name', models.CharField(max_length=20)),
                 ('description', models.CharField(max_length=200)),
-                ('created_by', cuser.fields.CurrentUserField(related_name='boards_board_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('last_updated_by', cuser.fields.CurrentUserField(related_name='boards_board_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', CurrentUserField(related_name='boards_board_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('last_updated_by', CurrentUserField(related_name='boards_board_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'abstract': False,

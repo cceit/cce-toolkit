@@ -1,7 +1,6 @@
 SECRET_KEY = 'ctqay9sxnh2$mvaii)-^r@^dw#kj%4jsb9!lqn*k1vuid_*dcc'
 
 INSTALLED_APPS = (
-    'cuser',
     'toolkit',
 
     'django.contrib.auth',
@@ -9,7 +8,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'cuser.middleware.CuserMiddleware',
+    'django_currentuser.middleware.ThreadLocalUserMiddleware',
 )
 
 FABRIC_SETTINGS = {

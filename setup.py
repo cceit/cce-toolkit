@@ -11,7 +11,7 @@ setup(
     license='BSD',
 
     install_requires=[
-        "django-cuser",
+        "django-currentuser",
         "arrow",
         "django-request-provider",
         "user-agents",

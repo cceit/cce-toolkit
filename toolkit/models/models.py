@@ -17,12 +17,12 @@ class CCEAuditModel(CCEModel):
     and last update.
 
     .. note:: - Inherits from **CCEModel**
-              - Requires **django-cuser** package to determine current user
+              - Requires **django-currentuser** package to determine current user
 
     :tags:
-        django-cuser
+        django-currentuser
     """
-    from cuser.fields import CurrentUserField
+    from django_currentuser.db.models import CurrentUserField
 
     last_updated_by = CurrentUserField(related_name='%(app_label)s_%(class)s_last_updated')
     last_updated_at = models.DateTimeField(auto_now=True)

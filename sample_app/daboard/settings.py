@@ -57,7 +57,6 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'cuser',  # CurrentUserField
     'widget_tweaks',  # django widget tweaks
     'django_behave',
     'splinter',
@@ -79,7 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'cuser.middleware.CuserMiddleware',  # CurrentUserField
+    'django_currentuser.middleware.ThreadLocalUserMiddleware',
 )
 
 ROOT_URLCONF = 'daboard.urls'

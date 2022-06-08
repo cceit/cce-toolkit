@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
-import cuser.fields
+from django_currentuser.db.models import CurrentUserField
 import toolkit.models.mixins
 
 
@@ -21,8 +21,8 @@ class Migration(migrations.Migration):
                 ('last_updated_at', models.DateTimeField(auto_now=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('picture', models.FileField(null=True, upload_to=b'', blank=True)),
-                ('created_by', cuser.fields.CurrentUserField(related_name='profiles_profile_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
-                ('last_updated_by', cuser.fields.CurrentUserField(related_name='profiles_profile_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('created_by', CurrentUserField(related_name='profiles_profile_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
+                ('last_updated_by', CurrentUserField(related_name='profiles_profile_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={

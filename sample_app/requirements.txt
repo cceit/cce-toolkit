@@ -1,7 +1,7 @@
 # Custom Django model-views-forms requirements
-Django==1.8.12
+Django==2.0.13
 django-extra-views
-django-cuser==2014.9.28
+django-currentuser==0.3.4
 django-widget-tweaks==1.4.1
 python-magic
 
