@@ -8,7 +8,7 @@ from openpyxl.utils import get_column_letter
 import xlwt
 from django.conf import settings
 from django.core.files import temp as tempfile
-from django.db.models import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist
 from django.http import HttpResponse
 from django.utils.text import capfirst
 
