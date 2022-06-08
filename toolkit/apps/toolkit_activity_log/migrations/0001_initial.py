@@ -49,12 +49,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='toolkitactivitylog',
             name='activity_type',
-            field=models.ForeignKey(to='toolkit_activity_log.ToolkitActivityType'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='toolkit_activity_log.ToolkitActivityType'),
         ),
         migrations.AddField(
             model_name='toolkitactivitylog',
             name='content_type',
-            field=models.ForeignKey(to='contenttypes.ContentType'),
+            field=models.ForeignKey(on_delete=models.CASCADE, to='contenttypes.ContentType'),
         ),
         migrations.AddField(
             model_name='toolkitactivitylog',

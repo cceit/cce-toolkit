@@ -21,7 +21,7 @@ class Task(CCEAuditModel):
     image = models.ImageField(upload_to='task_images', blank=True, null=True)
     attachment = models.FileField(upload_to='task_attachment', blank=True,
                                   null=True)
-    board = models.ForeignKey(Board, related_name='tasks')
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='tasks')
     completed_at = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=128, choices=STATUS_CHOICES,
                               blank=True,

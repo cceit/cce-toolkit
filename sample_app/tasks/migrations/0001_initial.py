@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('attachment', models.FileField(null=True, upload_to=b'task_attachment', blank=True)),
                 ('completed_at', models.DateTimeField(null=True, blank=True)),
                 ('status', models.CharField(default=b'pending', max_length=128, blank=True, choices=[(b'pending', b'Pending'), (b'started', b'Started'), (b'complete', b'Complete')])),
-                ('board', models.ForeignKey(related_name='tasks', to='boards.Board')),
+                ('board', models.ForeignKey(related_name='tasks', on_delete=models.CASCADE, to='boards.Board')),
                 ('created_by', CurrentUserField(related_name='tasks_task_last_created', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
                 ('last_updated_by', CurrentUserField(related_name='tasks_task_last_updated', editable=False, to=settings.AUTH_USER_MODEL, null=True)),
             ],

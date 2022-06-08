@@ -46,8 +46,8 @@ class ToolkitActivityType(CCEModel):
 class ToolkitActivityLog(CCEAuditModel):
     summary = models.TextField(max_length=128)
     description = models.TextField(max_length=256)
-    activity_type = models.ForeignKey(ToolkitActivityType)
-    content_type = models.ForeignKey(ContentType)
+    activity_type = models.ForeignKey(ToolkitActivityType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     absolute_url_name = models.CharField(max_length=64, blank=True)
