@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from behave import *
 import requests
 

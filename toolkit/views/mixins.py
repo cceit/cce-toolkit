@@ -8,7 +8,7 @@ from django.contrib.admin.utils import NestedObjects
 from django.contrib.messages.views import \
     SuccessMessageMixin as BuiltInSuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.db import models
 from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe

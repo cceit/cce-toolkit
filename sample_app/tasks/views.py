@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from toolkit.views import CCECreateView, CCEDeleteView, \
     CCEUpdateView, ReportDownloadSearchView, CCEDetailView
 
