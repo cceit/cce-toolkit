@@ -6,7 +6,7 @@ from django.db.models.fields.related import RelatedField
 from django.shortcuts import _get_queryset
 from django.utils import six
 from django.utils.encoding import force_text
-from django.utils.functional import allow_lazy
+from django.utils.functional import keep_lazy
 from django.utils.safestring import mark_safe, SafeText
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
@@ -114,7 +114,7 @@ def snakify(value):
     value = re.sub('[^\w\s-]', '', value).strip().lower()
     return mark_safe(re.sub('[-\s]+', '_', value))
 
-snakify = allow_lazy(snakify, six.text_type, SafeText)
+snakify = keep_lazy(snakify, six.text_type, SafeText)
 
 
 def get_object_or_none(klass, *args, **kwargs):
