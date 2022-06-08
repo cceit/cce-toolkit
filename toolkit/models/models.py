@@ -24,9 +24,9 @@ class CCEAuditModel(CCEModel):
     """
     from django_currentuser.db.models import CurrentUserField
 
-    last_updated_by = CurrentUserField(related_name='%(app_label)s_%(class)s_last_updated')
+    last_updated_by = CurrentUserField(related_name='%(app_label)s_%(class)s_last_updated', on_update=True)
     last_updated_at = models.DateTimeField(auto_now=True)
-    created_by = CurrentUserField(add_only=True, related_name='%(app_label)s_%(class)s_last_created')
+    created_by = CurrentUserField(related_name='%(app_label)s_%(class)s_last_created')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
