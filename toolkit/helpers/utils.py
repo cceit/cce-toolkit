@@ -4,7 +4,6 @@ import unicodedata
 
 from django.db.models.fields.related import RelatedField
 from django.shortcuts import _get_queryset
-from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.functional import keep_lazy
 from django.utils.safestring import mark_safe, SafeText
@@ -114,7 +113,7 @@ def snakify(value):
     value = re.sub('[^\w\s-]', '', value).strip().lower()
     return mark_safe(re.sub('[-\s]+', '_', value))
 
-snakify = keep_lazy(snakify, six.text_type, SafeText)
+snakify = keep_lazy(snakify, str, SafeText)
 
 
 def get_object_or_none(klass, *args, **kwargs):
@@ -125,11 +124,11 @@ def get_object_or_none(klass, *args, **kwargs):
         .. code-block:: python
             :linenos:
 
-            >>> get_object_or_none(Poll, pk=1)
+            >> get_object_or_none(Poll, pk=1)
             None
-            >>> get_object_or_none(Poll, {'pk': 1, 'user': 1})
+            >> get_object_or_none(Poll, {'pk': 1, 'user': 1})
             None
-            >>> get_object_or_none(Poll, {'pk': 2})
+            >> get_object_or_none(Poll, {'pk': 2})
             Poll object
 
     """
@@ -172,13 +171,13 @@ def hasfield(model, field_name):
         .. code-block:: python
             :linenos:
 
-            >>> hasfield(Poll, 'question')
+            >> hasfield(Poll, 'question')
             Django Model
-            >>> hasfield(Poll, 'user__name')
+            >> hasfield(Poll, 'user__name')
             Django Model
-            >>> hasfield(Poll, 'user.username')
+            >> hasfield(Poll, 'user.username')
             Django Model
-            >>> hasfield(Poll, 'user.full_name')
+            >> hasfield(Poll, 'user.full_name')
             False # full_name is a property method not a field
     """
     field_name = field_name.replace('__', '.')
