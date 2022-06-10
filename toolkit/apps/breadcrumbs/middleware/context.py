@@ -13,7 +13,10 @@ def get_class(c):
 
 def update_breadcrumb(url, breadcrumbs):
     func, args, kwargs = resolve(url)
-    clss = get_class('{0}.{1}'.format(func.__module__, func.__name__))
+    try:
+        clss = get_class('{0}.{1}'.format(func.__module__, func.__name__))
+    except AttributeError:
+        return
 
     if 'extra_context' in kwargs and 'breadcrumb_name' \
             in kwargs['extra_context']:
@@ -27,6 +30,10 @@ def update_breadcrumb(url, breadcrumbs):
 
 
 def process_context(req):
+    # Don't attempt to process breadcrumbs on django admin pages
+    if req.path.startswith('/admin/'):
+        return {}
+
     tokens = req.path.split("/")
     subpaths = ["/" + "/".join(tokens[1:n + 1])
                 for n in range(len(tokens[:-1]))]
