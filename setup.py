@@ -17,7 +17,7 @@ setup(
         "user-agents",
     ],
     classifiers=[
-        'Development Status :: 1.0.0-b0',
+        'Development Status :: 1.0.0-b1',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
