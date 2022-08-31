@@ -71,7 +71,7 @@ class ToolkitActivityLog(CCEAuditModel):
             if not self.ip_address:
                 self.ip_address = http_request.META['REMOTE_ADDR']
             if not self.user_agent:
-                self.user_agent = http_request.META['HTTP_USER_AGENT']
+                self.user_agent = http_request.META.get('HTTP_USER_AGENT', "- No User Agent -")
             if not self.hostname:
                 self.hostname = socket.getfqdn(http_request.META['REMOTE_ADDR'])
         else:
