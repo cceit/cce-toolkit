@@ -12,7 +12,7 @@ from django.urls import reverse, NoReverseMatch
 from django.db import models
 from django.http import Http404, HttpResponse
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from toolkit.helpers.utils import hasfield
 
 

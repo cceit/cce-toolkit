@@ -3,8 +3,9 @@ import re
 import unicodedata
 
 from django.db.models.fields.related import RelatedField
+# noinspection PyProtectedMember
 from django.shortcuts import _get_queryset
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.functional import keep_lazy
 from django.utils.safestring import mark_safe, SafeText
 from django.template.loader import render_to_string
@@ -107,7 +108,7 @@ def snakify(value):
             u'polls_report_may_1_2016'
 
     """
-    value = force_text(value)
+    value = force_str(value)
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')\
         .decode('ascii')
     value = re.sub('[^\w\s-]', '', value).strip().lower()
@@ -156,6 +157,7 @@ def _hasfield(model_fields, field_name):
     return False
 
 
+# noinspection PyProtectedMember
 def hasfield(model, field_name):
     """
     Returns whether the specified field_name string is a valid field on
@@ -201,6 +203,7 @@ def hasfield(model, field_name):
     return False
 
 
+# noinspection PyProtectedMember
 def get_subclass_instance(obj):
     """
         Returns the utilized child class instance of a superclass instance.
@@ -221,6 +224,7 @@ def get_subclass_instance(obj):
     return getattr(obj, subclass_instance_name)
 
 
+# noinspection PyProtectedMember
 def send_template_email(address_list, template_name, template_context=None, context=None, subject="NO SUBJECT",
                         attachments=None, from_address=None):
     email_context = {}
@@ -238,6 +242,7 @@ def send_template_email(address_list, template_name, template_context=None, cont
     email_msg.send()
 
 
+# noinspection PyProtectedMember
 def delete_files_from_storage(instance):
     fields = type(instance)._meta.get_fields()
     filefield_names = [field.name for field in fields if isinstance(field, CleanFileField)]

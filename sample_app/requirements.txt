@@ -1,8 +1,8 @@
 # Custom Django model-views-forms requirements
-Django==2.0.13
+Django>4.0
 django-extra-views
-django-currentuser==0.3.4
-django-widget-tweaks==1.4.1
+django-currentuser==0.6.1
+django-widget-tweaks==1.5.0
 python-magic
 
 # Documentation requirements
@@ -10,7 +10,7 @@ sphinx
 sphinx_rtd_theme
 
 # Custom Report helpers requirements
-openpyxl==2.2.3
+openpyxl==3.1.2
 xlwt
 
 # Fabric recipes requirements
@@ -26,6 +26,6 @@ django-behave
 git+https://github.com/cceit/cce-toolkit.git@latest
 
 #Postgres
-psycopg2==2.6.1
+psycopg2==2.9.9
 
-Pillow
+Pillow==10.0.1

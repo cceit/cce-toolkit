@@ -1,7 +1,8 @@
 # Custom Django model-views-forms requirements
-django>3.2
-django-extra-views
-django-currentuser
+Django>4.2, <5.0
+django-extra-views==0.14.0
+django-currentuser==0.6.1
+django-widget-tweaks==1.5.0
 python-magic
 arrow
 user-agents
@@ -10,17 +11,20 @@ user-agents
 sphinx
 sphinx_rtd_theme
 
-
 # Custom Report helpers requirements
-openpyxl
+openpyxl==3.1.2
 xlwt
-
-
-# Fabric recipes requirements
-Fabric
 
 # Testing helpers requirements
 pyvirtualdisplay
 requests
 splinter
 django-behave
+
+#CCE Toolkit
+git+https://github.com/cceit/cce-toolkit.git@latest
+
+#Postgres
+psycopg2==2.9.9
+
+Pillow==10.0.1
