@@ -134,3 +134,14 @@ class MakeListNode(template.Node):
     def render(self, context):
         context[self.varname] = [i.resolve(context) for i in self.items]
         return ""
+
+
+@register.filter
+def index(sequence, key):
+    """
+    Helper Filter to get a list or dict entry in cases where the template . syntax doesn't work.
+    """
+    try:
+        return sequence[key]
+    except:
+        return None
