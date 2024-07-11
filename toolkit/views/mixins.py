@@ -498,7 +498,7 @@ class AbstractedListMixin(object):
             button = self.render_button(obj.pk, 'btn-info',
                                         'view_' + underscored_model_name,
                                         'View',
-                                        'glyphicon glyphicon-info-sign')
+                                        'fa-solid fa-fw fa-info-circle')
             if button:
                 buttons.append(button)
         if edit_perm_func is None:
@@ -506,7 +506,7 @@ class AbstractedListMixin(object):
         if edit_perm_func(obj, user):
             button = self.render_button(obj.pk, 'btn-warning',
                                         'edit_' + underscored_model_name,
-                                        'Edit', 'glyphicon glyphicon-edit')
+                                        'Edit', 'fa-solid fa-fw fa-edit')
             if button:
                 buttons.append(button)
         if delete_perm_func is None:
@@ -514,7 +514,7 @@ class AbstractedListMixin(object):
         if delete_perm_func(obj, user):
             button = self.render_button(obj.pk, 'btn-danger',
                                         'delete_' + underscored_model_name,
-                                        'Delete', 'glyphicon glyphicon-remove')
+                                        'Delete', 'fa-solid fa-fw fa-times')
             if button:
                 buttons.append(button)
         return buttons
@@ -921,7 +921,7 @@ class ListContextMenuMixin(ContextMenuMixin):
                     # label, reversed url, icon class, sidebar_group
                     menu_links.append(
                         ("Add %s" % name.title(), add_url,
-                         "glyphicon glyphicon-plus", "add_%s" % name_underscored)
+                         "fa-solid fa-fw fa-plus", "add_%s" % name_underscored)
                     )
         return menu_links
 
@@ -942,7 +942,7 @@ class DetailContextMenuMixin(ContextMenuMixin):
             if self.get_object().can_update(self.request.user):
                 menu_links.append(
                     ("Edit %s" % name.title(), edit_url,
-                     "glyphicon glyphicon-edit", "edit_%s" % name_underscored),
+                     "fa-solid fa-fw fa-edit", "edit_%s" % name_underscored),
                 )
         return menu_links
 
@@ -970,7 +970,7 @@ class CreateContextMenuMixin(ContextMenuMixin):
             if cvl:
                 menu_links.append(
                     ("Browse %s" % plural_name.title(), browse_url,
-                     "glyphicon glyphicon-list")
+                     "fa-solid fa-fw fa-list")
                 )
         return menu_links
 
@@ -991,6 +991,6 @@ class UpdateContextMenuMixin(ContextMenuMixin):
             if self.get_object().can_view(self.request.user):
                 menu_links.append(
                     ("View %s" % name.title(), view_url,
-                     "glyphicon glyphicon-info-sign")
+                     "fa-solid fa-fw fa-info-circle")
                 )
         return menu_links

@@ -1,9 +1,12 @@
 {% load i18n %}
 {% for error in errors %}
-    <div class="alert alert-danger alert-dismissible fade in fieldalert {{ field_id_for_label }}_field_alert" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}"><span
-                aria-hidden="true">×</span></button>
-        <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            {{ error }}</strong>
+    <div class="alert alert-danger alert-dismissible fade show fieldalert {{ field_id_for_label }}_field_alert" role="alert">
+      <strong>
+          <i class="fa-solid fa-lg fa-fw fa-exclamation"></i>
+          {{ error }}
+      </strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close' %}">
+          <i class="fa-solid fa-lg fa-fw fa-times"></i>
+      </button>
     </div>
 {% endfor %}

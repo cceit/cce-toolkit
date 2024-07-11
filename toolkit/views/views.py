@@ -45,7 +45,7 @@ class CCECreateView(ViewMetaMixin, SuccessMessageMixin, ClassPermissionsMixin,
                         (
                             "Link to something else you want",
                             reverse('link_to_something_else'),
-                            "glyphicon glyphicon-fire",
+                            "fa-solid fa-fw fa-fire",
                             "something_else",
                         )
                     )
@@ -107,7 +107,7 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
                         (
                             "Edit All Polls at Once",
                             reverse('edit_all_polls'),
-                            "glyphicon glyphicon-pencil",
+                            "fa-solid fa-fw fa-pencil",
                             "edit_all_polls",
                         )
                     )
@@ -119,12 +119,12 @@ class CCEListView(ViewMetaMixin, ClassPermissionsMixin, AbstractedListMixin,
                         self.render_button(
                             url_name='edit_poll_permissions',
                             pk=obj.pk,
-                            icon_classes='fa fa-lock',
+                            icon_classes='fa-solid fa-fw fa-lock',
                         ),
                         self.render_button(
                             btn_class='warning',
                             label='Button text',
-                            icon_classes='glyphicon glyphicon-fire',
+                            icon_classes='fa-solid fa-fw fa-fire',
                             url=reverse('some_url_name_no_pk_required'),
                             condensed=False,
                         ),
@@ -188,7 +188,7 @@ class CCEUpdateView(ViewMetaMixin, SuccessMessageMixin,
                         (
                             "Link to something else you want",
                             reverse('link_to_something_else'),
-                            "glyphicon glyphicon-fire",
+                            "fa-solid fa-fw fa-fire",
                             "something_else",
                         )
                     )
@@ -243,7 +243,7 @@ class CCEDetailView(ViewMetaMixin, ObjectPermissionsMixin,
                         (
                             "Link to something else you want",
                             reverse('link_to_something_else'),
-                            "glyphicon glyphicon-fire",
+                            "fa-solid fa-fw fa-fire",
                             "something_else",
                         )
                     )
@@ -397,7 +397,7 @@ class CCESearchView(CCEListView):
                         (
                             "Edit All Polls at Once",
                             reverse('edit_all_polls'),
-                            "glyphicon glyphicon-pencil",
+                            "fa-solid fa-fw fa-pencil",
                             "edit_all_polls",
                         )
                     )
@@ -409,12 +409,12 @@ class CCESearchView(CCEListView):
                         self.render_button(
                             url_name='edit_poll_permissions',
                             pk=obj.pk,
-                            icon_classes='fa fa-lock',
+                            icon_classes='fa-solid fa-w fa-lock',
                         ),
                         self.render_button(
                             btn_class='warning',
                             label='Button text',
-                            icon_classes='glyphicon glyphicon-fire',
+                            icon_classes='fa-solid fa-fw fa-fire',
                             url=reverse('some_url_name_no_pk_required'),
                             condensed=False,
                         ),

@@ -40,7 +40,7 @@ class ToolkitActivityLogListView(ReportDownloadSearchView):
             self.render_button(
                 btn_class='btn-info',
                 label='View',
-                icon_classes='glyphicon glyphicon-info-sign',
+                icon_classes='fa-solid fa-fw fa-info-circle',
                 url=obj.resolved_url
             ),
         ]

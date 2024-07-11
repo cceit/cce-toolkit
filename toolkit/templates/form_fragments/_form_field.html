@@ -15,7 +15,7 @@
                     <span>
                     <a href="javascript:void(0)" id="{{ field.id_for_label }}_modal_btn" title="{{ field.label }} {% trans "Help" %}"
                        data-toggle="modal" data-target="#{{ field.id_for_label }}_modal" style="cursor:pointer; font-size: 12pt;">
-                        <i class="glyphicon glyphicon-question-sign"></i>
+                        <i class="fa-solid fa-fw fa-question-circle"></i>
                     </a>
                     </span>
 {#                    {% elif field.help_text|length > 55  %}#}
@@ -23,7 +23,7 @@
 {#                        <a href="javascript:void(0)" id="{{ field.id_for_label }}_popover" title="{{ field.label }} Help"#}
 {#                           data-trigger='click' data-toggle="popover" style="cursor:pointer"#}
 {#                           data-placement="top" data-content="{{ field.help_text|safe }}">#}
-{#                            <i class="glyphicon glyphicon-question-sign"></i>#}
+{#                            <i class="fa-solid fa-fw fa-question-circle"></i>#}
 {#                        </a>#}
 {#                        </span>#}
                     {% endif %}

@@ -16,9 +16,9 @@ $.fn.dashboard.setup_widgets_modal = function () {
     install_widgets_list.empty();
     $.each(available_widgets, function (index, widget) {
         if ($.inArray(widget.id, installed_widgets) > -1)
-            widget_install_button = '<a href="#" class="btn btn-success pull-right widget-install-btn disabled" data-id=' + widget.id + '><i class="glyphicon glyphicon-plus"></i> Added</a>';
+            widget_install_button = '<a href="#" class="btn btn-success pull-right widget-install-btn disabled" data-id=' + widget.id + '><i class="fa-solid fa-fw fa-plus"></i> Added</a>';
         else
-            widget_install_button = '<a href="#" class="btn btn-success pull-right widget-install-btn" data-id=' + widget.id + '><i class="glyphicon glyphicon-plus"></i> Add Widget</a>';
+            widget_install_button = '<a href="#" class="btn btn-success pull-right widget-install-btn" data-id=' + widget.id + '><i class="fa-solid fa-fw fa-plus"></i> Add Widget</a>';
         var circle = "";
         if (widget.newWidget) {
             circle = '<span class="pull-right new_marker">New</span>';
@@ -30,7 +30,7 @@ $.fn.dashboard.setup_widgets_modal = function () {
     install_widgets_list.find('.widget-install-btn').each(function () {
         $(this).on('click', function () {
             $.fn.dashboard.add_widget($(this).data('id'), 'column-2', $(this).data('options'));
-            $(this).addClass('disabled').html('<i class="glyphicon glyphicon-plus"></i> Added</a>');
+            $(this).addClass('disabled').html('<i class="fa-solid fa-fw fa-plus"></i> Added</a>');
             $.fn.dashboard.save_state();
         });
 

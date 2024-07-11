@@ -1,7 +1,7 @@
 {% load user_agent_tags %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><i class="glyphicon glyphicon-time"></i> Activity Log</h3>
+        <h3 class="panel-title"><i class="fa-solid fa-fw fa-clock"></i> Activity Log</h3>
     </div>
     <div class="panel-body">
         <div class="list-group">
@@ -32,7 +32,7 @@
         {% if activity_log %}
             <div class="text-right">
                 <a href="{% url 'browse_activity_logs' %}">
-                    View All Activity <i class="glyphicon glyphicon-circle-arrow-right"></i>
+                    View All Activity <i class="fa-solid fa-fw fa-circle-arrow-right"></i>
                 </a>
             </div>
         {% endif %}

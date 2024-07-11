@@ -15,11 +15,11 @@ def boolean_icon(value):
     :returns html: i tag with fontawesome icon representation
     """
     if value:
-        return mark_safe('<i class="true_icon fa fa-check" aria-hidden="true"></i>')
+        return mark_safe('<i class="true_icon fa-solid fa-fw fa-check" aria-hidden="true"></i>')
     elif value is None:
         return '--'
     else:
-        return mark_safe('<i class="false_icon fa fa-times" aria-hidden="true"></i>')
+        return mark_safe('<i class="false_icon fa-solid fa-fw fa-times" aria-hidden="true"></i>')
 
 
 def follow_path(ob, dotted_attrs):

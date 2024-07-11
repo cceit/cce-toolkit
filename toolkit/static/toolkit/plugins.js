@@ -30,12 +30,12 @@ function initialize_plugins(advanced_search_form_bound) {
     $advance_search_toggle.on('click', function () {
         if ($advance_search_toggle.attr('aria-pressed') == 'false') {
             $advance_search_toggle.attr('aria-pressed', 'true');
-            $advance_search_toggle.children('span').removeClass('glyphicon-plus');
-            $advance_search_toggle.children('span').addClass('glyphicon-minus');
+            $advance_search_toggle.children('span').removeClass('fa-plus');
+            $advance_search_toggle.children('span').addClass('fa-minus');
         } else {
             $advance_search_toggle.attr('aria-pressed', 'false');
-            $advance_search_toggle.children('span').removeClass('glyphicon-minus');
-            $advance_search_toggle.children('span').addClass('glyphicon-plus');
+            $advance_search_toggle.children('span').removeClass('fa-minus');
+            $advance_search_toggle.children('span').addClass('fa-plus');
         }
 
         $('#advanced_search_form').toggle()
@@ -44,8 +44,8 @@ function initialize_plugins(advanced_search_form_bound) {
     if (advanced_search_form_bound) {
 
         $advance_search_toggle.attr('aria-pressed', 'true');
-        $advance_search_toggle.children('span').removeClass('glyphicon-plus');
-        $advance_search_toggle.children('span').addClass('glyphicon-minus');
+        $advance_search_toggle.children('span').removeClass('fa-plus');
+        $advance_search_toggle.children('span').addClass('fa-minus');
     }
     else {
         $advanced_search_form.toggle();

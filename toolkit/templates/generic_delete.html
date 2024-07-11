@@ -18,10 +18,10 @@
     <form action="" method="POST">{% csrf_token %}
         <br />
         <button name='submit' id='submit' type="submit" class="btn btn-success">
-            <i class="glyphicon glyphicon-ok"></i> Yes
+            <i class="fa-solid fa-fw fa-check"></i> Yes
         </button>
         <a href="{{ no_url_path }}" class="btn btn-danger">
-            <i class="glyphicon glyphicon-remove"></i> No
+            <i class="fa-solid fa-fw fa-times"></i> No
         </a>
     </form>
     {% if page_details_bottom %}

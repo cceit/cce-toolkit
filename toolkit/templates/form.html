@@ -33,7 +33,7 @@
             <form action="" method="{{ form_method|default:'POST' }}" style="padding: 20px" enctype="multipart/form-data">{% csrf_token %}
 
                 <span class="required-warning">*</span> - {% trans "indicates a required field." %}<br>
-                <span class="glyphicon glyphicon-question-sign" style="font-size: 12pt"></span> - {% trans "indicates additional information." %}
+                <span class="fa-solid fa-fw fa-question-circle" style="font-size: 12pt"></span> - {% trans "indicates additional information." %}
                 <div class="form-content">
                     {% block render_form %}
                         {% include 'render_form.html' %}
@@ -45,7 +45,8 @@
                 <div class="row submit-content">
                    <div class="col-sm-12" style="text-align: center">
                        <button type="submit" name="submit" class="btn btn-default action">
-                           <i class="{{ form.submit_icon|default:'glyphicon glyphicon-floppy-disk' }}"></i> {{ form.submit_text|default:'Save' }}
+                           <i class="{{ form.submit_icon|default:'fa-solid fa-fw fa-save' }}"></i>
+                           {{ form.submit_text|default:'Save' }}
                        </button>
                        {% block additional_submit_buttons %}
                        {% endblock additional_submit_buttons %}

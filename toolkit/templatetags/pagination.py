@@ -26,16 +26,16 @@ def generate_ordering_links(request, title, value):
         dict_ = request.GET.copy()
         dict_['page'] = 1
         order = ''
-        icon = '<i class="fa fa-sort" aria-hidden="true"></i>'
+        icon = '<i class="fa-solid fa-fw fa-sort" aria-hidden="true"></i>'
         if 'order_by' in dict_ and dict_['order_by']:
             if value in dict_['order_by']:
                 if dict_['order_by'][0] == '-':
                     order = ''
-                    icon = '<i class="fa fa-sort-alpha-desc" ' \
+                    icon = '<i class="fa-solid fa-fw fa-sort-alpha-desc" ' \
                            'aria-hidden="true"></i>'
                 else:
                     order = '-'
-                    icon = '<i class="fa fa-sort-alpha-asc" ' \
+                    icon = '<i class="fa-solid fa-fw fa-sort-alpha-asc" ' \
                            'aria-hidden="true"></i>'
 
         dict_['order_by'] = '%s%s' % (order, value)

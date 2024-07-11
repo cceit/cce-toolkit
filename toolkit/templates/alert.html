@@ -1,8 +1,12 @@
 {% load i18n %}
 <div style="margin-top: 10px;"></div>
-<div class="alert alert-{{ type }} alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}"><span aria-hidden="true">×</span>
-    </button>
-    <strong><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {% trans "Alert" %}</strong>
+<div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+    <strong>
+        <i class="fa-solid fa-lg fa-fw fa-exclamation"></i>
+        {% trans "Alert" %}
+    </strong>
     {{ message|linebreaks }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Close' %}">
+        <i class="fa-solid fa-lg fa-fw fa-times"></i>
+    </button>
 </div>

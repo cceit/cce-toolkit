@@ -13,7 +13,6 @@ setup(
     install_requires=[
         "django-currentuser",
         "arrow",
-        "django-request-provider",
         "user-agents",
     ],
     classifiers=[
