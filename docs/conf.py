@@ -25,8 +25,8 @@ description = u'A collection of python helpers and custom Django views, ' \
               u'Information Systems'
 copyright = u'2016-2024, University of Oklahoma - Digital Innovations Group'
 author = u'CCE-IT Devs'
-version = u'1.1.1'
-release = u'1.1.1'
+version = u'1.1.4'
+release = u'1.1.4'
 language = 'en'
 exclude_patterns = []
 pygments_style = 'sphinx'

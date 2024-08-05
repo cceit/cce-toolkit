@@ -111,8 +111,8 @@ def snakify(value):
     value = force_str(value)
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')\
         .decode('ascii')
-    value = re.sub('[^\w\s-]', '', value).strip().lower()
-    return mark_safe(re.sub('[-\s]+', '_', value))
+    value = re.sub(r'[^\w\s-]', '', value).strip().lower()
+    return mark_safe(re.sub(r'[-\s]+', '_', value))
 
 snakify = keep_lazy(snakify, str, SafeText)
 

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="cce_toolkit",
-    version="1.1.3",
+    version="1.1.4",
     author_email='devs@cce.ou.edu',
     description=('A collection of python helpers and custom Django views, '
                  'forms and models created for rapid development of Management'
@@ -16,7 +16,7 @@ setup(
         "user-agents",
     ],
     classifiers=[
-        'Development Status :: 1.1.1',
+        'Development Status :: 1.1.4',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
