@@ -2,12 +2,12 @@ from setuptools import setup
 
 setup(
     name="cce_toolkit",
-    version="1.1.4",
+    version="2.0.0",
     author_email='devs@cce.ou.edu',
     description=('A collection of python helpers and custom Django views, '
                  'forms and models created for rapid development of Management'
                  ' Information Systems'),
-    author='University of Oklahoma - College of Continuing Education - IT',
+    author='University of Oklahoma IT - DIG OSS Team',
     license='BSD',
 
     install_requires=[
@@ -16,7 +16,7 @@ setup(
         "user-agents",
     ],
     classifiers=[
-        'Development Status :: 1.1.4',
+        'Development Status :: 2.0.0',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',

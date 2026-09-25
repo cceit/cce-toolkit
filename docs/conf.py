@@ -23,10 +23,10 @@ project = u'CCE Toolkit'
 description = u'A collection of python helpers and custom Django views, ' \
               u'forms and models created for rapid development of Management '\
               u'Information Systems'
-copyright = u'2016-2024, University of Oklahoma - Digital Innovations Group'
-author = u'CCE-IT Devs'
-version = u'1.1.4'
-release = u'1.1.4'
+copyright = u'2016-2026, University of Oklahoma'
+author = u'CCE-IT Devs, DIG OSS Team'
+version = u'2.0.0'
+release = u'2.0.0'
 language = 'en'
 exclude_patterns = []
 pygments_style = 'sphinx'
