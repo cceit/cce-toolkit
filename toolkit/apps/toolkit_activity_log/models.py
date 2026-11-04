@@ -1,5 +1,7 @@
 import socket
 
+from user_agents import parse
+
 from django.contrib.auth.models import Group
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -7,10 +9,9 @@ from django.urls import reverse, NoReverseMatch
 from django.db import models
 
 from toolkit.apps.toolkit_activity_log.reports import ActivityReports
+from toolkit.apps.toolkit_activity_log.managers import ActivityTypePermissionManager, ActivitiesPermissionManager
 from toolkit.models import CCEAuditModel, CCEModel
-
-from .managers import ActivityTypePermissionManager, ActivitiesPermissionManager
-from ...middlewares import GlobalRequest
+from toolkit.middlewares import GlobalRequest
 
 
 class ToolkitActivityType(CCEModel):
@@ -58,6 +59,8 @@ class ToolkitActivityLog(CCEAuditModel):
     objects = ActivitiesPermissionManager.as_manager()
     reports = ActivityReports()
 
+    NO_AGENT = "- No User Agent -"
+
     class Meta:
         db_table = 'cce_toolkit_activity_log'
         ordering = ('-pk',)
@@ -71,7 +74,7 @@ class ToolkitActivityLog(CCEAuditModel):
             if not self.ip_address:
                 self.ip_address = http_request.META['REMOTE_ADDR']
             if not self.user_agent:
-                self.user_agent = http_request.META.get('HTTP_USER_AGENT', "- No User Agent -")
+                self.user_agent = http_request.META.get('HTTP_USER_AGENT', self.NO_AGENT)
             if not self.hostname:
                 self.hostname = socket.getfqdn(http_request.META['REMOTE_ADDR'])
         else:
@@ -80,9 +83,12 @@ class ToolkitActivityLog(CCEAuditModel):
 
         return super(ToolkitActivityLog, self).save(*args, **kwargs)
 
-    # @property
-    # def icon_class(self):
-    #     return self.ACTIVITY_ICONS[str(self.activity_type)]
+    @property
+    def safe_content_object(self):
+        content_type = self.content_type
+        if content_type.model_class() is None:
+            return None
+        return self.content_object
 
     @property
     def resolved_url(self):
@@ -91,17 +97,26 @@ class ToolkitActivityLog(CCEAuditModel):
                 return reverse(self.absolute_url_name)
             except NoReverseMatch:
                 try:
-                    return reverse(self.absolute_url_name, kwargs={'pk': self.object_id})
+                    return reverse(
+                        self.absolute_url_name, kwargs={"pk": self.object_id}
+                    )
                 except NoReverseMatch:
                     pass
 
-        if self.content_object:
+        content_object = self.safe_content_object
+        if content_object:
             try:
-                return self.content_object.get_absolute_url()
+                return content_object.get_absolute_url()
             except NoReverseMatch:
-                return ''
+                return ""
+        return ""
 
-
+    @property
+    def simple_user_agent(self):
+        if not self.user_agent or self.user_agent == self.NO_AGENT:
+            return self.NO_AGENT
+        user_agent = parse(value)
+        return str(user_agent)
 
     @classmethod
     def create_log(cls, summary, description, activity_type, content_type_model, object_id, absolute_url_name=None):

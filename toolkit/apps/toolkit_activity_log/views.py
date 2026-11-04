@@ -36,14 +36,18 @@ class ToolkitActivityLogListView(ReportDownloadSearchView):
     ]
 
     def render_buttons(self, user, obj, *args, **kwargs):
-        return [
-            self.render_button(
-                btn_class='btn-info',
-                label='View',
-                icon_classes='fa-solid fa-fw fa-info-circle',
-                url=obj.resolved_url
-            ),
-        ]
+        obj_url = obj.resolved_url
+        if obj_url:
+            return [
+                self.render_button(
+                    btn_class='btn-info',
+                    label='View',
+                    icon_classes='fa-solid fa-fw fa-info-circle',
+                    url=obj_url
+                ),
+            ]
+        else:
+            return []
 
     def get_reports(self):
         reports = OrderedDict()

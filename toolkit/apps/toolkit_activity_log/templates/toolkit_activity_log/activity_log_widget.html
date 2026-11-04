@@ -1,4 +1,3 @@
-{% load user_agent_tags %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><i class="fa-solid fa-fw fa-clock"></i> Activity Log</h3>
@@ -6,25 +5,21 @@
     <div class="panel-body">
         <div class="list-group">
             {% for activity in activity_log %}
-                {% if activity.content_object %}
-                    <a href="{{ activity.resolved_url }}"
-                       title="{{ activity.description }}"
-                       class="list-group-item">
+                {% if activity.resolved_url %}
+                <a href="{{ activity.resolved_url }}" title="{{ activity.description }}" class="list-group-item">
                 {% else %}
-                    <a href="{{ activity.absolute_url_name }}"
-                       title="{{ activity.description }}"
-                       class="list-group-item">
+                <div title="{{ activity.description }}" class="list-group-item">
                 {% endif %}
-            <time class="timeago pull-right"
-                  datetime="{{ activity.created_at|date:'c' }}"
-                  title="{{ activity.created_at|date:'m/d/Y h:iA' }}">
-                  {{ activity.created_at|date:'m/d/Y' }}
-            </time>
-            <i class="{{ activity.activity_type.logo }}"></i>
-            <b>{{ activity.activity_type }}</b> - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
-            {% if activity.user_agent %}<br><b>User Agent:</b> {{ activity.user_agent|simple_user_agent }}{% endif %}
-            {% if activity.ip_address %}<br><b>IP Address:</b> {{ activity.ip_address }}{% endif %}
-            </a>
+                    <time class="timeago pull-right"
+                          datetime="{{ activity.created_at|date:'c' }}"
+                          title="{{ activity.created_at|date:'m/d/Y h:iA' }}">
+                          {{ activity.created_at|date:'m/d/Y' }}
+                    </time>
+                    <i class="{{ activity.activity_type.logo }}"></i>
+                    <b>{{ activity.activity_type }}</b> - {{ activity.summary }} {% if activity.created_by %}({{ activity.created_by }}){% endif %}
+                    {% if activity.user_agent %}<br><b>User Agent:</b> {{ activity.simple_user_agent }}{% endif %}
+                    {% if activity.ip_address %}<br><b>IP Address:</b> {{ activity.ip_address }}{% endif %}
+                {% if activity.resolved_url %} </a> {% else %} </div> {% endif %}
             {% empty %}
                 {% include 'alert.html' with type='warning' message='No activities logged yet.' %}
             {% endfor %}
